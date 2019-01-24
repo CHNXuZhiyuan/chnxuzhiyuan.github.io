@@ -27,21 +27,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[「洛谷P5059」中国象棋]]></title>
-    <url>%2F2019%2F01%2F16%2F%E3%80%8C%E6%B4%9B%E8%B0%B7P5059%E3%80%8D%E4%B8%AD%E5%9B%BD%E8%B1%A1%E6%A3%8B%2F</url>
-    <content type="text"><![CDATA[又是数数题QwQ… 传送门洛谷P5059 题解首先注意题目中说的是有$n^2$个格子，也就是$(n+1)^2$个格点。 以下是出题人的推导： 首先我们可以发现每一行是独立的，所以只需要处理一行的答案即可 设$F[i][0]$表示一行中摆了$i$个位置且第$i$个位置不摆放棋子的方案数 设$F[i][1]$表示一行中摆了$i$个位置且第$i$个位置摆放棋子的方案数 设$Ans[i]$表示$F[i][0]+F[i][1]$ 那么忽略第二个限制可以发现有: $F[i][0]=F[i-1][0]+F[i-1][1]$ $F[i][1]=F[i-1][0]$ 所以有 $Ans[i]$ $=F[i][0]+F[i][1]$ $=2F[i-1][0]+F[i-1][1]$ $=(F[i-1][0]+F[i-1][1])+(F[i-2][0]+F[i-2][1])$ $=Ans[i-1]+Ans[i-2]$ 好了很显然这是一个斐波那契数列。自己再推一下，注意一下细节，不难发现最后的答案就是$$(Fib_{n+3}-n-2)^{n+1}$$矩阵加快速幂就可以在$\Theta(\log n)$的复杂内求解。 还有一个问题，由于n和P都非常大，直接乘long long也会boom。所以这里用了一个类似于快速幂的方法来求$(a*b)\mod P$的值。虽然复杂度多了一只log，但是很好写，并且避免了高精度又臭又长的代码和大常数复杂度。 代码还挺好写的呢poi。 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152#include&lt;cstdio&gt;using namespace std;typedef long long LL;LL n,P;LL Multiply(LL x,LL y) //两个10^18级别的数在模P意义下的乘法&#123; LL ret=0,w=x; while(y) &#123; if(y&amp;1) ret=(ret+w)%P; w=(w+w)%P;y&gt;&gt;=1; &#125; return ret;&#125;struct Matrix&#123; LL a[2][2]; Matrix()&#123;a[0][0]=a[0][1]=a[1][0]=a[1][1]=0;&#125; Matrix operator * (Matrix b) //矩阵乘法 &#123; Matrix c; for(int i=0;i&lt;2;i++) for(int j=0;j&lt;2;j++) for(int k=0;k&lt;2;k++) c.a[i][j]=(c.a[i][j]+Multiply(a[k][j],b.a[i][k]))%P; return c; &#125;&#125;ans,mat,tep;LL QP(LL a,LL b) //普通快速幂&#123; LL ret=1,w=a; while(b) &#123; if(b&amp;1) ret=Multiply(ret,w); w=Multiply(w,w);b&gt;&gt;=1; &#125; return ret;&#125;int main()&#123; scanf("%lld%lld",&amp;n,&amp;P); ans.a[0][0]=ans.a[0][1]=mat.a[0][0]=mat.a[0][1]=mat.a[1][0]=1; LL b=n+1;tep=mat; while(b) //矩阵加速斐波那契数列 &#123; if(b&amp;1) mat=mat*tep; tep=tep*tep;b&gt;&gt;=1; &#125; ans=ans*mat; printf("%lld\n",QP(((ans.a[0][0]-n-2)%P+P)%P,n+1)); return 0;&#125;]]></content>
-      <categories>
-        <category>矩阵加速DP</category>
-      </categories>
-      <tags>
-        <tag>DP</tag>
-        <tag>数数</tag>
-        <tag>快速幂</tag>
-        <tag>斐波那契数列</tag>
-        <tag>矩阵加速</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[「国家集训队」聪聪可可]]></title>
     <url>%2F2019%2F01%2F16%2F%E3%80%8C%E5%9B%BD%E5%AE%B6%E9%9B%86%E8%AE%AD%E9%98%9F%E3%80%8D%E8%81%AA%E8%81%AA%E5%8F%AF%E5%8F%AF%2F</url>
     <content type="text"><![CDATA[我数数最差了QwQ… 传送门洛谷P2634 BZOJ2152 题解很显然这是一道假的概率题。而是一道数数题，只要数出路径长度为3的倍数的点对的数量就行了呢poi。 隔壁dalao说这是一道点分治裸题，但是我还是觉得树形DP更好写一些QwQ。 定义$F_{ij}(j \in \lbrace 0,1,2 \rbrace)$表示节点$i$的子树中，到i的距离$\mod 3=j$的节点个数。如果当前遍历到的节点为i，我们需要计算出$i$及其子树中满足最短路径经过节点$i$且满足路径长是3的倍数的节点个数，累计到答案里最后除以$n^2$并约分就好了呢poi。 注意起点和终点可以相同，计算时小心点，不要算重复也不要漏算了哟poi。 代码12345678910111213141516171819202122232425262728293031323334353637383940414243#include&lt;cstdio&gt;using namespace std;const int maxn=20005;int n,tot,lnk[maxn],son[maxn*2],w[maxn*2],nxt[maxn*2],F[maxn][3],ans1,ans2;inline int read()&#123; int ret=0,f=1;char ch=getchar(); while(ch&lt;'0'||ch&gt;'9')&#123;if(ch=='-')f=-f;ch=getchar();&#125; while(ch&gt;='0'&amp;&amp;ch&lt;='9')&#123;ret=ret*10+ch-'0';ch=getchar();&#125; return ret*f;&#125;inline void add_e(int x,int y,int z)&#123;tot++;son[tot]=y;w[tot]=z;nxt[tot]=lnk[x];lnk[x]=tot;&#125;int gcd(int x,int y)&#123;return !y?x:gcd(y,x%y);&#125;void DFS(int now,int fa)&#123; F[now][0]=1; for(int i=lnk[now];i;i=nxt[i]) &#123; if(son[i]!=fa) &#123; DFS(son[i],now); for(int j=0;j&lt;3;j++) ans1+=F[son[i]][j]*F[now][((3-j-w[i])%3+3)%3]*2; for(int j=0;j&lt;3;j++) F[now][(j+w[i])%3]+=F[son[i]][j]; &#125; &#125;&#125;int main()&#123; n=read(); for(int i=1;i&lt;n;i++) &#123; int a=read(),b=read(),c=read(); add_e(a,b,c);add_e(b,a,c); &#125; DFS(1,0); ans1+=n;ans2=n*n; int gys=gcd(ans1,ans2); ans1/=gys;ans2/=gys; printf("%d/%d\n",ans1,ans2); return 0;&#125;]]></content>
@@ -55,6 +40,21 @@
         <tag>数数</tag>
         <tag>概率</tag>
         <tag>DFS</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[「洛谷P5059」中国象棋]]></title>
+    <url>%2F2019%2F01%2F16%2F%E3%80%8C%E6%B4%9B%E8%B0%B7P5059%E3%80%8D%E4%B8%AD%E5%9B%BD%E8%B1%A1%E6%A3%8B%2F</url>
+    <content type="text"><![CDATA[又是数数题QwQ… 传送门洛谷P5059 题解首先注意题目中说的是有$n^2$个格子，也就是$(n+1)^2$个格点。 以下是出题人的推导： 首先我们可以发现每一行是独立的，所以只需要处理一行的答案即可 设$F[i][0]$表示一行中摆了$i$个位置且第$i$个位置不摆放棋子的方案数 设$F[i][1]$表示一行中摆了$i$个位置且第$i$个位置摆放棋子的方案数 设$Ans[i]$表示$F[i][0]+F[i][1]$ 那么忽略第二个限制可以发现有: $F[i][0]=F[i-1][0]+F[i-1][1]$ $F[i][1]=F[i-1][0]$ 所以有 $Ans[i]$ $=F[i][0]+F[i][1]$ $=2F[i-1][0]+F[i-1][1]$ $=(F[i-1][0]+F[i-1][1])+(F[i-2][0]+F[i-2][1])$ $=Ans[i-1]+Ans[i-2]$ 好了很显然这是一个斐波那契数列。自己再推一下，注意一下细节，不难发现最后的答案就是$$(Fib_{n+3}-n-2)^{n+1}$$矩阵加快速幂就可以在$\Theta(\log n)$的复杂内求解。 还有一个问题，由于n和P都非常大，直接乘long long也会boom。所以这里用了一个类似于快速幂的方法来求$(a*b)\mod P$的值。虽然复杂度多了一只log，但是很好写，并且避免了高精度又臭又长的代码和大常数复杂度。 代码还挺好写的呢poi。 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152#include&lt;cstdio&gt;using namespace std;typedef long long LL;LL n,P;LL Multiply(LL x,LL y) //两个10^18级别的数在模P意义下的乘法&#123; LL ret=0,w=x; while(y) &#123; if(y&amp;1) ret=(ret+w)%P; w=(w+w)%P;y&gt;&gt;=1; &#125; return ret;&#125;struct Matrix&#123; LL a[2][2]; Matrix()&#123;a[0][0]=a[0][1]=a[1][0]=a[1][1]=0;&#125; Matrix operator * (Matrix b) //矩阵乘法 &#123; Matrix c; for(int i=0;i&lt;2;i++) for(int j=0;j&lt;2;j++) for(int k=0;k&lt;2;k++) c.a[i][j]=(c.a[i][j]+Multiply(a[k][j],b.a[i][k]))%P; return c; &#125;&#125;ans,mat,tep;LL QP(LL a,LL b) //普通快速幂&#123; LL ret=1,w=a; while(b) &#123; if(b&amp;1) ret=Multiply(ret,w); w=Multiply(w,w);b&gt;&gt;=1; &#125; return ret;&#125;int main()&#123; scanf("%lld%lld",&amp;n,&amp;P); ans.a[0][0]=ans.a[0][1]=mat.a[0][0]=mat.a[0][1]=mat.a[1][0]=1; LL b=n+1;tep=mat; while(b) //矩阵加速斐波那契数列 &#123; if(b&amp;1) mat=mat*tep; tep=tep*tep;b&gt;&gt;=1; &#125; ans=ans*mat; printf("%lld\n",QP(((ans.a[0][0]-n-2)%P+P)%P,n+1)); return 0;&#125;]]></content>
+      <categories>
+        <category>矩阵加速DP</category>
+      </categories>
+      <tags>
+        <tag>DP</tag>
+        <tag>数数</tag>
+        <tag>快速幂</tag>
+        <tag>斐波那契数列</tag>
+        <tag>矩阵加速</tag>
       </tags>
   </entry>
   <entry>
