@@ -8,8 +8,8 @@
         <category>贪心</category>
       </categories>
       <tags>
-        <tag>DFS</tag>
         <tag>贪心</tag>
+        <tag>DFS</tag>
       </tags>
   </entry>
   <entry>
@@ -46,12 +46,12 @@
         <category>树形DP</category>
       </categories>
       <tags>
+        <tag>DFS</tag>
         <tag>DP</tag>
         <tag>树形DP</tag>
         <tag>点分治</tag>
         <tag>数数</tag>
         <tag>概率</tag>
-        <tag>DFS</tag>
       </tags>
   </entry>
   <entry>
