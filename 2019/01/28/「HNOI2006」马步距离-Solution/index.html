@@ -69,7 +69,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="DFS,贪心,">
 
 
 
@@ -80,13 +80,18 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="Welcome to XuZhiyuan&#39;s blog">
-<meta property="og:url" content="http://chnxuzhiyuan.cn/tags/DAG/index.html">
+<meta name="description" content="这题有点水QwQ…">
+<meta name="keywords" content="DFS,贪心">
+<meta property="og:type" content="article">
+<meta property="og:title" content="「HNOI2006」马步距离">
+<meta property="og:url" content="http://chnxuzhiyuan.cn/2019/01/28/「HNOI2006」马步距离-Solution/index.html">
 <meta property="og:site_name" content="Welcome to XuZhiyuan&#39;s blog">
+<meta property="og:description" content="这题有点水QwQ…">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-01-28T03:37:58.703Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Welcome to XuZhiyuan&#39;s blog">
+<meta name="twitter:title" content="「HNOI2006」马步距离">
+<meta name="twitter:description" content="这题有点水QwQ…">
 
 
 
@@ -116,13 +121,13 @@
 
 
 
-  <link rel="canonical" href="http://chnxuzhiyuan.cn/tags/DAG/">
+  <link rel="canonical" href="http://chnxuzhiyuan.cn/2019/01/28/「HNOI2006」马步距离-Solution/">
 
 
 
 
 
-  <title>标签: DAG | Welcome to XuZhiyuan's blog</title>
+  <title>「HNOI2006」马步距离 | Welcome to XuZhiyuan's blog</title>
   
 
 
@@ -141,7 +146,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
@@ -277,78 +282,197 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block tag">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>DAG<small>标签</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
 
   <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://chnxuzhiyuan.cn/2019/01/28/「HNOI2006」马步距离-Solution/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="XuZhiyuan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Welcome to XuZhiyuan's blog">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2019/01/24/「BJOI2014」想法-Solution/" itemprop="url">
-              
-                <span itemprop="name">「BJOI2014」想法</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">「HNOI2006」马步距离</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-01-24T00:00:00+08:00" content="2019-01-24">
-          01-24
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-28T00:00:00+08:00">
+                2019-01-28
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/贪心/" itemprop="url" rel="index">
+                    <span itemprop="name">贪心</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/01/28/「HNOI2006」马步距离-Solution/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/01/28/「HNOI2006」马步距离-Solution/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i> 浏览量：
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>次
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-        
+      
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/01/14/「USACO2015JAN」草鉴定Grass-Cownoisseur -Solution/" itemprop="url">
-              
-                <span itemprop="name">「USACO2015JAN」草鉴定Grass Cownoisseur</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-01-14T00:00:00+08:00" content="2019-01-14">
-          01-14
-        </time>
-      </div>
-
-    </header>
-  </article>
-
+      
+        <p>这题有点水QwQ…</p>
+<a id="more"></a>
+<h3 id="传送门"><a href="#传送门" class="headerlink" title="传送门"></a>传送门</h3><p><a href="https://www.luogu.org/problemnew/show/P2060" target="_blank" rel="noopener">洛谷P2060</a></p>
+<p><a href="https://www.lydsy.com/JudgeOnline/problem.php?id=1193" target="_blank" rel="noopener">BZOJ1193</a></p>
+<h3 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h3><p>首先很显然不能直接贪心，直接贪心有可能WA，所以要写个DFS之类的东西来搜。</p>
+<p>但是数据稍微有点大QwQ，搜不出来。</p>
+<p>不难发现，当距离比较远时直接贪心地奔着目标走是肯定没问题的。</p>
+<p>所以距离远时贪心，距离近时爆搜就行了QwQ。</p>
+<p><del>其实手玩就能把表打出来。</del></p>
+<p>###代码</p>
+<p><del>打表万岁</del></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> f[<span class="number">7</span>][<span class="number">7</span>]=</span><br><span class="line">&#123;</span><br><span class="line">	&#123;<span class="number">0</span>,<span class="number">3</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">2</span>&#125;,</span><br><span class="line">	&#123;<span class="number">3</span>,<span class="number">2</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>&#125;,</span><br><span class="line">	&#123;<span class="number">2</span>,<span class="number">1</span>,<span class="number">4</span>,<span class="number">3</span>,<span class="number">2</span>&#125;,</span><br><span class="line">	&#123;<span class="number">3</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">2</span>,<span class="number">3</span>&#125;,</span><br><span class="line">	&#123;<span class="number">2</span>,<span class="number">3</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>&#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">int</span> xp,yp,xs,ys,x,y,ans;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">ABS</span><span class="params">(<span class="keyword">int</span> x)</span></span>&#123;<span class="keyword">return</span> x&lt;<span class="number">0</span>?-x:x;&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%d%d%d%d"</span>,&amp;xp,&amp;yp,&amp;xs,&amp;ys);</span><br><span class="line">	x=ABS(xp-xs);y=ABS(yp-ys);</span><br><span class="line">	<span class="keyword">while</span>(x&gt;<span class="number">4</span>||y&gt;<span class="number">4</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span>(x&lt;y)&#123;x--;y-=<span class="number">2</span>;&#125;</span><br><span class="line">		<span class="keyword">else</span>&#123;x-=<span class="number">2</span>;y--;&#125;</span><br><span class="line">		<span class="keyword">if</span>(x&lt;<span class="number">0</span>) x=-x;<span class="keyword">if</span>(y&lt;<span class="number">0</span>) y=-y;</span><br><span class="line">		ans++;</span><br><span class="line">	&#125;</span><br><span class="line">	ans+=f[x][y];</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"%d\n"</span>,ans);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
     </div>
+    
+    
+    
 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/DFS/" rel="tag"># DFS</a>
+          
+            <a href="/tags/贪心/" rel="tag"># 贪心</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/01/24/「BJOI2014」想法-Solution/" rel="next" title="「BJOI2014」想法">
+                <i class="fa fa-chevron-left"></i> 「BJOI2014」想法
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -356,6 +480,13 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
 
         </div>
         
@@ -376,8 +507,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -469,6 +609,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#传送门"><span class="nav-number">1.</span> <span class="nav-text">传送门</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#题解"><span class="nav-number">2.</span> <span class="nav-text">题解</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -614,6 +770,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 

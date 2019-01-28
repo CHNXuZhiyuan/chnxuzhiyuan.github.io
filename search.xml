@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[「HNOI2006」马步距离]]></title>
+    <url>%2F2019%2F01%2F28%2F%E3%80%8CHNOI2006%E3%80%8D%E9%A9%AC%E6%AD%A5%E8%B7%9D%E7%A6%BB-Solution%2F</url>
+    <content type="text"><![CDATA[这题有点水QwQ… 传送门洛谷P2060 BZOJ1193 题解首先很显然不能直接贪心，直接贪心有可能WA，所以要写个DFS之类的东西来搜。 但是数据稍微有点大QwQ，搜不出来。 不难发现，当距离比较远时直接贪心地奔着目标走是肯定没问题的。 所以距离远时贪心，距离近时爆搜就行了QwQ。 其实手玩就能把表打出来。 ###代码 打表万岁 123456789101112131415161718192021222324252627#include&lt;cstdio&gt;using namespace std;const int f[7][7]=&#123; &#123;0,3,2,3,2&#125;, &#123;3,2,1,2,3&#125;, &#123;2,1,4,3,2&#125;, &#123;3,2,3,2,3&#125;, &#123;2,3,2,3,4&#125;&#125;;int xp,yp,xs,ys,x,y,ans;int ABS(int x)&#123;return x&lt;0?-x:x;&#125;int main()&#123; scanf("%d%d%d%d",&amp;xp,&amp;yp,&amp;xs,&amp;ys); x=ABS(xp-xs);y=ABS(yp-ys); while(x&gt;4||y&gt;4) &#123; if(x&lt;y)&#123;x--;y-=2;&#125; else&#123;x-=2;y--;&#125; if(x&lt;0) x=-x;if(y&lt;0) y=-y; ans++; &#125; ans+=f[x][y]; printf("%d\n",ans); return 0;&#125;]]></content>
+      <categories>
+        <category>贪心</category>
+      </categories>
+      <tags>
+        <tag>DFS</tag>
+        <tag>贪心</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[「BJOI2014」想法]]></title>
     <url>%2F2019%2F01%2F24%2F%E3%80%8CBJOI2014%E3%80%8D%E6%83%B3%E6%B3%95-Solution%2F</url>
     <content type="text"><![CDATA[什么鬼？省选也出这种玄学随机算法题？ 传送门洛谷P4581 题解首先这题一看就很不可解。 所以上随机算法（人家题面都告诉你了QwQ）。 写之前先膜拜一下dalao，保佑AC。 sto 黄霖 orz 对于一个节点，将所用能走到它的叶子节点都存下来是不现实的，所以我们只存$k$个。并且我们要先为每个叶子节点i随机一个权值$W_i$，满足$W_i \in [1,RANDMAX]$。对于每个非叶子节点，我们需要存下所有能走到个节点的叶子节点的权值的前$k$小。设这个节点的答案为$ans$，第$k$小权值为$F_k​$根据期望可得$$\frac{F_k}{RANDMAX}=\frac{k}{ans}$$故有$$ans=\frac{k*RANDMAX}{F_k}$$令$k=50$，多为叶子节点随机几套权值求平均值，吸个氧，放个大悲咒，选个好种子，你就能AC了。 代码这是真的玄学QwQ 1234567891011121314151617181920212223242526272829303132333435363738394041424344#include&lt;cstdio&gt;#include&lt;cstdlib&gt;using namespace std;typedef long long LL;const int maxn=1000005,k=50;int n,m,son[maxn][2],w[maxn],num[maxn],f[maxn][55];LL ans[maxn];inline int read()&#123; int ret=0,f=1;char ch=getchar(); while(ch&lt;'0'||ch&gt;'9')&#123;if(ch=='-')f=-f;ch=getchar();&#125; while(ch&gt;='0'&amp;&amp;ch&lt;='9')&#123;ret=ret*10+ch-'0';ch=getchar();&#125; return ret*f;&#125;inline void Merge(int s1,int s2,int now) //从两个儿子节点合并过来&#123; register int i=1,j=1;num[now]=k; for(register int p=1;p&lt;=k;p++) &#123; while(f[s1][i]==f[now][p-1]&amp;&amp;i&lt;=num[s1]) i++; //注意去重 while(f[s2][j]==f[now][p-1]&amp;&amp;j&lt;=num[s2]) j++; if(i&gt;num[s1]&amp;&amp;j&gt;num[s2])&#123;num[now]=p-1;break;&#125; if(i&lt;=num[s1]&amp;&amp;(f[s1][i]&lt;f[s2][j]||j&gt;num[s2]))&#123;f[now][p]=f[s1][i];i++;&#125; else if(j&lt;=num[s2])&#123;f[now][p]=f[s2][j];j++;&#125; &#125;&#125;int main()&#123; srand(20050429); n=read();m=read(); for(register int i=m+1;i&lt;=n;i++)&#123;son[i][0]=read();son[i][1]=read();&#125; for(int r=1;r&lt;=4;r++) &#123; for(register int i=1;i&lt;=n;i++)&#123;w[i]=rand();while(!w[i])w[i]=rand();&#125; for(register int i=1;i&lt;=m;i++)&#123;f[i][1]=w[i];num[i]=1;&#125; for(register int i=m+1;i&lt;=n;i++) &#123; Merge(son[i][0],son[i][1],i); if(num[i]&lt;k) ans[i]=num[i]*4; //如果还没到k个就不用根据期望计算了 else ans[i]+=(LL)k*RAND_MAX/f[i][k]; &#125; &#125; for(int i=m+1;i&lt;=n;i++) printf("%lld\n",ans[i]/4); return 0;&#125;]]></content>
