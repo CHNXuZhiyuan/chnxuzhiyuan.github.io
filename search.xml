@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[「HNOI2005」狡猾的商人]]></title>
+    <url>%2F2019%2F01%2F29%2F%E3%80%8CHNOI2005%E3%80%8D%E7%8B%A1%E7%8C%BE%E7%9A%84%E5%95%86%E4%BA%BA-Solution%2F</url>
+    <content type="text"><![CDATA[贪心大法好QwQ！ 传送门洛谷P2294 BZOJ1202 题解这题有好多种解法，可以上差分约束、并查集之类的。 但是贪心大法好啊！！！ 把所有偷看到的信息按左端点排序，然后从前到后两两比较。 如果左端点相同 比较右端点 如果右端点相同 比较权值，如果不相同直接输出false 如果右端点不相同 将重叠部分抵消掉，权值相减得到一个新的信息，扔回去，用堆维护 如果左端点不同 把前面一个信息扔掉即可，不用管 直到最后，堆空了，没有出现问题，那么输出true就好了。 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152#include&lt;queue&gt;#include&lt;vector&gt;#include&lt;cstdio&gt;#include&lt;algorithm&gt;using namespace std;int T,n,m;bool fal;inline int read()&#123; int ret=0,f=1;char ch=getchar(); while(ch&lt;'0'||ch&gt;'9')&#123;if(ch=='-')f=-f;ch=getchar();&#125; while(ch&gt;='0'&amp;&amp;ch&lt;='9')&#123;ret=ret*10+ch-'0';ch=getchar();&#125; return ret*f;&#125;struct Node&#123; int L,R,w; bool operator &lt; (const Node&amp; b)const&#123;return L&lt;b.L||(L==b.L&amp;&amp;R&lt;b.R);&#125; bool operator &gt; (const Node&amp; b)const&#123;return L&gt;b.L||(L==b.L&amp;&amp;R&gt;b.R);&#125;&#125;tep1,tep2;priority_queue&lt;Node,vector&lt;Node&gt;,greater&lt;Node&gt; &gt; H;int main()&#123; T=read(); while(T--) &#123; while(H.size()) H.pop(); n=read();m=read();fal=false; for(int i=1;i&lt;=m;i++) &#123; tep1.L=read();tep1.R=read();tep1.w=read(); H.push(tep1); &#125; tep1=H.top();H.pop(); while(H.size()) &#123; tep2=H.top();H.pop(); if(tep1.L==tep2.L) &#123; if(tep1.R==tep2.R) &#123; if(tep1.w!=tep2.w) &#123;printf("false\n");fal=true;break;&#125; &#125; else if(tep1.R!=tep2.R) H.push((Node)&#123;tep1.R+1,tep2.R,tep2.w-tep1.w&#125;); &#125; tep1=tep2; &#125; if(!fal) printf("true\n"); &#125; return 0;&#125;]]></content>
+      <categories>
+        <category>贪心</category>
+      </categories>
+      <tags>
+        <tag>贪心</tag>
+        <tag>并查集</tag>
+        <tag>查分约束</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[「HNOI2006」马步距离]]></title>
     <url>%2F2019%2F01%2F28%2F%E3%80%8CHNOI2006%E3%80%8D%E9%A9%AC%E6%AD%A5%E8%B7%9D%E7%A6%BB-Solution%2F</url>
     <content type="text"><![CDATA[这题有点水QwQ… 传送门洛谷P2060 BZOJ1193 题解首先很显然不能直接贪心，直接贪心有可能WA，所以要写个DFS之类的东西来搜。 但是数据稍微有点大QwQ，搜不出来。 不难发现，当距离比较远时直接贪心地奔着目标走是肯定没问题的。 所以距离远时贪心，距离近时爆搜就行了QwQ。 其实手玩就能把表打出来。 代码打表万岁 123456789101112131415161718192021222324252627#include&lt;cstdio&gt;using namespace std;const int f[7][7]=&#123; &#123;0,3,2,3,2&#125;, &#123;3,2,1,2,3&#125;, &#123;2,1,4,3,2&#125;, &#123;3,2,3,2,3&#125;, &#123;2,3,2,3,4&#125;&#125;;int xp,yp,xs,ys,x,y,ans;int ABS(int x)&#123;return x&lt;0?-x:x;&#125;int main()&#123; scanf("%d%d%d%d",&amp;xp,&amp;yp,&amp;xs,&amp;ys); x=ABS(xp-xs);y=ABS(yp-ys); while(x&gt;4||y&gt;4) &#123; if(x&lt;y)&#123;x--;y-=2;&#125; else&#123;x-=2;y--;&#125; if(x&lt;0) x=-x;if(y&lt;0) y=-y; ans++; &#125; ans+=f[x][y]; printf("%d\n",ans); return 0;&#125;]]></content>
@@ -39,6 +52,21 @@
       </tags>
   </entry>
   <entry>
+    <title><![CDATA[「洛谷P5059」中国象棋]]></title>
+    <url>%2F2019%2F01%2F16%2F%E3%80%8C%E6%B4%9B%E8%B0%B7P5059%E3%80%8D%E4%B8%AD%E5%9B%BD%E8%B1%A1%E6%A3%8B%2F</url>
+    <content type="text"><![CDATA[又是数数题QwQ… 传送门洛谷P5059 题解首先注意题目中说的是有$n^2$个格子，也就是$(n+1)^2$个格点。 以下是出题人的推导： 首先我们可以发现每一行是独立的，所以只需要处理一行的答案即可 设$F[i][0]$表示一行中摆了$i$个位置且第$i$个位置不摆放棋子的方案数 设$F[i][1]$表示一行中摆了$i$个位置且第$i$个位置摆放棋子的方案数 设$Ans[i]$表示$F[i][0]+F[i][1]$ 那么忽略第二个限制可以发现有: $F[i][0]=F[i-1][0]+F[i-1][1]$ $F[i][1]=F[i-1][0]$ 所以有 $Ans[i]$ $=F[i][0]+F[i][1]$ $=2F[i-1][0]+F[i-1][1]$ $=(F[i-1][0]+F[i-1][1])+(F[i-2][0]+F[i-2][1])$ $=Ans[i-1]+Ans[i-2]$ 好了很显然这是一个斐波那契数列。自己再推一下，注意一下细节，不难发现最后的答案就是$$(Fib_{n+3}-n-2)^{n+1}$$矩阵加快速幂就可以在$\Theta(\log n)$的复杂内求解。 还有一个问题，由于n和P都非常大，直接乘long long也会boom。所以这里用了一个类似于快速幂的方法来求$(a*b)\mod P$的值。虽然复杂度多了一只log，但是很好写，并且避免了高精度又臭又长的代码和大常数复杂度。 代码还挺好写的呢poi。 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152#include&lt;cstdio&gt;using namespace std;typedef long long LL;LL n,P;LL Multiply(LL x,LL y) //两个10^18级别的数在模P意义下的乘法&#123; LL ret=0,w=x; while(y) &#123; if(y&amp;1) ret=(ret+w)%P; w=(w+w)%P;y&gt;&gt;=1; &#125; return ret;&#125;struct Matrix&#123; LL a[2][2]; Matrix()&#123;a[0][0]=a[0][1]=a[1][0]=a[1][1]=0;&#125; Matrix operator * (Matrix b) //矩阵乘法 &#123; Matrix c; for(int i=0;i&lt;2;i++) for(int j=0;j&lt;2;j++) for(int k=0;k&lt;2;k++) c.a[i][j]=(c.a[i][j]+Multiply(a[k][j],b.a[i][k]))%P; return c; &#125;&#125;ans,mat,tep;LL QP(LL a,LL b) //普通快速幂&#123; LL ret=1,w=a; while(b) &#123; if(b&amp;1) ret=Multiply(ret,w); w=Multiply(w,w);b&gt;&gt;=1; &#125; return ret;&#125;int main()&#123; scanf("%lld%lld",&amp;n,&amp;P); ans.a[0][0]=ans.a[0][1]=mat.a[0][0]=mat.a[0][1]=mat.a[1][0]=1; LL b=n+1;tep=mat; while(b) //矩阵加速斐波那契数列 &#123; if(b&amp;1) mat=mat*tep; tep=tep*tep;b&gt;&gt;=1; &#125; ans=ans*mat; printf("%lld\n",QP(((ans.a[0][0]-n-2)%P+P)%P,n+1)); return 0;&#125;]]></content>
+      <categories>
+        <category>矩阵加速DP</category>
+      </categories>
+      <tags>
+        <tag>DP</tag>
+        <tag>数数</tag>
+        <tag>快速幂</tag>
+        <tag>斐波那契数列</tag>
+        <tag>矩阵加速</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[「国家集训队」聪聪可可]]></title>
     <url>%2F2019%2F01%2F16%2F%E3%80%8C%E5%9B%BD%E5%AE%B6%E9%9B%86%E8%AE%AD%E9%98%9F%E3%80%8D%E8%81%AA%E8%81%AA%E5%8F%AF%E5%8F%AF%2F</url>
     <content type="text"><![CDATA[我数数最差了QwQ… 传送门洛谷P2634 BZOJ2152 题解很显然这是一道假的概率题。而是一道数数题，只要数出路径长度为3的倍数的点对的数量就行了呢poi。 隔壁dalao说这是一道点分治裸题，但是我还是觉得树形DP更好写一些QwQ。 定义$F_{ij}(j \in \lbrace 0,1,2 \rbrace)$表示节点$i$的子树中，到i的距离$\mod 3=j$的节点个数。如果当前遍历到的节点为i，我们需要计算出$i$及其子树中满足最短路径经过节点$i$且满足路径长是3的倍数的节点个数，累计到答案里最后除以$n^2$并约分就好了呢poi。 注意起点和终点可以相同，计算时小心点，不要算重复也不要漏算了哟poi。 代码12345678910111213141516171819202122232425262728293031323334353637383940414243#include&lt;cstdio&gt;using namespace std;const int maxn=20005;int n,tot,lnk[maxn],son[maxn*2],w[maxn*2],nxt[maxn*2],F[maxn][3],ans1,ans2;inline int read()&#123; int ret=0,f=1;char ch=getchar(); while(ch&lt;'0'||ch&gt;'9')&#123;if(ch=='-')f=-f;ch=getchar();&#125; while(ch&gt;='0'&amp;&amp;ch&lt;='9')&#123;ret=ret*10+ch-'0';ch=getchar();&#125; return ret*f;&#125;inline void add_e(int x,int y,int z)&#123;tot++;son[tot]=y;w[tot]=z;nxt[tot]=lnk[x];lnk[x]=tot;&#125;int gcd(int x,int y)&#123;return !y?x:gcd(y,x%y);&#125;void DFS(int now,int fa)&#123; F[now][0]=1; for(int i=lnk[now];i;i=nxt[i]) &#123; if(son[i]!=fa) &#123; DFS(son[i],now); for(int j=0;j&lt;3;j++) ans1+=F[son[i]][j]*F[now][((3-j-w[i])%3+3)%3]*2; for(int j=0;j&lt;3;j++) F[now][(j+w[i])%3]+=F[son[i]][j]; &#125; &#125;&#125;int main()&#123; n=read(); for(int i=1;i&lt;n;i++) &#123; int a=read(),b=read(),c=read(); add_e(a,b,c);add_e(b,a,c); &#125; DFS(1,0); ans1+=n;ans2=n*n; int gys=gcd(ans1,ans2); ans1/=gys;ans2/=gys; printf("%d/%d\n",ans1,ans2); return 0;&#125;]]></content>
@@ -52,21 +80,6 @@
         <tag>点分治</tag>
         <tag>数数</tag>
         <tag>概率</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[「洛谷P5059」中国象棋]]></title>
-    <url>%2F2019%2F01%2F16%2F%E3%80%8C%E6%B4%9B%E8%B0%B7P5059%E3%80%8D%E4%B8%AD%E5%9B%BD%E8%B1%A1%E6%A3%8B%2F</url>
-    <content type="text"><![CDATA[又是数数题QwQ… 传送门洛谷P5059 题解首先注意题目中说的是有$n^2$个格子，也就是$(n+1)^2$个格点。 以下是出题人的推导： 首先我们可以发现每一行是独立的，所以只需要处理一行的答案即可 设$F[i][0]$表示一行中摆了$i$个位置且第$i$个位置不摆放棋子的方案数 设$F[i][1]$表示一行中摆了$i$个位置且第$i$个位置摆放棋子的方案数 设$Ans[i]$表示$F[i][0]+F[i][1]$ 那么忽略第二个限制可以发现有: $F[i][0]=F[i-1][0]+F[i-1][1]$ $F[i][1]=F[i-1][0]$ 所以有 $Ans[i]$ $=F[i][0]+F[i][1]$ $=2F[i-1][0]+F[i-1][1]$ $=(F[i-1][0]+F[i-1][1])+(F[i-2][0]+F[i-2][1])$ $=Ans[i-1]+Ans[i-2]$ 好了很显然这是一个斐波那契数列。自己再推一下，注意一下细节，不难发现最后的答案就是$$(Fib_{n+3}-n-2)^{n+1}$$矩阵加快速幂就可以在$\Theta(\log n)$的复杂内求解。 还有一个问题，由于n和P都非常大，直接乘long long也会boom。所以这里用了一个类似于快速幂的方法来求$(a*b)\mod P$的值。虽然复杂度多了一只log，但是很好写，并且避免了高精度又臭又长的代码和大常数复杂度。 代码还挺好写的呢poi。 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152#include&lt;cstdio&gt;using namespace std;typedef long long LL;LL n,P;LL Multiply(LL x,LL y) //两个10^18级别的数在模P意义下的乘法&#123; LL ret=0,w=x; while(y) &#123; if(y&amp;1) ret=(ret+w)%P; w=(w+w)%P;y&gt;&gt;=1; &#125; return ret;&#125;struct Matrix&#123; LL a[2][2]; Matrix()&#123;a[0][0]=a[0][1]=a[1][0]=a[1][1]=0;&#125; Matrix operator * (Matrix b) //矩阵乘法 &#123; Matrix c; for(int i=0;i&lt;2;i++) for(int j=0;j&lt;2;j++) for(int k=0;k&lt;2;k++) c.a[i][j]=(c.a[i][j]+Multiply(a[k][j],b.a[i][k]))%P; return c; &#125;&#125;ans,mat,tep;LL QP(LL a,LL b) //普通快速幂&#123; LL ret=1,w=a; while(b) &#123; if(b&amp;1) ret=Multiply(ret,w); w=Multiply(w,w);b&gt;&gt;=1; &#125; return ret;&#125;int main()&#123; scanf("%lld%lld",&amp;n,&amp;P); ans.a[0][0]=ans.a[0][1]=mat.a[0][0]=mat.a[0][1]=mat.a[1][0]=1; LL b=n+1;tep=mat; while(b) //矩阵加速斐波那契数列 &#123; if(b&amp;1) mat=mat*tep; tep=tep*tep;b&gt;&gt;=1; &#125; ans=ans*mat; printf("%lld\n",QP(((ans.a[0][0]-n-2)%P+P)%P,n+1)); return 0;&#125;]]></content>
-      <categories>
-        <category>矩阵加速DP</category>
-      </categories>
-      <tags>
-        <tag>DP</tag>
-        <tag>数数</tag>
-        <tag>快速幂</tag>
-        <tag>斐波那契数列</tag>
-        <tag>矩阵加速</tag>
       </tags>
   </entry>
   <entry>
