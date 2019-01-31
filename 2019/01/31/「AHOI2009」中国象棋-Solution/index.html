@@ -88,7 +88,7 @@
 <meta property="og:site_name" content="Welcome to XuZhiyuan&#39;s blog">
 <meta property="og:description" content="数数万岁…">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-01-31T00:18:54.963Z">
+<meta property="og:updated_time" content="2019-01-31T00:31:48.782Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="「AHOI2009」中国象棋">
 <meta name="twitter:description" content="数数万岁…">
@@ -418,7 +418,7 @@
 <p>如果放两个炮，那么有三种情况：</p>
 <ul>
 <li>两个都放在空的列上：$F[i][j][k]+=F[i-1][j][k-2]<em>(m-j-k+2)</em>(m-j-k+1)/2​$；</li>
-<li>一个放在空列，一个放在只有一个的列上：$F[i][j][k]+=F[i-1][j-1][k]<em>k</em>(m-j-k+1)​$；</li>
+<li>一个放在空列，一个放在只有一个的列上：$F[i][j][k]+=F[i-1][j-1][k]*k$；</li>
 <li>两个都放在只有一个的列上：$F[i][j][k]+=F[i-1][j-2][k+2]<em>(k+2)</em>(k+1)/2​$。</li>
 </ul>
 <p>最后的答案：<br>$$<br>\sum_{1=0}^{m}{\sum_{j=0}^{m-i}{F[n][i][j]}}<br>$$<br>然后这题就做完了QwQ。</p>
