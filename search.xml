@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[「JSOI2008」球形空间产生器]]></title>
+    <url>%2F2019%2F02%2F06%2F%E3%80%8CJSOI2008%E3%80%8D%E7%90%83%E5%BD%A2%E7%A9%BA%E9%97%B4%E4%BA%A7%E7%94%9F%E5%99%A8-Solution%2F</url>
+    <content type="text"><![CDATA[纳尼？n维空间？什么鬼？？？ 传送门洛谷P4035 BZOJ1013 题解根据题目的说明，设球心的坐标为$O_j(j \in [1,n])$，$n+1$个点的坐标为$X_{ij}(i \in[1,n+1],j\in{1,n})$，$R$为半径，那么就有$n+1$个这样的式子： \sum_{j=1}^{n}{(O_j-X_{ij})^2}=R^2将$R$消去，平方展开，移项后，可以得到$n$个这样的方程： \sum_{j=1}^{n}{2\cdot (X_{i+1j}-X_{ij})}\cdot O_j=\sum_{j=1}^{n}{X_{i+1j}^2-X_{ij}^2}狠狠盯着方程几秒钟，然后你就会发现方程中只有$O_j​$是未知数，其他都是常数，所以这$n​$个方程构成了一个n元非齐次线性方程组（说人话叫做n元一次方程组）。 怎么解呢？ 上高斯消元啊啊啊！！！ 才发现什么矩阵行列式之类的东西都忘得差不多了，吓得我赶紧掏出了线性代数小紫书 代码12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849#include&lt;cstdio&gt;#include&lt;algorithm&gt;using namespace std;int n;double a[15][15],A[15][15];double ABS(double x)&#123;return x&lt;0?-x:x;&#125;inline void Gauss() //高斯消元解方程&#123; for(int i=1;i&lt;=n;i++) &#123; int now=i; for(int j=i+1;j&lt;=n;j++) if(ABS(A[j][i]&gt;A[now][i])) now=j; if(now!=i) for(int j=i;j&lt;=n+1;j++) swap(A[now][j],A[i][j]); for(int k=i+1;k&lt;=n;k++) &#123; double t=A[k][i]/A[i][i]; for(int j=i;j&lt;=n+1;j++) A[k][j]-=A[i][j]*t; &#125; &#125; for(int i=n;i;i--) &#123; for(int j=i+1;j&lt;=n;j++) A[i][n+1]-=A[j][n+1]*A[i][j]; A[i][n+1]/=A[i][i]; &#125;&#125;int main()&#123; scanf("%d",&amp;n); for(int i=1;i&lt;=n+1;i++) for(int j=1;j&lt;=n;j++) scanf("%lf",&amp;a[i][j]); for(int i=1;i&lt;=n;i++) &#123; for(int j=1;j&lt;=n;j++) &#123; A[i][j]=2*(a[i+1][j]-a[i][j]); A[i][n+1]+=a[i+1][j]*a[i+1][j]-a[i][j]*a[i][j]; &#125; &#125; //A数组是该n元非齐次线性方程组的增广矩阵 Gauss(); for(int i=1;i&lt;=n;i++) printf("%.3lf%c",A[i][n+1],i==n?'\n':' '); return 0;&#125;]]></content>
+      <categories>
+        <category>高斯消元</category>
+      </categories>
+      <tags>
+        <tag>高斯消元</tag>
+        <tag>解方程</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[「SCOI2008」奖励关]]></title>
     <url>%2F2019%2F02%2F05%2F%E3%80%8CSCOI2008%E3%80%8D%E5%A5%96%E5%8A%B1%E5%85%B3-Solution%2F</url>
     <content type="text"><![CDATA[又是状压又是期望的，本蒟蒻最不熟了QwQ。 传送门洛谷P2473 BZOJ1076 题解由于种种原因，这题的DP是倒着推的。 设$F[i][s]$表示现在是第$i$关，已经吃的宝物的状态为$s$，吃到最后的得分期望。 由于每一关中每个宝物的概率都相同，所以累加每个宝物的贡献然后除以$n$即可。 转移方程，若可以吃第$j (j \in [1,n])$个宝物，可以选择吃或者不吃 F[i][s]+=max(F[i+1][s],F[i+1][s|(1]]></content>
