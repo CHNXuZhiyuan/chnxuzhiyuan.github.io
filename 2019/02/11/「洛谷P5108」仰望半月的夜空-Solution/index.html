@@ -69,7 +69,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="后缀数组,二分,哈希,单调栈,">
 
 
 
@@ -80,13 +80,18 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="Welcome to XuZhiyuan&#39;s blog">
-<meta property="og:url" content="http://chnxuzhiyuan.cn/archives/index.html">
+<meta name="description" content="这是一个标算与瞎搞的故事…">
+<meta name="keywords" content="后缀数组,二分,哈希,单调栈">
+<meta property="og:type" content="article">
+<meta property="og:title" content="「洛谷P5108」仰望半月的夜空">
+<meta property="og:url" content="http://chnxuzhiyuan.cn/2019/02/11/「洛谷P5108」仰望半月的夜空-Solution/index.html">
 <meta property="og:site_name" content="Welcome to XuZhiyuan&#39;s blog">
+<meta property="og:description" content="这是一个标算与瞎搞的故事…">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-02-11T08:47:36.834Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Welcome to XuZhiyuan&#39;s blog">
+<meta name="twitter:title" content="「洛谷P5108」仰望半月的夜空">
+<meta name="twitter:description" content="这是一个标算与瞎搞的故事…">
 
 
 
@@ -116,13 +121,13 @@
 
 
 
-  <link rel="canonical" href="http://chnxuzhiyuan.cn/archives/">
+  <link rel="canonical" href="http://chnxuzhiyuan.cn/2019/02/11/「洛谷P5108」仰望半月的夜空-Solution/">
 
 
 
 
 
-  <title>归档 | Welcome to XuZhiyuan's blog</title>
+  <title>「洛谷P5108」仰望半月的夜空 | Welcome to XuZhiyuan's blog</title>
   
 
 
@@ -141,7 +146,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
@@ -277,391 +282,215 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
+  <div id="posts" class="posts-expand">
+    
 
-      <span class="archive-page-counter">
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://chnxuzhiyuan.cn/2019/02/11/「洛谷P5108」仰望半月的夜空-Solution/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="XuZhiyuan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Welcome to XuZhiyuan's blog">
+    </span>
+
+    
+      <header class="post-header">
+
         
         
+          <h1 class="post-title" itemprop="name headline">「洛谷P5108」仰望半月的夜空</h1>
         
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-11T00:00:00+08:00">
+                2019-02-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
           
-        
-        嗯..! 目前共计 25 篇日志。 继续努力。
-      </span>
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/单调栈/" itemprop="url" rel="index">
+                    <span itemprop="name">单调栈</span>
+                  </a>
+                </span>
 
-      
-
-        
-        
-        
-
-        
+                
+                
+              
+            </span>
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2019">2019</h1>
-          </div>
-        
-        
 
-        
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/02/11/「洛谷P5108」仰望半月的夜空-Solution/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/02/11/「洛谷P5108」仰望半月的夜空-Solution/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
+          
+          
 
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/02/13/「AHOI2017 HNOI2017」大佬-Solution/" itemprop="url">
-              
-                <span itemprop="name">「AHOI2017/HNOI2017」大佬</span>
-              
-            </a>
-        
-      </h2>
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i> 浏览量：
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>次
+            </span>
+          
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-02-13T00:00:00+08:00" content="2019-02-13">
-          02-13
-        </time>
-      </div>
+          
 
-    </header>
-  </article>
+          
 
+        </div>
+      </header>
+    
 
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/02/11/「洛谷P5108」仰望半月的夜空-Solution/" itemprop="url">
-              
-                <span itemprop="name">「洛谷P5108」仰望半月的夜空</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-02-11T00:00:00+08:00" content="2019-02-11">
-          02-11
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/02/07/高斯消元法解线性方程组-Algorithm/" itemprop="url">
-              
-                <span itemprop="name">高斯消元法解线性方程组</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-02-07T00:00:00+08:00" content="2019-02-07">
-          02-07
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/02/06/「JSOI2008」球形空间产生器-Solution/" itemprop="url">
-              
-                <span itemprop="name">「JSOI2008」球形空间产生器</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-02-06T00:00:00+08:00" content="2019-02-06">
-          02-06
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+      
+        <p>这是一个标算与瞎搞的故事…</p>
+<a id="more"></a>
+<h3 id="传送门"><a href="#传送门" class="headerlink" title="传送门"></a>传送门</h3><p><a href="https://www.luogu.org/problemnew/show/P5108" target="_blank" rel="noopener">洛谷P5108</a></p>
+<h3 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h3><p>蒟蒻我人生的第一道1次过样例并AC的黑题。（<del>然而写的并不是标算，这题貌似也没有达到黑题的难度</del>）</p>
+<p>这题的标算是后缀数组，然鹅蒟蒻我选择了瞎搞QwQ。</p>
+<p>此题瞎搞的关键点在于找出题目中隐藏的单调性。（大雾）</p>
+<p>首先，如果先考虑长度为$1$的子串，再考虑长度为$2$的，长度为$3$的…那么分别一共有$n$个、$n-1$个、$n-2$个。</p>
+<p>并不好搞。</p>
+<p>所以倒着来处理。（汗</p>
+<p>长度为$n$的子串可以由$1$开头、长度为$n-2$的子串可以由2开头…每次可能的开头增加一个。</p>
+<p>并且其中有一定的单调性：对于合法的开头$i,j$，如果当前$i$比$j$优，那么之后$j$永远不可能比$i$优。</p>
+<p>所以构造一个单调栈$stk[]$，每次直接把新增的合法开头扔进栈顶，然后不断比较当前长度下$stk[top]$和$stk[top-1]$。如果此时$stk[top]$不比$stk[top-1]$优，直接弹掉它，维护栈的单调性。</p>
+<p>维护操作结束后，栈顶就是当前最优解。</p>
+<p>但是还有一个关键问题没有解决：如何快速比较两个较长字符串的大小？</p>
+<p>既然原字符串是静态的，那么可以通过Hash+二分找出两个字符串的最长相同前缀，然后比较下一位即可。</p>
+<p>瞎搞完成 ，总时间复杂度为$\Theta(n\log n)$。</p>
+<p>然后…</p>
+<p>ZS：嗯哼？后缀数组的题让你Hash+二分过了？看我拍一宿造数据卡掉你！！！</p>
+<p>蒟蒻我：老师我写了双Hash！！！</p>
+<p>ZS：嗯哼！喂？是中国人民解放军国防科技大学吗？麻烦你们把天河二号借我用一宿…</p>
+<p><del>然后就没有然后了QwQ…</del></p>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">long</span> LL;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn=<span class="number">300005</span>;</span><br><span class="line"><span class="keyword">int</span> sig,n,S[maxn],top,stk[maxn],ans[maxn];<span class="keyword">char</span> tep[maxn];</span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">read</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> ret=<span class="number">0</span>,f=<span class="number">1</span>;<span class="keyword">char</span> ch=getchar();</span><br><span class="line">	<span class="keyword">while</span>(ch&lt;<span class="string">'0'</span>||ch&gt;<span class="string">'9'</span>)&#123;<span class="keyword">if</span>(ch==<span class="string">'-'</span>)f=-f;ch=getchar();&#125;</span><br><span class="line">	<span class="keyword">while</span>(ch&gt;=<span class="string">'0'</span>&amp;&amp;ch&lt;=<span class="string">'9'</span>)&#123;ret=ret*<span class="number">10</span>+ch-<span class="string">'0'</span>;ch=getchar();&#125;</span><br><span class="line">	<span class="keyword">return</span> ret*f;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Hash</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	<span class="keyword">int</span> Base,TT,Pow[maxn],Val[maxn];</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">init</span><span class="params">(<span class="keyword">int</span> b,<span class="keyword">int</span> m)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		Base=b;TT=m;Pow[<span class="number">0</span>]=<span class="number">1</span>;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++) Pow[i]=(LL)Pow[i<span class="number">-1</span>]*Base%TT;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++) Val[i]=((LL)Val[i<span class="number">-1</span>]*Base+S[i])%TT;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">GetHashValue</span><span class="params">(<span class="keyword">int</span> L,<span class="keyword">int</span> R)</span></span>&#123;<span class="keyword">return</span> ((Val[R]-(LL)Val[L<span class="number">-1</span>]*Pow[R-L+<span class="number">1</span>])%TT+TT)%TT;&#125;</span><br><span class="line">&#125;H1,H2;</span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">bool</span> <span class="title">IsStringSame</span><span class="params">(<span class="keyword">int</span> L,<span class="keyword">int</span> R,<span class="keyword">int</span> S,<span class="keyword">int</span> T)</span></span>&#123;<span class="keyword">return</span> H1.GetHashValue(L,R)==H1.GetHashValue(S,T)&amp;&amp;H2.GetHashValue(L,R)==H2.GetHashValue(S,T);&#125;</span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">bool</span> <span class="title">StrCmp</span><span class="params">(<span class="keyword">int</span> S1,<span class="keyword">int</span> S2,<span class="keyword">int</span> len)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> L=<span class="number">0</span>,R=len,mid;</span><br><span class="line">	<span class="keyword">while</span>(L&lt;=R)</span><br><span class="line">	&#123;</span><br><span class="line">		mid=L+R&gt;&gt;<span class="number">1</span>;</span><br><span class="line">		IsStringSame(S1,S1+mid<span class="number">-1</span>,S2,S2+mid<span class="number">-1</span>)?L=mid+<span class="number">1</span>:R=mid<span class="number">-1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(R==len) <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">	<span class="keyword">return</span> S[S1+R]&gt;=S[S2+R];</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	sig=read();n=read();</span><br><span class="line">	<span class="keyword">if</span>(sig==<span class="number">26</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">"%s"</span>,tep+<span class="number">1</span>);</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++) S[i]=tep[i]-<span class="string">'a'</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line">			S[i]=read();</span><br><span class="line">	H1.init(<span class="number">19630217</span>,<span class="number">1000000007</span>);H2.init(<span class="number">19260817</span>,<span class="number">1000000009</span>);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> len=n;len;len--)</span><br><span class="line">	&#123;</span><br><span class="line">		top++;stk[top]=n-len+<span class="number">1</span>;</span><br><span class="line">		<span class="keyword">while</span>(top&gt;<span class="number">1</span>&amp;&amp;StrCmp(stk[top],stk[top<span class="number">-1</span>],len)) top--;</span><br><span class="line">		ans[len]=stk[top];</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"%d%c"</span>,ans[i],i==n?<span class="string">'\n'</span>:<span class="string">' '</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/02/05/「SCOI2008」奖励关-Solution/" itemprop="url">
-              
-                <span itemprop="name">「SCOI2008」奖励关</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-02-05T00:00:00+08:00" content="2019-02-05">
-          02-05
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/02/04/「SCOI2009」粉刷匠-Solution/" itemprop="url">
-              
-                <span itemprop="name">「SCOI2009」粉刷匠</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-02-04T00:00:00+08:00" content="2019-02-04">
-          02-04
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/02/03/「HNOI2008」GT考试-Solution/" itemprop="url">
-              
-                <span itemprop="name">「HNOI2008」GT考试</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-02-03T00:00:00+08:00" content="2019-02-03">
-          02-03
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/01/31/「AHOI2009」中国象棋-Solution/" itemprop="url">
-              
-                <span itemprop="name">「AHOI2009」中国象棋</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-01-31T00:00:00+08:00" content="2019-01-31">
-          01-31
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/01/30/「FJOI2007」轮状病毒-Solution/" itemprop="url">
-              
-                <span itemprop="name">「FJOI2007」轮状病毒</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-01-30T00:00:00+08:00" content="2019-01-30">
-          01-30
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/01/30/「SCOI2009」windy数-Solution/" itemprop="url">
-              
-                <span itemprop="name">「SCOI2009」windy数</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-01-30T00:00:00+08:00" content="2019-01-30">
-          01-30
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
     </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/后缀数组/" rel="tag"># 后缀数组</a>
+          
+            <a href="/tags/二分/" rel="tag"># 二分</a>
+          
+            <a href="/tags/哈希/" rel="tag"># 哈希</a>
+          
+            <a href="/tags/单调栈/" rel="tag"># 单调栈</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/02/07/高斯消元法解线性方程组-Algorithm/" rel="next" title="高斯消元法解线性方程组">
+                <i class="fa fa-chevron-left"></i> 高斯消元法解线性方程组
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/02/13/「AHOI2017 HNOI2017」大佬-Solution/" rel="prev" title="「AHOI2017/HNOI2017」大佬">
+                「AHOI2017/HNOI2017」大佬 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
-
-  
-  <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><a class="page-number" href="/archives/page/3/">3</a><a class="extend next" rel="next" href="/archives/page/2/"><i class="fa fa-angle-right"></i></a>
-  </nav>
+  </article>
 
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -669,6 +498,13 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
 
         </div>
         
@@ -689,8 +525,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -782,6 +627,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#传送门"><span class="nav-number">1.</span> <span class="nav-text">传送门</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#题解"><span class="nav-number">2.</span> <span class="nav-text">题解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码"><span class="nav-number">3.</span> <span class="nav-text">代码</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -927,6 +788,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
