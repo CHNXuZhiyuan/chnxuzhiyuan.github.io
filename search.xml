@@ -35,8 +35,8 @@
         <category>BFS</category>
       </categories>
       <tags>
-        <tag>DP</tag>
         <tag>BFS</tag>
+        <tag>DP</tag>
       </tags>
   </entry>
   <entry>
@@ -116,8 +116,8 @@
         <category>矩阵加速DP</category>
       </categories>
       <tags>
-        <tag>数数</tag>
         <tag>DP</tag>
+        <tag>数数</tag>
         <tag>快速幂</tag>
         <tag>矩阵加速</tag>
       </tags>
@@ -130,8 +130,8 @@
         <category>DP</category>
       </categories>
       <tags>
-        <tag>数数</tag>
         <tag>DP</tag>
+        <tag>数数</tag>
         <tag>递推</tag>
         <tag>三维DP</tag>
       </tags>
@@ -144,8 +144,8 @@
         <category>递推</category>
       </categories>
       <tags>
-        <tag>数数</tag>
         <tag>DP</tag>
+        <tag>数数</tag>
         <tag>递推</tag>
         <tag>高精度</tag>
       </tags>
@@ -223,8 +223,8 @@
         <category>树形DP</category>
       </categories>
       <tags>
-        <tag>数数</tag>
         <tag>DP</tag>
+        <tag>数数</tag>
         <tag>DFS</tag>
         <tag>概率</tag>
         <tag>树形DP</tag>
@@ -239,8 +239,8 @@
         <category>矩阵加速DP</category>
       </categories>
       <tags>
-        <tag>数数</tag>
         <tag>DP</tag>
+        <tag>数数</tag>
         <tag>快速幂</tag>
         <tag>矩阵加速</tag>
         <tag>斐波那契数列</tag>
