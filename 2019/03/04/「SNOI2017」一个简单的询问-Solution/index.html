@@ -88,7 +88,7 @@
 <meta property="og:site_name" content="Welcome to XuZhiyuan&#39;s blog">
 <meta property="og:description" content="嗯哼？这不是赤裸裸的莫队吗QwQ？">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-03-04T11:42:17.093Z">
+<meta property="og:updated_time" content="2019-03-05T07:44:17.233Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="「SNOI2017」一个简单的询问">
 <meta name="twitter:description" content="嗯哼？这不是赤裸裸的莫队吗QwQ？">
@@ -404,7 +404,7 @@
 <a id="more"></a>
 <h3 id="传送门"><a href="#传送门" class="headerlink" title="传送门"></a>传送门</h3><p><a href="https://www.lydsy.com/JudgeOnline/problem.php?id=5016" target="_blank" rel="noopener">BZOJ5016</a></p>
 <h3 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h3><p>首先拐一道弯，令$F(L1,R1,L2,R2)=\sum_{x=0}^{\infty}{get(L1,R1,x)\cdot get(L2,R2,x)}​$。</p>
-<p>那么根据荣斥的原理，可以得到$F(L1,R1,L2,R2)=F(1,R1,1,R2)-F(1,L1,1,R2)-F(1,R1,1,L2)+F(1,L1,1,L2)$。</p>
+<p>那么根据容斥的原理，可以得到$F(L1,R1,L2,R2)=F(1,R1,1,R2)-F(1,L1,1,R2)-F(1,R1,1,L2)+F(1,L1,1,L2)$。</p>
 <p>那么就把一个询问先拆成四个询问。</p>
 <p>然后只要想办法求出$F(1,x,1,y)$。裸的莫队啊啊啊！！！注意细节即可。</p>
 <p>然后就没有然后了。</p>
