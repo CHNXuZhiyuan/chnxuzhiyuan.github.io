@@ -120,7 +120,7 @@
 
 
 
-
+<script src="/js/src/tagcanvas.min.js"></script>
 
   <title>分类: 贪心 | Welcome to XuZhiyuan's blog</title>
   
@@ -507,7 +507,23 @@
 </span>
 </div>
 
-
+<script type="text/javascript">
+	window.onload = function() {
+		try {
+			TagCanvas.Start('TagCloud','',{
+				textColour: null,
+				outlineColour: '#5EB95E',
+				weight: true,
+				reverse: true,
+				depth: 1,
+				maxSpeed: 0.05,
+				freezeDecel: true
+			});
+		} catch(e) {
+			document.getElementById('MyTagCloud').style.display = 'none';
+		}
+	};
+</script>
         
 <div class="busuanzi-count">
   <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>

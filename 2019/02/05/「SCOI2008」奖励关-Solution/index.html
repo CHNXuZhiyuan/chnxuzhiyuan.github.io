@@ -125,7 +125,7 @@
 
 
 
-
+<script src="/js/src/tagcanvas.min.js"></script>
 
   <title>「SCOI2008」奖励关 | Welcome to XuZhiyuan's blog</title>
   
@@ -677,7 +677,23 @@ F[i][s]/=n</script><p>仔细瞅几眼DP式的定义，显然$F[1][0]$就是答�
 </span>
 </div>
 
-
+<script type="text/javascript">
+	window.onload = function() {
+		try {
+			TagCanvas.Start('TagCloud','',{
+				textColour: null,
+				outlineColour: '#5EB95E',
+				weight: true,
+				reverse: true,
+				depth: 1,
+				maxSpeed: 0.05,
+				freezeDecel: true
+			});
+		} catch(e) {
+			document.getElementById('MyTagCloud').style.display = 'none';
+		}
+	};
+</script>
         
 <div class="busuanzi-count">
   <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>

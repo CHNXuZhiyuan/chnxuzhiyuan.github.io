@@ -125,7 +125,7 @@
 
 
 
-
+<script src="/js/src/tagcanvas.min.js"></script>
 
   <title>「HNOI2008」GT考试 | Welcome to XuZhiyuan's blog</title>
   
@@ -680,7 +680,23 @@ F[n]=F[0]*G^n</script><p>且又知道$f[0][0]=1$、最后答案为$F[n]​$第�
 </span>
 </div>
 
-
+<script type="text/javascript">
+	window.onload = function() {
+		try {
+			TagCanvas.Start('TagCloud','',{
+				textColour: null,
+				outlineColour: '#5EB95E',
+				weight: true,
+				reverse: true,
+				depth: 1,
+				maxSpeed: 0.05,
+				freezeDecel: true
+			});
+		} catch(e) {
+			document.getElementById('MyTagCloud').style.display = 'none';
+		}
+	};
+</script>
         
 <div class="busuanzi-count">
   <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>

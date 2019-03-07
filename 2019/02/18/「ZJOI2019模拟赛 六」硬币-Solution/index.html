@@ -125,7 +125,7 @@
 
 
 
-
+<script src="/js/src/tagcanvas.min.js"></script>
 
   <title>「ZJOI2019模拟赛 六」硬币 | Welcome to XuZhiyuan's blog</title>
   
@@ -730,7 +730,23 @@ S=\frac{q}{1-q}</script><p>求出$S$之后再代回原始中就能求出$P(n)$�
 </span>
 </div>
 
-
+<script type="text/javascript">
+	window.onload = function() {
+		try {
+			TagCanvas.Start('TagCloud','',{
+				textColour: null,
+				outlineColour: '#5EB95E',
+				weight: true,
+				reverse: true,
+				depth: 1,
+				maxSpeed: 0.05,
+				freezeDecel: true
+			});
+		} catch(e) {
+			document.getElementById('MyTagCloud').style.display = 'none';
+		}
+	};
+</script>
         
 <div class="busuanzi-count">
   <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>

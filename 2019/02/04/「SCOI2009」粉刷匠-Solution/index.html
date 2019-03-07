@@ -125,7 +125,7 @@
 
 
 
-
+<script src="/js/src/tagcanvas.min.js"></script>
 
   <title>「SCOI2009」粉刷匠 | Welcome to XuZhiyuan's blog</title>
   
@@ -681,7 +681,23 @@ G[i][j]=\max_{k=0}^{min(m,j)}{G[i-1][j-k]+F[i][m][k]} \tag{3}</script><p>这趟D
 </span>
 </div>
 
-
+<script type="text/javascript">
+	window.onload = function() {
+		try {
+			TagCanvas.Start('TagCloud','',{
+				textColour: null,
+				outlineColour: '#5EB95E',
+				weight: true,
+				reverse: true,
+				depth: 1,
+				maxSpeed: 0.05,
+				freezeDecel: true
+			});
+		} catch(e) {
+			document.getElementById('MyTagCloud').style.display = 'none';
+		}
+	};
+</script>
         
 <div class="busuanzi-count">
   <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>

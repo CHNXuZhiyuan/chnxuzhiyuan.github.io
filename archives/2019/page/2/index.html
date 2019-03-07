@@ -120,7 +120,7 @@
 
 
 
-
+<script src="/js/src/tagcanvas.min.js"></script>
 
   <title>归档 | Welcome to XuZhiyuan's blog</title>
   
@@ -558,9 +558,9 @@
 
       <h2 class="post-title">
         
-            <a class="post-title-link" href="/2019/01/30/「SCOI2009」windy数-Solution/" itemprop="url">
+            <a class="post-title-link" href="/2019/01/30/「FJOI2007」轮状病毒-Solution/" itemprop="url">
               
-                <span itemprop="name">「SCOI2009」windy数</span>
+                <span itemprop="name">「FJOI2007」轮状病毒</span>
               
             </a>
         
@@ -593,9 +593,9 @@
 
       <h2 class="post-title">
         
-            <a class="post-title-link" href="/2019/01/30/「FJOI2007」轮状病毒-Solution/" itemprop="url">
+            <a class="post-title-link" href="/2019/01/30/「SCOI2009」windy数-Solution/" itemprop="url">
               
-                <span itemprop="name">「FJOI2007」轮状病毒</span>
+                <span itemprop="name">「SCOI2009」windy数</span>
               
             </a>
         
@@ -818,7 +818,23 @@
 </span>
 </div>
 
-
+<script type="text/javascript">
+	window.onload = function() {
+		try {
+			TagCanvas.Start('TagCloud','',{
+				textColour: null,
+				outlineColour: '#5EB95E',
+				weight: true,
+				reverse: true,
+				depth: 1,
+				maxSpeed: 0.05,
+				freezeDecel: true
+			});
+		} catch(e) {
+			document.getElementById('MyTagCloud').style.display = 'none';
+		}
+	};
+</script>
         
 <div class="busuanzi-count">
   <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
