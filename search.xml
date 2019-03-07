@@ -14,17 +14,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[「洛谷P4886」快递员]]></title>
-    <url>%2F2019%2F03%2F05%2F%E3%80%8C%E6%B4%9B%E8%B0%B7P4886%E3%80%8D%E5%BF%AB%E9%80%92%E5%91%98-Solution%2F</url>
-    <content type="text"><![CDATA[完了…没高中读了QwQ，我要去打工送快递！！！QwQ 传送门洛谷P4886 题解这题其实还是挺好玩的。 首先随便钦定一个点，临时作为快递中心 。 然后可以$O(n)$计算出每一组点对到快递中心的距离和。设点对到快递中心最大距离和为$Max$，可能有多个点对到快递中心的距离和都是$Max$那么就把它们都存下来。 如果当前的快递中心在任意一组距离最大的点对之间最短路径上，那么答案就是$Max$不可能再小了。 如果有任意两组点对，一组在当前快递中心的一棵子树里，另一组在另一棵子树里，那么答案同样也无法更小。 否则答案最优时的快递中心就有可能在当前唯一一棵有点对的子树中，那么就取这棵子树的重心作为临时快递中心，然后递归。由于每次取的都是重心，所以只会递归$\log n$层，总时间复杂度为$O(n\log n)​$。 代码12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667#include&lt;cstdio&gt;#include&lt;cstdlib&gt;using namespace std;const int maxn=100005;int n,m,u[maxn],v[maxn],tot,lnk[maxn],son[maxn*2],w[maxn*2],nxt[maxn*2],sum,siz[maxn],maxp[maxn],rt,sub[maxn],dist[maxn],que[maxn],ans=1000000000;bool vis[maxn];inline int read()&#123; int ret=0,f=1;char ch=getchar(); while(ch&lt;'0'||ch&gt;'9')&#123;if(ch=='-')f=-f;ch=getchar();&#125; while(ch&gt;='0'&amp;&amp;ch&lt;='9')&#123;ret=ret*10+ch-'0';ch=getchar();&#125; return ret*f;&#125;inline void add_e(int x,int y,int z)&#123;tot++;son[tot]=y;w[tot]=z;nxt[tot]=lnk[x];lnk[x]=tot;&#125;void GetRoot(int now,int fa) //找重心&#123; siz[now]=1;maxp[now]=0; for(int i=lnk[now];i;i=nxt[i]) &#123; if(vis[son[i]]||son[i]==fa) continue; GetRoot(son[i],now);siz[now]+=siz[son[i]]; if(siz[son[i]]&gt;maxp[now]) maxp[now]=siz[son[i]]; &#125; if(sum-siz[now]&gt;maxp[now]) maxp[now]=sum-siz[now]; if(maxp[now]&lt;maxp[rt]) rt=now;&#125;void GetDist(int now,int fa,int st)&#123; sub[now]=st; for(int i=lnk[now];i;i=nxt[i]) if(son[i]!=fa) &#123;dist[son[i]]=dist[now]+w[i];GetDist(son[i],now,st);&#125;&#125;inline void Print()&#123;printf("%d\n",ans);exit(0);&#125; //输出答案void Solve(int now)&#123; if(vis[now]) Print(); vis[now]=true;dist[now]=0; for(int i=lnk[now];i;i=nxt[i]) &#123;dist[son[i]]=w[i];GetDist(son[i],now,son[i]);&#125; //先暴力计算距离 int Max=0,len=0,las=0; for(int i=1;i&lt;=m;i++) &#123; if(dist[u[i]]+dist[v[i]]&gt;Max)&#123;len=1;que[len]=i;Max=dist[u[i]]+dist[v[i]];&#125; else if(dist[u[i]]+dist[v[i]]==Max) que[++len]=i; //刷最大距离和 &#125; if(Max&lt;ans) ans=Max; for(int i=1;i&lt;=len;i++) &#123; if(sub[u[que[i]]]!=sub[v[que[i]]]) Print(); //分情况考虑答案 if(!las) las=sub[u[que[i]]]; if(sub[u[que[i]]]!=las) Print(); &#125; rt=0;sum=siz[las];GetRoot(las,0);Solve(rt); //递归解决&#125;int main()&#123; n=read();m=read(); for(int i=1;i&lt;n;i++) &#123; int a=read(),b=read(),c=read(); add_e(a,b,c);add_e(b,a,c); &#125; for(int i=1;i&lt;=m;i++)&#123;u[i]=read();v[i]=read();&#125; sum=maxp[0]=n;GetRoot(1,0);Solve(rt); Print(); return 0;&#125;]]></content>
-      <categories>
-        <category>点分治</category>
-      </categories>
-      <tags>
-        <tag>点分治</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[「IOI2011」Race]]></title>
     <url>%2F2019%2F03%2F05%2F%E3%80%8CIOI2011%E3%80%8DRace-Solution%2F</url>
     <content type="text"><![CDATA[又是一个赤裸裸的点分治QwQ。 传送门洛谷P4149 BZOJ2599 题解基本上就是点分治的裸题QwQ。 每次找重心，然后刷出当前处理的子树中每个点到重心的距离和经过的边的数量，直接搞就行了，记得要刷边数的最小值，还要判无解。没啥好说的QwQ。 代码12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667#include&lt;cstdio&gt;#include&lt;cstring&gt;using namespace std;const int maxn=200005,maxk=1000005,inf=0x3F3F3F3F;int n,K,tot,lnk[maxn],son[maxn*2],w[maxn*2],nxt[maxn*2],sum,siz[maxn],maxp[maxn],rt,dist[maxn],cnt[maxn],num,Q[maxn][2],ans=inf,jud[maxk],que[maxn];bool vis[maxn];inline int read()&#123; int ret=0,f=1;char ch=getchar(); while(ch&lt;'0'||ch&gt;'9')&#123;if(ch=='-')f=-f;ch=getchar();&#125; while(ch&gt;='0'&amp;&amp;ch&lt;='9')&#123;ret=ret*10+ch-'0';ch=getchar();&#125; return ret*f;&#125;inline void add_e(int x,int y,int z)&#123;tot++;son[tot]=y;w[tot]=z;nxt[tot]=lnk[x];lnk[x]=tot;&#125;void GetRoot(int now,int fa)&#123; siz[now]=1;maxp[now]=0; for(int i=lnk[now];i;i=nxt[i]) &#123; if(vis[son[i]]||son[i]==fa) continue; GetRoot(son[i],now);siz[now]+=siz[son[i]]; if(siz[son[i]]&gt;maxp[now]) maxp[now]=siz[son[i]]; &#125; if(sum-siz[now]&gt;maxp[now]) maxp[now]=sum-siz[now]; if(maxp[now]&lt;maxp[rt]) rt=now;&#125;void GetDist(int now,int fa)&#123; if(dist[now]&gt;K||cnt[now]&gt;ans) return; num++;Q[num][0]=dist[now];Q[num][1]=cnt[now]; for(int i=lnk[now];i;i=nxt[i]) if(!vis[son[i]]&amp;&amp;son[i]!=fa) &#123;dist[son[i]]=dist[now]+w[i];cnt[son[i]]=cnt[now]+1;GetDist(son[i],now);&#125;&#125;void Solve(int now)&#123; int len=1;que[1]=0;vis[now]=true;jud[0]=0; for(int i=lnk[now];i;i=nxt[i]) &#123; if(vis[son[i]]) continue; num=0;dist[son[i]]=w[i];cnt[son[i]]=1;GetDist(son[i],0); for(int j=1;j&lt;=num;j++) if(Q[j][1]+jud[K-Q[j][0]]&lt;ans) ans=Q[j][1]+jud[K-Q[j][0]]; for(int j=1;j&lt;=num;j++) &#123; if(Q[j][1]&lt;jud[Q[j][0]]) jud[Q[j][0]]=Q[j][1]; que[++len]=Q[j][0]; &#125; &#125; for(int i=1;i&lt;=len;i++) jud[que[i]]=inf; for(int i=lnk[now];i;i=nxt[i]) if(!vis[son[i]]) &#123;sum=siz[son[i]];rt=0;GetRoot(son[i],0);Solve(rt);&#125;&#125;int main()&#123; n=read();K=read(); for(int i=1;i&lt;n;i++) &#123; int a=read()+1,b=read()+1,c=read(); add_e(a,b,c);add_e(b,a,c); &#125; memset(jud,63,sizeof(jud)); maxp[0]=sum=n;GetRoot(1,0);Solve(rt); printf("%d\n",ans==inf?-1:ans); return 0;&#125;]]></content>
@@ -36,17 +25,14 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[「AHOI2001」多项式乘法]]></title>
-    <url>%2F2019%2F03%2F04%2F%E3%80%8CAHOI2001%E3%80%8D%E5%A4%9A%E9%A1%B9%E5%BC%8F%E4%B9%98%E6%B3%95-Solution%2F</url>
-    <content type="text"><![CDATA[来水一发大模拟QwQ。 传送门洛谷P2553 题解好久没写这种处理字符串的大模拟了QwQ。 这题每个多项式的长度都很短，系数也很小，所以直接$O(n^2)$的暴力搞过去就行了。 数据范围大一点的话FFT即可。 注意可能有空格。 注意可能在一行中可能包含一个不完整的表达式（可能没有”*”或者”()”），注意应该什么也不要输出，也要注意不要RE或者怎么样了。 总而言之还是挺好写的QwQ。 代码12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758#include&lt;cstdio&gt;#include&lt;cstring&gt;using namespace std;int len,a1[50],a2[50],ans[100];char exp[1000];int main()&#123; while(gets(exp),exp[0]) &#123; len=strlen(exp);memset(a1,0,sizeof(a1));memset(a2,0,sizeof(a2));memset(ans,0,sizeof(ans)); int i=1; while(exp[i]!=')'&amp;&amp;i&lt;len) &#123; int x=0,z=0; while(exp[i]&lt;'0'||exp[i]&gt;'9') i++; x=exp[i]-'0'; if('0'&lt;=exp[i+1]&amp;&amp;exp[i+1]&lt;='9')&#123;i++;x=x*10+exp[i]-'0';&#125; i++; if(exp[i]=='a') &#123; i++;i++;z=exp[i]-'0'; if('0'&lt;=exp[i+1]&amp;&amp;exp[i+1]&lt;='9')&#123;i++;z=z*10+exp[i]-'0';&#125; i++; &#125; a1[z]+=x; &#125; i++; while(exp[i]!=')'&amp;&amp;i&lt;len) &#123; int x=0,z=0; while(exp[i]&lt;'0'||exp[i]&gt;'9') i++; x=exp[i]-'0'; if('0'&lt;=exp[i+1]&amp;&amp;exp[i+1]&lt;='9')&#123;i++;x=x*10+exp[i]-'0';&#125; i++; if(exp[i]=='a') &#123; i++;i++;z=exp[i]-'0'; if('0'&lt;=exp[i+1]&amp;&amp;exp[i+1]&lt;='9')&#123;i++;z=z*10+exp[i]-'0';&#125; i++; &#125; a2[z]+=x; &#125; for(int i=0;i&lt;=30;i++) for(int j=0;j&lt;=30;j++) ans[i+j]+=a1[i]*a2[j]; bool first=false; for(int j=60;j&gt;=0;j--) &#123; if(!ans[j]) continue; if(first) putchar('+'); else first=true; if(j&gt;0) printf("%da^%d",ans[j],j); else printf("%d",ans[j]); &#125; putchar('\n'); memset(exp,0,sizeof(exp)); &#125; return 0;&#125;]]></content>
+    <title><![CDATA[「洛谷P4886」快递员]]></title>
+    <url>%2F2019%2F03%2F05%2F%E3%80%8C%E6%B4%9B%E8%B0%B7P4886%E3%80%8D%E5%BF%AB%E9%80%92%E5%91%98-Solution%2F</url>
+    <content type="text"><![CDATA[完了…没高中读了QwQ，我要去打工送快递！！！QwQ 传送门洛谷P4886 题解这题其实还是挺好玩的。 首先随便钦定一个点，临时作为快递中心 。 然后可以$O(n)$计算出每一组点对到快递中心的距离和。设点对到快递中心最大距离和为$Max$，可能有多个点对到快递中心的距离和都是$Max$那么就把它们都存下来。 如果当前的快递中心在任意一组距离最大的点对之间最短路径上，那么答案就是$Max$不可能再小了。 如果有任意两组点对，一组在当前快递中心的一棵子树里，另一组在另一棵子树里，那么答案同样也无法更小。 否则答案最优时的快递中心就有可能在当前唯一一棵有点对的子树中，那么就取这棵子树的重心作为临时快递中心，然后递归。由于每次取的都是重心，所以只会递归$\log n$层，总时间复杂度为$O(n\log n)​$。 代码12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667#include&lt;cstdio&gt;#include&lt;cstdlib&gt;using namespace std;const int maxn=100005;int n,m,u[maxn],v[maxn],tot,lnk[maxn],son[maxn*2],w[maxn*2],nxt[maxn*2],sum,siz[maxn],maxp[maxn],rt,sub[maxn],dist[maxn],que[maxn],ans=1000000000;bool vis[maxn];inline int read()&#123; int ret=0,f=1;char ch=getchar(); while(ch&lt;'0'||ch&gt;'9')&#123;if(ch=='-')f=-f;ch=getchar();&#125; while(ch&gt;='0'&amp;&amp;ch&lt;='9')&#123;ret=ret*10+ch-'0';ch=getchar();&#125; return ret*f;&#125;inline void add_e(int x,int y,int z)&#123;tot++;son[tot]=y;w[tot]=z;nxt[tot]=lnk[x];lnk[x]=tot;&#125;void GetRoot(int now,int fa) //找重心&#123; siz[now]=1;maxp[now]=0; for(int i=lnk[now];i;i=nxt[i]) &#123; if(vis[son[i]]||son[i]==fa) continue; GetRoot(son[i],now);siz[now]+=siz[son[i]]; if(siz[son[i]]&gt;maxp[now]) maxp[now]=siz[son[i]]; &#125; if(sum-siz[now]&gt;maxp[now]) maxp[now]=sum-siz[now]; if(maxp[now]&lt;maxp[rt]) rt=now;&#125;void GetDist(int now,int fa,int st)&#123; sub[now]=st; for(int i=lnk[now];i;i=nxt[i]) if(son[i]!=fa) &#123;dist[son[i]]=dist[now]+w[i];GetDist(son[i],now,st);&#125;&#125;inline void Print()&#123;printf("%d\n",ans);exit(0);&#125; //输出答案void Solve(int now)&#123; if(vis[now]) Print(); vis[now]=true;dist[now]=0; for(int i=lnk[now];i;i=nxt[i]) &#123;dist[son[i]]=w[i];GetDist(son[i],now,son[i]);&#125; //先暴力计算距离 int Max=0,len=0,las=0; for(int i=1;i&lt;=m;i++) &#123; if(dist[u[i]]+dist[v[i]]&gt;Max)&#123;len=1;que[len]=i;Max=dist[u[i]]+dist[v[i]];&#125; else if(dist[u[i]]+dist[v[i]]==Max) que[++len]=i; //刷最大距离和 &#125; if(Max&lt;ans) ans=Max; for(int i=1;i&lt;=len;i++) &#123; if(sub[u[que[i]]]!=sub[v[que[i]]]) Print(); //分情况考虑答案 if(!las) las=sub[u[que[i]]]; if(sub[u[que[i]]]!=las) Print(); &#125; rt=0;sum=siz[las];GetRoot(las,0);Solve(rt); //递归解决&#125;int main()&#123; n=read();m=read(); for(int i=1;i&lt;n;i++) &#123; int a=read(),b=read(),c=read(); add_e(a,b,c);add_e(b,a,c); &#125; for(int i=1;i&lt;=m;i++)&#123;u[i]=read();v[i]=read();&#125; sum=maxp[0]=n;GetRoot(1,0);Solve(rt); Print(); return 0;&#125;]]></content>
       <categories>
-        <category>模拟</category>
+        <category>点分治</category>
       </categories>
       <tags>
-        <tag>多项式乘法</tag>
-        <tag>FFT</tag>
-        <tag>模拟</tag>
-        <tag>字符串处理</tag>
+        <tag>点分治</tag>
       </tags>
   </entry>
   <entry>
@@ -75,6 +61,20 @@
       </tags>
   </entry>
   <entry>
+    <title><![CDATA[「AHOI2001」多项式乘法]]></title>
+    <url>%2F2019%2F03%2F04%2F%E3%80%8CAHOI2001%E3%80%8D%E5%A4%9A%E9%A1%B9%E5%BC%8F%E4%B9%98%E6%B3%95-Solution%2F</url>
+    <content type="text"><![CDATA[来水一发大模拟QwQ。 传送门洛谷P2553 题解好久没写这种处理字符串的大模拟了QwQ。 这题每个多项式的长度都很短，系数也很小，所以直接$O(n^2)$的暴力搞过去就行了。 数据范围大一点的话FFT即可。 注意可能有空格。 注意可能在一行中可能包含一个不完整的表达式（可能没有”*”或者”()”），注意应该什么也不要输出，也要注意不要RE或者怎么样了。 总而言之还是挺好写的QwQ。 代码12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758#include&lt;cstdio&gt;#include&lt;cstring&gt;using namespace std;int len,a1[50],a2[50],ans[100];char exp[1000];int main()&#123; while(gets(exp),exp[0]) &#123; len=strlen(exp);memset(a1,0,sizeof(a1));memset(a2,0,sizeof(a2));memset(ans,0,sizeof(ans)); int i=1; while(exp[i]!=')'&amp;&amp;i&lt;len) &#123; int x=0,z=0; while(exp[i]&lt;'0'||exp[i]&gt;'9') i++; x=exp[i]-'0'; if('0'&lt;=exp[i+1]&amp;&amp;exp[i+1]&lt;='9')&#123;i++;x=x*10+exp[i]-'0';&#125; i++; if(exp[i]=='a') &#123; i++;i++;z=exp[i]-'0'; if('0'&lt;=exp[i+1]&amp;&amp;exp[i+1]&lt;='9')&#123;i++;z=z*10+exp[i]-'0';&#125; i++; &#125; a1[z]+=x; &#125; i++; while(exp[i]!=')'&amp;&amp;i&lt;len) &#123; int x=0,z=0; while(exp[i]&lt;'0'||exp[i]&gt;'9') i++; x=exp[i]-'0'; if('0'&lt;=exp[i+1]&amp;&amp;exp[i+1]&lt;='9')&#123;i++;x=x*10+exp[i]-'0';&#125; i++; if(exp[i]=='a') &#123; i++;i++;z=exp[i]-'0'; if('0'&lt;=exp[i+1]&amp;&amp;exp[i+1]&lt;='9')&#123;i++;z=z*10+exp[i]-'0';&#125; i++; &#125; a2[z]+=x; &#125; for(int i=0;i&lt;=30;i++) for(int j=0;j&lt;=30;j++) ans[i+j]+=a1[i]*a2[j]; bool first=false; for(int j=60;j&gt;=0;j--) &#123; if(!ans[j]) continue; if(first) putchar('+'); else first=true; if(j&gt;0) printf("%da^%d",ans[j],j); else printf("%d",ans[j]); &#125; putchar('\n'); memset(exp,0,sizeof(exp)); &#125; return 0;&#125;]]></content>
+      <categories>
+        <category>模拟</category>
+      </categories>
+      <tags>
+        <tag>多项式乘法</tag>
+        <tag>FFT</tag>
+        <tag>模拟</tag>
+        <tag>字符串处理</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[「YNOI2016」掉进兔子洞]]></title>
     <url>%2F2019%2F02%2F25%2F%E3%80%8CYNOI2016%E3%80%8D%E6%8E%89%E8%BF%9B%E5%85%94%E5%AD%90%E6%B4%9E-Solution%2F</url>
     <content type="text"><![CDATA[震惊！我妻由乃掉进了兔子洞里… 传送门洛谷P4688 BZOJ4939 题解这题再YNOI里应该算简单的吧，毕竟代码挺短的。 根据题意，要求的答案就是三个区间的长度和减去三个区间的交集长度的三倍。 因为要求交集，自然而然想到用bitset。只要上莫队求出每个询问的三个区间的bitset，求交集即可。 但是这个交集还不是那么好求，要拐个弯QwQ。 先对原序列进行离散化，定义离散化之后的$A_i$表示原序列中有多少个数小于原$A_i$。 然后考虑一个区间，现在加入一个元素，怎么维护bitset。由于存在相同元素，所以bitset上可能有好多位都是留给与当前元素相同的元素的，那么就需要从第$A_i$个位置从左往右找到第一个空位把新元素按上去，这样进行&amp;运算的时候就没有问题了，找位置的时候事先记一下当前区间每个值已经出现多少次了，就能O(1)找到。 这样进行&amp;运算就没有什么问题了。 还有就是由于直接开$10^5$个长度为$10^5$的bitset会MLE，所以把所有询问分三次处理就好了。 感觉莫队+bitset的题常数都不小，蒟蒻我一般不吸氧过不了QwQ。 代码1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465#include&lt;map&gt;#include&lt;cmath&gt;#include&lt;cstdio&gt;#include&lt;bitset&gt;#include&lt;cstring&gt;#include&lt;algorithm&gt;using namespace std;const int maxn=100005,maxm=34005;int n,tot,m,A[maxn],B[maxn],sum,S,Area[maxn],ans[maxn],cnt[maxn];map&lt;int,int&gt; C;bitset&lt;maxn&gt; col[maxm],tep;bool vis[maxm];inline int read()&#123; int ret=0,f=1;char ch=getchar(); while(ch&lt;'0'||ch&gt;'9')&#123;if(ch=='-')f=-f;ch=getchar();&#125; while(ch&gt;='0'&amp;&amp;ch&lt;='9')&#123;ret=ret*10+ch-'0';ch=getchar();&#125; return ret*f;&#125;struct Interval&#123; int L,R,id; bool operator &lt; (const Interval&amp; b)const&#123;return Area[L]&lt;Area[b.L]||(Area[L]==Area[b.L]&amp;&amp;((Area[L]&amp;1)?Area[R]&lt;Area[b.R]:Area[R]&gt;Area[b.R]));&#125;&#125;Q[maxm*3];inline void inc(int x)&#123;tep[x+cnt[x]]=1;cnt[x]++;&#125;inline void dec(int x)&#123;cnt[x]--;tep[x+cnt[x]]=0;&#125;inline void Solve()&#123; int num=0,L=1,R=1;tep[A[1]]=1;cnt[A[1]]++; for(int i=1;i&lt;=m&amp;&amp;i&lt;=34000;i++) &#123; num++;Q[num].L=read();Q[num].R=read();Q[num].id=i;ans[i]+=Q[num].R-Q[num].L+1; num++;Q[num].L=read();Q[num].R=read();Q[num].id=i;ans[i]+=Q[num].R-Q[num].L+1; num++;Q[num].L=read();Q[num].R=read();Q[num].id=i;ans[i]+=Q[num].R-Q[num].L+1; &#125; sort(Q+1,Q+1+num); for(int i=1;i&lt;=num;i++) &#123; while(L&gt;Q[i].L) inc(A[--L]); while(R&lt;Q[i].R) inc(A[++R]); while(L&lt;Q[i].L) dec(A[L++]); while(R&gt;Q[i].R) dec(A[R--]); if(vis[Q[i].id]) col[Q[i].id]&amp;=tep; else&#123;col[Q[i].id]=tep;vis[Q[i].id]=true;&#125; &#125; for(int i=1;i&lt;=m&amp;&amp;i&lt;=34000;i++) &#123; ans[i]-=col[i].count()*3; printf("%d\n",ans[i]); &#125; m-=34000;memset(ans,0,sizeof(ans));memset(cnt,0,sizeof(cnt));memset(vis,0,sizeof(vis));tep.reset();&#125;int main()&#123; n=read();m=read();S=sqrt(n)+1e-10; for(int i=1;i&lt;=n;i++) A[i]=B[i]=read(); for(int i=1;i&lt;=n;i++) Area[i]=(i-1)/S+1; sort(B+1,B+1+n); for(int i=1,j;i&lt;=n;i=j+1) &#123; j=i; while(j&lt;n&amp;&amp;B[j+1]==B[i]) j++; C[B[i]]=sum;sum+=j-i+1; &#125; for(int i=1;i&lt;=n;i++) A[i]=C[A[i]]; while(m&gt;0) Solve(); return 0;&#125;]]></content>
@@ -82,8 +82,8 @@
         <category>莫队</category>
       </categories>
       <tags>
-        <tag>bitset</tag>
         <tag>莫队</tag>
+        <tag>bitset</tag>
       </tags>
   </entry>
   <entry>
@@ -202,8 +202,8 @@
         <category>矩阵加速DP</category>
       </categories>
       <tags>
-        <tag>DP</tag>
         <tag>数数</tag>
+        <tag>DP</tag>
         <tag>快速幂</tag>
         <tag>矩阵加速</tag>
       </tags>
@@ -216,24 +216,10 @@
         <category>DP</category>
       </categories>
       <tags>
-        <tag>DP</tag>
         <tag>数数</tag>
+        <tag>DP</tag>
         <tag>递推</tag>
         <tag>三维DP</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[「FJOI2007」轮状病毒]]></title>
-    <url>%2F2019%2F01%2F30%2F%E3%80%8CFJOI2007%E3%80%8D%E8%BD%AE%E7%8A%B6%E7%97%85%E6%AF%92-Solution%2F</url>
-    <content type="text"><![CDATA[数数题怎么这么讨厌呀QwQ… 传送门洛谷P2144 BZOJ1002 题解这种数数题当然要先找规律呀poi！ 通过手玩或者暴力，可以得到以下表格： n ans 1 1 2 5 3 16 4 45 5 121 6 320 咦？当$n$为奇数时，$ans$都是完全平方数哇！！！ 那么当$n$为偶数时呢？ 哟，$ans$加上4之后也都是完全平方数呢！！！ 把这些完全平方数开个方试试看！！！ 就得到了这样的一个序列：1 3 4 7 11 18… 呀呀呀！这不就是一个变形的斐波那契数列么？ 并且$n​$很小，直接上高精度就好了呢poi。 然后这题就做完了QwQ… 别问我为什么有这样的规律，我也不知道QwQ… 码完代码测样例，才发现高精度都写挂了，我好菜啊QwQ 代码1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071#include&lt;cstdio&gt;#include&lt;cstring&gt;#include&lt;algorithm&gt;using namespace std;const int maxn=105;int n;struct BigInt //封装好的高精度&#123; int a[50],len; BigInt()&#123;len=0;memset(a,0,sizeof(a));&#125; BigInt(int x) &#123; len=0;memset(a,0,sizeof(a)); while(x)&#123;len++;a[len]=x%10;x/=10;&#125; &#125; BigInt operator + (const BigInt&amp; b) &#123; BigInt c; c.len=max(len,b.len); for(int i=1;i&lt;=c.len;i++) &#123; c.a[i]+=a[i]+b.a[i]; c.a[i+1]+=c.a[i]/10; c.a[i]%=10; &#125; if(c.a[c.len+1]) c.len++; return c; &#125; BigInt operator * (const BigInt&amp; b) &#123; BigInt c; c.len=len+b.len-1; for(int i=1;i&lt;=len;i++) &#123; for(int j=1;j&lt;=b.len;j++) &#123; c.a[i+j-1]+=a[i]*b.a[j]; c.a[i+j]+=c.a[i+j-1]/10; c.a[i+j-1]%=10; &#125; &#125; if(c.a[c.len+1]) c.len++; return c; &#125; BigInt operator - (const int&amp; b) //这个减法只能减去10以内的数 &#123; BigInt c=*this; c.a[1]-=b; for(int i=1;i&lt;=c.len&amp;&amp;c.a[i]&lt;0;i++) &#123; c.a[i]+=10; c.a[i+1]--; &#125; while(!c.a[c.len]) c.len--; return c; &#125; inline void Print() &#123; for(int i=len;i;i--) printf("%d",a[i]); printf("\n"); &#125;&#125;F[maxn],ans;int main()&#123; scanf("%d",&amp;n);F[1]=1;F[2]=3; for(int i=3;i&lt;=n;i++) F[i]=F[i-1]+F[i-2]; ans=F[n]*F[n]; if(n%2==0) ans=ans-4; //n为偶数时记得减去4哟 ans.Print(); return 0;&#125;]]></content>
-      <categories>
-        <category>递推</category>
-      </categories>
-      <tags>
-        <tag>DP</tag>
-        <tag>数数</tag>
-        <tag>高精度</tag>
-        <tag>递推</tag>
       </tags>
   </entry>
   <entry>
@@ -248,6 +234,20 @@
         <tag>打表</tag>
         <tag>分块打表</tag>
         <tag>数位DP</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[「FJOI2007」轮状病毒]]></title>
+    <url>%2F2019%2F01%2F30%2F%E3%80%8CFJOI2007%E3%80%8D%E8%BD%AE%E7%8A%B6%E7%97%85%E6%AF%92-Solution%2F</url>
+    <content type="text"><![CDATA[数数题怎么这么讨厌呀QwQ… 传送门洛谷P2144 BZOJ1002 题解这种数数题当然要先找规律呀poi！ 通过手玩或者暴力，可以得到以下表格： n ans 1 1 2 5 3 16 4 45 5 121 6 320 咦？当$n$为奇数时，$ans$都是完全平方数哇！！！ 那么当$n$为偶数时呢？ 哟，$ans$加上4之后也都是完全平方数呢！！！ 把这些完全平方数开个方试试看！！！ 就得到了这样的一个序列：1 3 4 7 11 18… 呀呀呀！这不就是一个变形的斐波那契数列么？ 并且$n​$很小，直接上高精度就好了呢poi。 然后这题就做完了QwQ… 别问我为什么有这样的规律，我也不知道QwQ… 码完代码测样例，才发现高精度都写挂了，我好菜啊QwQ 代码1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071#include&lt;cstdio&gt;#include&lt;cstring&gt;#include&lt;algorithm&gt;using namespace std;const int maxn=105;int n;struct BigInt //封装好的高精度&#123; int a[50],len; BigInt()&#123;len=0;memset(a,0,sizeof(a));&#125; BigInt(int x) &#123; len=0;memset(a,0,sizeof(a)); while(x)&#123;len++;a[len]=x%10;x/=10;&#125; &#125; BigInt operator + (const BigInt&amp; b) &#123; BigInt c; c.len=max(len,b.len); for(int i=1;i&lt;=c.len;i++) &#123; c.a[i]+=a[i]+b.a[i]; c.a[i+1]+=c.a[i]/10; c.a[i]%=10; &#125; if(c.a[c.len+1]) c.len++; return c; &#125; BigInt operator * (const BigInt&amp; b) &#123; BigInt c; c.len=len+b.len-1; for(int i=1;i&lt;=len;i++) &#123; for(int j=1;j&lt;=b.len;j++) &#123; c.a[i+j-1]+=a[i]*b.a[j]; c.a[i+j]+=c.a[i+j-1]/10; c.a[i+j-1]%=10; &#125; &#125; if(c.a[c.len+1]) c.len++; return c; &#125; BigInt operator - (const int&amp; b) //这个减法只能减去10以内的数 &#123; BigInt c=*this; c.a[1]-=b; for(int i=1;i&lt;=c.len&amp;&amp;c.a[i]&lt;0;i++) &#123; c.a[i]+=10; c.a[i+1]--; &#125; while(!c.a[c.len]) c.len--; return c; &#125; inline void Print() &#123; for(int i=len;i;i--) printf("%d",a[i]); printf("\n"); &#125;&#125;F[maxn],ans;int main()&#123; scanf("%d",&amp;n);F[1]=1;F[2]=3; for(int i=3;i&lt;=n;i++) F[i]=F[i-1]+F[i-2]; ans=F[n]*F[n]; if(n%2==0) ans=ans-4; //n为偶数时记得减去4哟 ans.Print(); return 0;&#125;]]></content>
+      <categories>
+        <category>递推</category>
+      </categories>
+      <tags>
+        <tag>数数</tag>
+        <tag>DP</tag>
+        <tag>递推</tag>
+        <tag>高精度</tag>
       </tags>
   </entry>
   <entry>
@@ -309,8 +309,8 @@
         <category>矩阵加速DP</category>
       </categories>
       <tags>
-        <tag>DP</tag>
         <tag>数数</tag>
+        <tag>DP</tag>
         <tag>快速幂</tag>
         <tag>矩阵加速</tag>
         <tag>斐波那契数列</tag>
@@ -324,12 +324,12 @@
         <category>树形DP</category>
       </categories>
       <tags>
-        <tag>DP</tag>
         <tag>数数</tag>
+        <tag>DP</tag>
         <tag>DFS</tag>
+        <tag>点分治</tag>
         <tag>概率</tag>
         <tag>树形DP</tag>
-        <tag>点分治</tag>
       </tags>
   </entry>
   <entry>
