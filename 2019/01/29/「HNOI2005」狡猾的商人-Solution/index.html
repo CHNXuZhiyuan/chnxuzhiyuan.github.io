@@ -400,36 +400,49 @@
       
 
       
-        <p>贪心大法好QwQ！</p>
+        
+贪心大法好QwQ！
+
 <a id="more"></a>
-<h3 id="传送门"><a href="#传送门" class="headerlink" title="传送门"></a>传送门</h3><p><a href="https://www.luogu.org/problemnew/show/P2294" target="_blank" rel="noopener">洛谷P2294</a></p>
-<p><a href="https://www.lydsy.com/JudgeOnline/problem.php?id=1202" target="_blank" rel="noopener">BZOJ1202</a></p>
-<h3 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h3><p>这题有好多种解法，可以上差分约束、并查集之类的。</p>
-<p>但是贪心大法好啊！！！</p>
-<p>把所有偷看到的信息按左端点排序，然后从前到后两两比较。</p>
-<blockquote>
-<p>如果左端点相同</p>
-<blockquote>
-<p>比较右端点</p>
-<blockquote>
-<p>如果右端点相同</p>
-<blockquote>
-<p>比较权值，如果不相同直接输出false</p>
-</blockquote>
-<p>如果右端点不相同</p>
-<blockquote>
-<p>将重叠部分抵消掉，权值相减得到一个新的信息，扔回去，用堆维护</p>
-</blockquote>
-</blockquote>
-</blockquote>
-<p>如果左端点不同</p>
-<blockquote>
-<p>把前面一个信息扔掉即可，不用管</p>
-</blockquote>
-</blockquote>
-<p>直到最后，堆空了，没有出现问题，那么输出true就好了。</p>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><p><del>其实这题挺水的</del></p>
+
+### 传送门
+
+[洛谷P2294](https://www.luogu.org/problemnew/show/P2294)
+
+[BZOJ1202](https://www.lydsy.com/JudgeOnline/problem.php?id=1202)
+
+### 题解
+
+这题有好多种解法，可以上差分约束、并查集之类的。
+
+但是贪心大法好啊！！！
+
+把所有偷看到的信息按左端点排序，然后从前到后两两比较。
+
+> 如果左端点相同
+>
+> >比较右端点
+> >
+> >>如果右端点相同
+> >>
+> >>>比较权值，如果不相同直接输出false
+> >>
+> >>如果右端点不相同
+> >>
+> >>>将重叠部分抵消掉，权值相减得到一个新的信息，扔回去，用堆维护
+>
+> 如果左端点不同
+>
+> >把前面一个信息扔掉即可，不用管
+
+直到最后，堆空了，没有出现问题，那么输出true就好了。
+
+### 代码
+
+~~其实这题挺水的~~
+
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;queue&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">int</span> T,n,m;<span class="keyword">bool</span> fal;</span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">read</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> ret=<span class="number">0</span>,f=<span class="number">1</span>;<span class="keyword">char</span> ch=getchar();</span><br><span class="line">	<span class="keyword">while</span>(ch&lt;<span class="string">'0'</span>||ch&gt;<span class="string">'9'</span>)&#123;<span class="keyword">if</span>(ch==<span class="string">'-'</span>)f=-f;ch=getchar();&#125;</span><br><span class="line">	<span class="keyword">while</span>(ch&gt;=<span class="string">'0'</span>&amp;&amp;ch&lt;=<span class="string">'9'</span>)&#123;ret=ret*<span class="number">10</span>+ch-<span class="string">'0'</span>;ch=getchar();&#125;</span><br><span class="line">	<span class="keyword">return</span> ret*f;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Node</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	<span class="keyword">int</span> L,R,w;</span><br><span class="line">	<span class="keyword">bool</span> <span class="keyword">operator</span> &lt; (<span class="keyword">const</span> Node&amp; b)<span class="keyword">const</span>&#123;<span class="keyword">return</span> L&lt;b.L||(L==b.L&amp;&amp;R&lt;b.R);&#125;</span><br><span class="line">	<span class="keyword">bool</span> <span class="keyword">operator</span> &gt; (<span class="keyword">const</span> Node&amp; b)<span class="keyword">const</span>&#123;<span class="keyword">return</span> L&gt;b.L||(L==b.L&amp;&amp;R&gt;b.R);&#125;</span><br><span class="line">&#125;tep1,tep2;</span><br><span class="line">priority_queue&lt;Node,<span class="built_in">vector</span>&lt;Node&gt;,greater&lt;Node&gt; &gt; H;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	T=read();</span><br><span class="line">	<span class="keyword">while</span>(T--)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">while</span>(H.size()) H.pop();</span><br><span class="line">		n=read();m=read();fal=<span class="literal">false</span>;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=m;i++)</span><br><span class="line">		&#123;</span><br><span class="line">			tep1.L=read();tep1.R=read();tep1.w=read();</span><br><span class="line">			H.push(tep1);</span><br><span class="line">		&#125;</span><br><span class="line">		tep1=H.top();H.pop();</span><br><span class="line">		<span class="keyword">while</span>(H.size())</span><br><span class="line">		&#123;</span><br><span class="line">			tep2=H.top();H.pop();</span><br><span class="line">			<span class="keyword">if</span>(tep1.L==tep2.L)</span><br><span class="line">			&#123;</span><br><span class="line">				<span class="keyword">if</span>(tep1.R==tep2.R)</span><br><span class="line">				&#123;</span><br><span class="line">					<span class="keyword">if</span>(tep1.w!=tep2.w)</span><br><span class="line">						&#123;<span class="built_in">printf</span>(<span class="string">"false\n"</span>);fal=<span class="literal">true</span>;<span class="keyword">break</span>;&#125;</span><br><span class="line">				&#125;</span><br><span class="line">				<span class="keyword">else</span> <span class="keyword">if</span>(tep1.R!=tep2.R)</span><br><span class="line">					H.push((Node)&#123;tep1.R+<span class="number">1</span>,tep2.R,tep2.w-tep1.w&#125;);</span><br><span class="line">			&#125;</span><br><span class="line">			tep1=tep2;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>(!fal) <span class="built_in">printf</span>(<span class="string">"true\n"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 
       
     </div>
@@ -531,17 +544,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -558,7 +562,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-count">38</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -637,22 +641,6 @@
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#传送门"><span class="nav-number">1.</span> <span class="nav-text">传送门</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#题解"><span class="nav-number">2.</span> <span class="nav-text">题解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码"><span class="nav-number">3.</span> <span class="nav-text">代码</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       

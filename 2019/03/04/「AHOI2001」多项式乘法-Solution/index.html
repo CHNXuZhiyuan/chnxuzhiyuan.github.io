@@ -400,16 +400,33 @@
       
 
       
-        <p>来水一发大模拟QwQ。</p>
+        
+来水一发大模拟QwQ。
+
 <a id="more"></a>
-<h3 id="传送门"><a href="#传送门" class="headerlink" title="传送门"></a>传送门</h3><p><a href="https://www.luogu.org/problemnew/show/P2553" target="_blank" rel="noopener">洛谷P2553</a></p>
-<h3 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h3><p>好久没写这种处理字符串的大模拟了QwQ。</p>
-<p>这题每个多项式的长度都很短，系数也很小，所以直接$O(n^2)$的暴力搞过去就行了。</p>
-<p>数据范围大一点的话FFT即可。</p>
-<p>注意可能有空格。</p>
-<p>注意可能在一行中可能包含一个不完整的表达式（可能没有”*”或者”()”），注意应该什么也不要输出，也要注意不要RE或者怎么样了。</p>
-<p>总而言之还是挺好写的QwQ。</p>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">int</span> len,a1[<span class="number">50</span>],a2[<span class="number">50</span>],ans[<span class="number">100</span>];<span class="keyword">char</span> <span class="built_in">exp</span>[<span class="number">1000</span>];</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">while</span>(gets(<span class="built_in">exp</span>),<span class="built_in">exp</span>[<span class="number">0</span>])</span><br><span class="line">	&#123;</span><br><span class="line">		len=<span class="built_in">strlen</span>(<span class="built_in">exp</span>);<span class="built_in">memset</span>(a1,<span class="number">0</span>,<span class="keyword">sizeof</span>(a1));<span class="built_in">memset</span>(a2,<span class="number">0</span>,<span class="keyword">sizeof</span>(a2));<span class="built_in">memset</span>(ans,<span class="number">0</span>,<span class="keyword">sizeof</span>(ans));</span><br><span class="line">		<span class="keyword">int</span> i=<span class="number">1</span>;</span><br><span class="line">		<span class="keyword">while</span>(<span class="built_in">exp</span>[i]!=<span class="string">')'</span>&amp;&amp;i&lt;len)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">int</span> x=<span class="number">0</span>,z=<span class="number">0</span>;</span><br><span class="line">			<span class="keyword">while</span>(<span class="built_in">exp</span>[i]&lt;<span class="string">'0'</span>||<span class="built_in">exp</span>[i]&gt;<span class="string">'9'</span>) i++;</span><br><span class="line">			x=<span class="built_in">exp</span>[i]-<span class="string">'0'</span>;</span><br><span class="line">			<span class="keyword">if</span>(<span class="string">'0'</span>&lt;=<span class="built_in">exp</span>[i+<span class="number">1</span>]&amp;&amp;<span class="built_in">exp</span>[i+<span class="number">1</span>]&lt;=<span class="string">'9'</span>)&#123;i++;x=x*<span class="number">10</span>+<span class="built_in">exp</span>[i]-<span class="string">'0'</span>;&#125;</span><br><span class="line">			i++;</span><br><span class="line">			<span class="keyword">if</span>(<span class="built_in">exp</span>[i]==<span class="string">'a'</span>)</span><br><span class="line">			&#123;</span><br><span class="line">				i++;i++;z=<span class="built_in">exp</span>[i]-<span class="string">'0'</span>;</span><br><span class="line">				<span class="keyword">if</span>(<span class="string">'0'</span>&lt;=<span class="built_in">exp</span>[i+<span class="number">1</span>]&amp;&amp;<span class="built_in">exp</span>[i+<span class="number">1</span>]&lt;=<span class="string">'9'</span>)&#123;i++;z=z*<span class="number">10</span>+<span class="built_in">exp</span>[i]-<span class="string">'0'</span>;&#125;</span><br><span class="line">				i++;</span><br><span class="line">			&#125;</span><br><span class="line">			a1[z]+=x;</span><br><span class="line">		&#125;</span><br><span class="line">		i++;</span><br><span class="line">		<span class="keyword">while</span>(<span class="built_in">exp</span>[i]!=<span class="string">')'</span>&amp;&amp;i&lt;len)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">int</span> x=<span class="number">0</span>,z=<span class="number">0</span>;</span><br><span class="line">			<span class="keyword">while</span>(<span class="built_in">exp</span>[i]&lt;<span class="string">'0'</span>||<span class="built_in">exp</span>[i]&gt;<span class="string">'9'</span>) i++;</span><br><span class="line">			x=<span class="built_in">exp</span>[i]-<span class="string">'0'</span>;</span><br><span class="line">			<span class="keyword">if</span>(<span class="string">'0'</span>&lt;=<span class="built_in">exp</span>[i+<span class="number">1</span>]&amp;&amp;<span class="built_in">exp</span>[i+<span class="number">1</span>]&lt;=<span class="string">'9'</span>)&#123;i++;x=x*<span class="number">10</span>+<span class="built_in">exp</span>[i]-<span class="string">'0'</span>;&#125;</span><br><span class="line">			i++;</span><br><span class="line">			<span class="keyword">if</span>(<span class="built_in">exp</span>[i]==<span class="string">'a'</span>)</span><br><span class="line">			&#123;</span><br><span class="line">				i++;i++;z=<span class="built_in">exp</span>[i]-<span class="string">'0'</span>;</span><br><span class="line">				<span class="keyword">if</span>(<span class="string">'0'</span>&lt;=<span class="built_in">exp</span>[i+<span class="number">1</span>]&amp;&amp;<span class="built_in">exp</span>[i+<span class="number">1</span>]&lt;=<span class="string">'9'</span>)&#123;i++;z=z*<span class="number">10</span>+<span class="built_in">exp</span>[i]-<span class="string">'0'</span>;&#125;</span><br><span class="line">				i++;</span><br><span class="line">			&#125;</span><br><span class="line">			a2[z]+=x;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;=<span class="number">30</span>;i++)</span><br><span class="line">			<span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;=<span class="number">30</span>;j++)</span><br><span class="line">				ans[i+j]+=a1[i]*a2[j];</span><br><span class="line">		<span class="keyword">bool</span> first=<span class="literal">false</span>;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">60</span>;j&gt;=<span class="number">0</span>;j--)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span>(!ans[j]) <span class="keyword">continue</span>;</span><br><span class="line">			<span class="keyword">if</span>(first) <span class="built_in">putchar</span>(<span class="string">'+'</span>);</span><br><span class="line">			<span class="keyword">else</span> first=<span class="literal">true</span>;</span><br><span class="line">			<span class="keyword">if</span>(j&gt;<span class="number">0</span>) <span class="built_in">printf</span>(<span class="string">"%da^%d"</span>,ans[j],j);</span><br><span class="line">			<span class="keyword">else</span> <span class="built_in">printf</span>(<span class="string">"%d"</span>,ans[j]);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="built_in">putchar</span>(<span class="string">'\n'</span>);</span><br><span class="line">		<span class="built_in">memset</span>(<span class="built_in">exp</span>,<span class="number">0</span>,<span class="keyword">sizeof</span>(<span class="built_in">exp</span>));</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+### 传送门
+
+[洛谷P2553](https://www.luogu.org/problemnew/show/P2553)
+
+### 题解
+
+好久没写这种处理字符串的大模拟了QwQ。
+
+这题每个多项式的长度都很短，系数也很小，所以直接$O(n^2)$的暴力搞过去就行了。
+
+数据范围大一点的话FFT即可。
+
+注意可能有空格。
+
+注意可能在一行中可能包含一个不完整的表达式（可能没有"*"或者"()"），注意应该什么也不要输出，也要注意不要RE或者怎么样了。
+
+总而言之还是挺好写的QwQ。
+
+### 代码
+
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">int</span> len,a1[<span class="number">50</span>],a2[<span class="number">50</span>],ans[<span class="number">100</span>];<span class="keyword">char</span> <span class="built_in">exp</span>[<span class="number">1000</span>];</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">while</span>(gets(<span class="built_in">exp</span>),<span class="built_in">exp</span>[<span class="number">0</span>])</span><br><span class="line">	&#123;</span><br><span class="line">		len=<span class="built_in">strlen</span>(<span class="built_in">exp</span>);<span class="built_in">memset</span>(a1,<span class="number">0</span>,<span class="keyword">sizeof</span>(a1));<span class="built_in">memset</span>(a2,<span class="number">0</span>,<span class="keyword">sizeof</span>(a2));<span class="built_in">memset</span>(ans,<span class="number">0</span>,<span class="keyword">sizeof</span>(ans));</span><br><span class="line">		<span class="keyword">int</span> i=<span class="number">1</span>;</span><br><span class="line">		<span class="keyword">while</span>(<span class="built_in">exp</span>[i]!=<span class="string">')'</span>&amp;&amp;i&lt;len)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">int</span> x=<span class="number">0</span>,z=<span class="number">0</span>;</span><br><span class="line">			<span class="keyword">while</span>(<span class="built_in">exp</span>[i]&lt;<span class="string">'0'</span>||<span class="built_in">exp</span>[i]&gt;<span class="string">'9'</span>) i++;</span><br><span class="line">			x=<span class="built_in">exp</span>[i]-<span class="string">'0'</span>;</span><br><span class="line">			<span class="keyword">if</span>(<span class="string">'0'</span>&lt;=<span class="built_in">exp</span>[i+<span class="number">1</span>]&amp;&amp;<span class="built_in">exp</span>[i+<span class="number">1</span>]&lt;=<span class="string">'9'</span>)&#123;i++;x=x*<span class="number">10</span>+<span class="built_in">exp</span>[i]-<span class="string">'0'</span>;&#125;</span><br><span class="line">			i++;</span><br><span class="line">			<span class="keyword">if</span>(<span class="built_in">exp</span>[i]==<span class="string">'a'</span>)</span><br><span class="line">			&#123;</span><br><span class="line">				i++;i++;z=<span class="built_in">exp</span>[i]-<span class="string">'0'</span>;</span><br><span class="line">				<span class="keyword">if</span>(<span class="string">'0'</span>&lt;=<span class="built_in">exp</span>[i+<span class="number">1</span>]&amp;&amp;<span class="built_in">exp</span>[i+<span class="number">1</span>]&lt;=<span class="string">'9'</span>)&#123;i++;z=z*<span class="number">10</span>+<span class="built_in">exp</span>[i]-<span class="string">'0'</span>;&#125;</span><br><span class="line">				i++;</span><br><span class="line">			&#125;</span><br><span class="line">			a1[z]+=x;</span><br><span class="line">		&#125;</span><br><span class="line">		i++;</span><br><span class="line">		<span class="keyword">while</span>(<span class="built_in">exp</span>[i]!=<span class="string">')'</span>&amp;&amp;i&lt;len)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">int</span> x=<span class="number">0</span>,z=<span class="number">0</span>;</span><br><span class="line">			<span class="keyword">while</span>(<span class="built_in">exp</span>[i]&lt;<span class="string">'0'</span>||<span class="built_in">exp</span>[i]&gt;<span class="string">'9'</span>) i++;</span><br><span class="line">			x=<span class="built_in">exp</span>[i]-<span class="string">'0'</span>;</span><br><span class="line">			<span class="keyword">if</span>(<span class="string">'0'</span>&lt;=<span class="built_in">exp</span>[i+<span class="number">1</span>]&amp;&amp;<span class="built_in">exp</span>[i+<span class="number">1</span>]&lt;=<span class="string">'9'</span>)&#123;i++;x=x*<span class="number">10</span>+<span class="built_in">exp</span>[i]-<span class="string">'0'</span>;&#125;</span><br><span class="line">			i++;</span><br><span class="line">			<span class="keyword">if</span>(<span class="built_in">exp</span>[i]==<span class="string">'a'</span>)</span><br><span class="line">			&#123;</span><br><span class="line">				i++;i++;z=<span class="built_in">exp</span>[i]-<span class="string">'0'</span>;</span><br><span class="line">				<span class="keyword">if</span>(<span class="string">'0'</span>&lt;=<span class="built_in">exp</span>[i+<span class="number">1</span>]&amp;&amp;<span class="built_in">exp</span>[i+<span class="number">1</span>]&lt;=<span class="string">'9'</span>)&#123;i++;z=z*<span class="number">10</span>+<span class="built_in">exp</span>[i]-<span class="string">'0'</span>;&#125;</span><br><span class="line">				i++;</span><br><span class="line">			&#125;</span><br><span class="line">			a2[z]+=x;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;=<span class="number">30</span>;i++)</span><br><span class="line">			<span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;=<span class="number">30</span>;j++)</span><br><span class="line">				ans[i+j]+=a1[i]*a2[j];</span><br><span class="line">		<span class="keyword">bool</span> first=<span class="literal">false</span>;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">60</span>;j&gt;=<span class="number">0</span>;j--)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span>(!ans[j]) <span class="keyword">continue</span>;</span><br><span class="line">			<span class="keyword">if</span>(first) <span class="built_in">putchar</span>(<span class="string">'+'</span>);</span><br><span class="line">			<span class="keyword">else</span> first=<span class="literal">true</span>;</span><br><span class="line">			<span class="keyword">if</span>(j&gt;<span class="number">0</span>) <span class="built_in">printf</span>(<span class="string">"%da^%d"</span>,ans[j],j);</span><br><span class="line">			<span class="keyword">else</span> <span class="built_in">printf</span>(<span class="string">"%d"</span>,ans[j]);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="built_in">putchar</span>(<span class="string">'\n'</span>);</span><br><span class="line">		<span class="built_in">memset</span>(<span class="built_in">exp</span>,<span class="number">0</span>,<span class="keyword">sizeof</span>(<span class="built_in">exp</span>));</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 
       
     </div>
@@ -446,8 +463,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/03/04/「SNOI2017」一个简单的询问-Solution/" rel="next" title="「SNOI2017」一个简单的询问">
-                <i class="fa fa-chevron-left"></i> 「SNOI2017」一个简单的询问
+              <a href="/2019/03/04/「ZJOI2019模拟赛 十二」紫苑-Solution/" rel="next" title="「ZJOI2019模拟赛 十二」紫苑">
+                <i class="fa fa-chevron-left"></i> 「ZJOI2019模拟赛 十二」紫苑
               </a>
             
           </div>
@@ -456,8 +473,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/03/05/「IOI2011」Race-Solution/" rel="prev" title="「IOI2011」Race">
-                「IOI2011」Race <i class="fa fa-chevron-right"></i>
+              <a href="/2019/03/04/「SNOI2017」一个简单的询问-Solution/" rel="prev" title="「SNOI2017」一个简单的询问">
+                「SNOI2017」一个简单的询问 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -513,17 +530,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -540,7 +548,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-count">38</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -619,22 +627,6 @@
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#传送门"><span class="nav-number">1.</span> <span class="nav-text">传送门</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#题解"><span class="nav-number">2.</span> <span class="nav-text">题解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码"><span class="nav-number">3.</span> <span class="nav-text">代码</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       

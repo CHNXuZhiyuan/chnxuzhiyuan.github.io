@@ -400,20 +400,41 @@
       
 
       
-        <p>什么鬼？省选也出这种玄学随机算法题？</p>
+        
+什么鬼？省选也出这种玄学随机算法题？
+
 <a id="more"></a>
-<h3 id="传送门"><a href="#传送门" class="headerlink" title="传送门"></a>传送门</h3><p><a href="https://www.luogu.org/problemnew/show/P4581" target="_blank" rel="noopener">洛谷P4581</a></p>
-<h3 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h3><p>首先这题一看就很不可解。</p>
-<p>所以上随机算法（<del>人家题面都告诉你了QwQ</del>）。</p>
-<p>写之前先膜拜一下dalao，保佑AC。</p>
-<p>sto  黄霖 orz</p>
-<p>对于一个节点，将所用能走到它的叶子节点都存下来是不现实的，所以我们只存$k$个。并且我们要先为每个叶子节点i随机一个权值$W_i$，满足$W_i \in [1,RANDMAX]$。对于每个非叶子节点，我们需要存下所有能走到个节点的叶子节点的权值的前$k$小。设这个节点的答案为$ans$，第$k$小权值为$F_k​$根据期望可得</p>
-<script type="math/tex; mode=display">
-\frac{F_k}{RANDMAX}=\frac{k}{ans}</script><p>故有</p>
-<script type="math/tex; mode=display">
-ans=\frac{k*RANDMAX}{F_k}</script><p>令$k=50$，多为叶子节点随机几套权值求平均值，吸个氧，<del>放个大悲咒，选个好种子，</del>你就能AC了。</p>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><p>这是真的玄学QwQ</p>
+
+### 传送门
+
+[洛谷P4581](https://www.luogu.org/problemnew/show/P4581)
+
+### 题解
+
+首先这题一看就很不可解。
+
+所以上随机算法（~~人家题面都告诉你了QwQ~~）。
+
+写之前先膜拜一下dalao，保佑AC。
+
+sto  黄霖 orz
+
+对于一个节点，将所用能走到它的叶子节点都存下来是不现实的，所以我们只存$k$个。并且我们要先为每个叶子节点i随机一个权值$W_i$，满足$W_i \in [1,RANDMAX]$。对于每个非叶子节点，我们需要存下所有能走到个节点的叶子节点的权值的前$k$小。设这个节点的答案为$ans$，第$k$小权值为$F_k​$根据期望可得
+$$
+\frac{F_k}{RANDMAX}=\frac{k}{ans}
+$$
+故有
+$$
+ans=\frac{k*RANDMAX}{F_k}
+$$
+令$k=50$，多为叶子节点随机几套权值求平均值，吸个氧，~~放个大悲咒，选个好种子，~~你就能AC了。
+
+### 代码
+
+这是真的玄学QwQ
+
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdlib&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">long</span> LL;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn=<span class="number">1000005</span>,k=<span class="number">50</span>;</span><br><span class="line"><span class="keyword">int</span> n,m,son[maxn][<span class="number">2</span>],w[maxn],num[maxn],f[maxn][<span class="number">55</span>];LL ans[maxn];</span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">read</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> ret=<span class="number">0</span>,f=<span class="number">1</span>;<span class="keyword">char</span> ch=getchar();</span><br><span class="line">	<span class="keyword">while</span>(ch&lt;<span class="string">'0'</span>||ch&gt;<span class="string">'9'</span>)&#123;<span class="keyword">if</span>(ch==<span class="string">'-'</span>)f=-f;ch=getchar();&#125;</span><br><span class="line">	<span class="keyword">while</span>(ch&gt;=<span class="string">'0'</span>&amp;&amp;ch&lt;=<span class="string">'9'</span>)&#123;ret=ret*<span class="number">10</span>+ch-<span class="string">'0'</span>;ch=getchar();&#125;</span><br><span class="line">	<span class="keyword">return</span> ret*f;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">Merge</span><span class="params">(<span class="keyword">int</span> s1,<span class="keyword">int</span> s2,<span class="keyword">int</span> now)</span>         <span class="comment">//从两个儿子节点合并过来</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">register</span> <span class="keyword">int</span> i=<span class="number">1</span>,j=<span class="number">1</span>;num[now]=k;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">register</span> <span class="keyword">int</span> p=<span class="number">1</span>;p&lt;=k;p++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">while</span>(f[s1][i]==f[now][p<span class="number">-1</span>]&amp;&amp;i&lt;=num[s1]) i++;  <span class="comment">//注意去重</span></span><br><span class="line">		<span class="keyword">while</span>(f[s2][j]==f[now][p<span class="number">-1</span>]&amp;&amp;j&lt;=num[s2]) j++;</span><br><span class="line">		<span class="keyword">if</span>(i&gt;num[s1]&amp;&amp;j&gt;num[s2])&#123;num[now]=p<span class="number">-1</span>;<span class="keyword">break</span>;&#125;</span><br><span class="line">		<span class="keyword">if</span>(i&lt;=num[s1]&amp;&amp;(f[s1][i]&lt;f[s2][j]||j&gt;num[s2]))&#123;f[now][p]=f[s1][i];i++;&#125;</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span>(j&lt;=num[s2])&#123;f[now][p]=f[s2][j];j++;&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	srand(<span class="number">20050429</span>);</span><br><span class="line">	n=read();m=read();</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">register</span> <span class="keyword">int</span> i=m+<span class="number">1</span>;i&lt;=n;i++)&#123;son[i][<span class="number">0</span>]=read();son[i][<span class="number">1</span>]=read();&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> r=<span class="number">1</span>;r&lt;=<span class="number">4</span>;r++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">register</span> <span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)&#123;w[i]=rand();<span class="keyword">while</span>(!w[i])w[i]=rand();&#125;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">register</span> <span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=m;i++)&#123;f[i][<span class="number">1</span>]=w[i];num[i]=<span class="number">1</span>;&#125;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">register</span> <span class="keyword">int</span> i=m+<span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line">		&#123;</span><br><span class="line">			Merge(son[i][<span class="number">0</span>],son[i][<span class="number">1</span>],i);</span><br><span class="line">			<span class="keyword">if</span>(num[i]&lt;k) ans[i]=num[i]*<span class="number">4</span>;          <span class="comment">//如果还没到k个就不用根据期望计算了</span></span><br><span class="line">			<span class="keyword">else</span> ans[i]+=(LL)k*RAND_MAX/f[i][k];</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=m+<span class="number">1</span>;i&lt;=n;i++) <span class="built_in">printf</span>(<span class="string">"%lld\n"</span>,ans[i]/<span class="number">4</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 
       
     </div>
@@ -513,17 +534,8 @@ ans=\frac{k*RANDMAX}{F_k}</script><p>令$k=50$，多为叶子节点随机几套�
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -540,7 +552,7 @@ ans=\frac{k*RANDMAX}{F_k}</script><p>令$k=50$，多为叶子节点随机几套�
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-count">38</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -619,22 +631,6 @@ ans=\frac{k*RANDMAX}{F_k}</script><p>令$k=50$，多为叶子节点随机几套�
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#传送门"><span class="nav-number">1.</span> <span class="nav-text">传送门</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#题解"><span class="nav-number">2.</span> <span class="nav-text">题解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码"><span class="nav-number">3.</span> <span class="nav-text">代码</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       

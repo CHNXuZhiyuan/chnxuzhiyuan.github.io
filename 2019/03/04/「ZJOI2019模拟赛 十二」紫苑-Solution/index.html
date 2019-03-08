@@ -80,18 +80,18 @@
 
 
 
-<meta name="description" content="震惊！XZY竟然在ZJOI模拟赛时公然写代码造数据卡掉各种排序算法…">
+<meta name="description" content="震惊！XZY竟然在ZJOI模拟赛时公然写代码造数据卡掉各种排序算法...">
 <meta name="keywords" content="非传统题,提交答案题,排序,分析代码">
 <meta property="og:type" content="article">
 <meta property="og:title" content="「ZJOI2019模拟赛 十二」紫苑">
 <meta property="og:url" content="http://chnxuzhiyuan.cn/2019/03/04/「ZJOI2019模拟赛 十二」紫苑-Solution/index.html">
 <meta property="og:site_name" content="Welcome to XuZhiyuan&#39;s blog">
-<meta property="og:description" content="震惊！XZY竟然在ZJOI模拟赛时公然写代码造数据卡掉各种排序算法…">
+<meta property="og:description" content="震惊！XZY竟然在ZJOI模拟赛时公然写代码造数据卡掉各种排序算法...">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2019-03-04T13:09:48.580Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="「ZJOI2019模拟赛 十二」紫苑">
-<meta name="twitter:description" content="震惊！XZY竟然在ZJOI模拟赛时公然写代码造数据卡掉各种排序算法…">
+<meta name="twitter:description" content="震惊！XZY竟然在ZJOI模拟赛时公然写代码造数据卡掉各种排序算法...">
 
 
 
@@ -400,39 +400,102 @@
       
 
       
-        <p>震惊！XZY竟然在ZJOI模拟赛时公然写代码造数据卡掉各种排序算法…</p>
-<a id="more"></a>
-<h3 id="传送门"><a href="#传送门" class="headerlink" title="传送门"></a>传送门</h3><p>原题来自UOJ，但各个子任务的分值略有不同。</p>
-<p><a href="http://uoj.ac/problem/83" target="_blank" rel="noopener">UOJ83</a></p>
-<h3 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h3><p>这题是真的毒瘤QwQ。</p>
-<h4 id="Subtask-1"><a href="#Subtask-1" class="headerlink" title="Subtask #1"></a>Subtask #1</h4><p>观察一下计数排序法的代码，发现它在排序开始之前先把数组从$0$到$max(A_i)$清了一遍，那么只要给一个数，并且足够大即可。简直就是送分。</p>
-<h4 id="Subtask-2"><a href="#Subtask-2" class="headerlink" title="Subtask #2"></a>Subtask #2</h4><p>从第二个子任务开始，题目渐渐地毒瘤了起来。</p>
-<p>首先你需要知道对于冒泡排序法，交换元素的次数等于逆序对的个数。</p>
-<p>然后仔细分析代码，计算出冒泡排序法和计数排序法的具体复杂度，然后发现，只要构造一个长度为$1990​$的升序排列，然后选出$521​$对元素两两交换即可。此时冒泡刚好不会T，选排刚好T掉。</p>
-<h4 id="Subtask-3"><a href="#Subtask-3" class="headerlink" title="Subtask #3"></a>Subtask #3</h4><p>继续分析代码。发现快排没有随机化，那么就让每次选的基准数都是整个序列的最大或者最小值，然后手动二分得到$n​$的值应该为$1984​$。</p>
-<h4 id="Subtask-4"><a href="#Subtask-4" class="headerlink" title="Subtask #4"></a>Subtask #4</h4><p>对于冒泡排序法来说，一个降序的排列逆序对数最多，最容易T，但是对计数排序法就很不友好了。</p>
-<p>然后再随便写几个数列试试看，发现类似于这样的序列很不错：2 2 2 1 1 1 0 0 0，手动多试几次值域和每个值出现的次数，就把这个点搞掉了。</p>
-<h4 id="Subtask-5"><a href="#Subtask-5" class="headerlink" title="Subtask #5"></a>Subtask #5</h4><p>和子任务4一样是要卡冒泡，同样构造一个类似的序列，然后手动胡乱修改几个数的出现次数，然后就过了。（大雾</p>
-<h4 id="Subtask-6"><a href="#Subtask-6" class="headerlink" title="Subtask #6"></a>Subtask #6</h4><p>woc最恶心的一个点，一定要好好分析一下随机排序法的代码。</p>
-<p>首先发现随机函数是手写的，想到这里应该有玄机，赶紧仔细看看。</p>
-<p>发现seed、RNG_a、RNG_b的初值都是一个奇怪的数字，在10进制下看不出啥玩意，打开计算器，转到二进制下看看。</p>
-<p>然后发现RNG_a在二进制下是$1100101101010000000000001$，RNG_b是$100110100100000000000001$，后面都有一长串$0$和一个$1$。并且打乱数组时都是取随机值然后模$n$，然后想到如果$n$是$2$的正整数次幂的话就会有一些奇妙的性质：上面两个数字在模$n$意义下都等于$1​$。</p>
-<p>考虑到最好应该让该程序打乱一遍数组就排序好，并且题目中时间上限给的十分准确，枚举$n$，发现$n=4096$时计时器的值刚好是$43026$，由此根据<del>出题人心理学</del>套路断定$n$一定等于$4096$。</p>
-<p>然后再仔细观察，发现如果seed是一个确定的值，原序列各元素之间的大小关系可以确定。于是乎再枚举seed，发现$seed=2048$（模$n$的意义下）时倒推得到的原序列使得快排T掉了。可得$seed=2048$。</p>
-<p>但是由于seed是一个根据输入序列生成的值，所以在确定原序列各元素之间的大小关系的情况下，关键在于如何构造一个合法的序列使得$seed=2048$。</p>
-<p>所以可以先构造一个各元素值都尽量小的排列$A$，然后将所有大于$A[n]$的元素的值都加上个比如$10^6$，然后就可枚举$A[n]$，一点点把它的值变大，直到$seed=2048$。这样最后一个点就构造好了。</p>
-<p><del>然后恭喜你获得荣誉勋章：毒瘤出题人。</del></p>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><h4 id="Subtask-1-1"><a href="#Subtask-1-1" class="headerlink" title="Subtask #1"></a>Subtask #1</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//没有QwQ，手造</span></span><br></pre></td></tr></table></figure>
-<h4 id="Subtask-2-1"><a href="#Subtask-2-1" class="headerlink" title="Subtask #2"></a>Subtask #2</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">int</span> n,A[<span class="number">2000</span>];</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	n=<span class="number">1990</span>;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"%d\n"</span>,n);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++) A[i]=i;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=<span class="number">521</span>;i++) swap(A[i*<span class="number">2</span>],A[i*<span class="number">2</span><span class="number">-1</span>]);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"%d%c"</span>,A[i],i==n?<span class="string">'\n'</span>:<span class="string">' '</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="Subtask-3-1"><a href="#Subtask-3-1" class="headerlink" title="Subtask #3"></a>Subtask #3</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">int</span> n,A[<span class="number">5000</span>],counter;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	n=<span class="number">1984</span>;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"%d\n"</span>,n);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++) A[i]=i;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">int</span> j=(i+<span class="number">1</span>)/<span class="number">2</span>;</span><br><span class="line">		swap(A[i],A[j]);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"%d%c"</span>,A[i],i==n?<span class="string">'\n'</span>:<span class="string">' '</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="Subtask-4-1"><a href="#Subtask-4-1" class="headerlink" title="Subtask #4"></a>Subtask #4</h4><p>其实后面少了几个0，可以手动补上，不补也没关系。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"%d\n"</span>,<span class="number">1012</span>);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">30</span>;i&gt;=<span class="number">0</span>;i--)</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">1</span>;j&lt;=<span class="number">32</span>;j++)</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"%d "</span>,i);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="Subtask-5-1"><a href="#Subtask-5-1" class="headerlink" title="Subtask #5"></a>Subtask #5</h4><p>用这个代码生成数据后还有手动乱搞一下QwQ。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"%d\n"</span>,<span class="number">1015</span>);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">27</span>;i&gt;=<span class="number">0</span>;i--)</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">1</span>;j&lt;=<span class="number">40</span>;j++)</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"%d "</span>,i);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="Subtask-6-1"><a href="#Subtask-6-1" class="headerlink" title="Subtask #6"></a>Subtask #6</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">int</span> n,A[<span class="number">5000</span>],counter;<span class="keyword">unsigned</span> <span class="keyword">int</span> seed,RNG_a,RNG_b;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">RNG_init</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	counter++;</span><br><span class="line">	seed = <span class="number">2166136261u</span>;</span><br><span class="line">	counter++;</span><br><span class="line">	RNG_a = <span class="number">26648577u</span>;</span><br><span class="line">	counter++;</span><br><span class="line">	RNG_b = <span class="number">10108929u</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	freopen(<span class="string">"Shion.in"</span>,<span class="string">"wb"</span>,<span class="built_in">stdout</span>);</span><br><span class="line">	n=<span class="number">4096</span>;seed=<span class="number">2166136261u</span>;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"%d\n"</span>,n);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++) A[i]=i;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=n;i;i--)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">int</span> j=(i+<span class="number">2048</span>)%<span class="number">4096</span>+<span class="number">1</span>;</span><br><span class="line">		swap(A[i],A[j]);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line">		<span class="keyword">if</span>(A[i]&gt;A[n])</span><br><span class="line">			A[i]+=<span class="number">1000000</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;n;i++)</span><br><span class="line">		seed=(seed*<span class="number">16777619u</span>)^A[i];</span><br><span class="line">	<span class="keyword">while</span>(((seed*<span class="number">16777619u</span>)^A[n])%(<span class="keyword">unsigned</span> <span class="keyword">int</span>)<span class="number">4096</span>!=(<span class="keyword">unsigned</span> <span class="keyword">int</span>)<span class="number">2048</span>) A[n]++;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"%d%c"</span>,A[i],i==n?<span class="string">'\n'</span>:<span class="string">' '</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="答案"><a href="#答案" class="headerlink" title="答案"></a>答案</h3><p><a href="https://www.chnxuzhiyuan.cn/files/「ZJOI2019模拟赛-十二」紫苑-Solution.zip" target="_blank" rel="noopener">戳我呀^w^</a></p>
-<p>终于写完了QwQ<del>，出题人真是毒瘤QwQ</del>。</p>
+        
+震惊！XZY竟然在ZJOI模拟赛时公然写代码造数据卡掉各种排序算法...
 
+<a id="more"></a>
+
+### 传送门
+
+原题来自UOJ，但各个子任务的分值略有不同。
+
+[UOJ83](http://uoj.ac/problem/83)
+
+### 题解
+
+这题是真的毒瘤QwQ。
+
+#### Subtask #1
+
+观察一下计数排序法的代码，发现它在排序开始之前先把数组从$0$到$max(A_i)$清了一遍，那么只要给一个数，并且足够大即可。简直就是送分。
+
+#### Subtask #2
+
+从第二个子任务开始，题目渐渐地毒瘤了起来。
+
+首先你需要知道对于冒泡排序法，交换元素的次数等于逆序对的个数。
+
+然后仔细分析代码，计算出冒泡排序法和计数排序法的具体复杂度，然后发现，只要构造一个长度为$1990​$的升序排列，然后选出$521​$对元素两两交换即可。此时冒泡刚好不会T，选排刚好T掉。
+
+#### Subtask #3
+
+继续分析代码。发现快排没有随机化，那么就让每次选的基准数都是整个序列的最大或者最小值，然后手动二分得到$n​$的值应该为$1984​$。
+
+#### Subtask #4
+
+对于冒泡排序法来说，一个降序的排列逆序对数最多，最容易T，但是对计数排序法就很不友好了。
+
+然后再随便写几个数列试试看，发现类似于这样的序列很不错：2 2 2 1 1 1 0 0 0，手动多试几次值域和每个值出现的次数，就把这个点搞掉了。
+
+#### Subtask #5
+
+和子任务4一样是要卡冒泡，同样构造一个类似的序列，然后手动胡乱修改几个数的出现次数，然后就过了。（大雾
+
+#### Subtask #6
+
+woc最恶心的一个点，一定要好好分析一下随机排序法的代码。
+
+首先发现随机函数是手写的，想到这里应该有玄机，赶紧仔细看看。
+
+发现seed、RNG_a、RNG_b的初值都是一个奇怪的数字，在10进制下看不出啥玩意，打开计算器，转到二进制下看看。
+
+然后发现RNG_a在二进制下是$1100101101010000000000001$，RNG_b是$100110100100000000000001$，后面都有一长串$0$和一个$1$。并且打乱数组时都是取随机值然后模$n$，然后想到如果$n$是$2$的正整数次幂的话就会有一些奇妙的性质：上面两个数字在模$n$意义下都等于$1​$。
+
+考虑到最好应该让该程序打乱一遍数组就排序好，并且题目中时间上限给的十分准确，枚举$n$，发现$n=4096$时计时器的值刚好是$43026$，由此根据~~出题人心理学~~套路断定$n$一定等于$4096$。
+
+然后再仔细观察，发现如果seed是一个确定的值，原序列各元素之间的大小关系可以确定。于是乎再枚举seed，发现$seed=2048$（模$n$的意义下）时倒推得到的原序列使得快排T掉了。可得$seed=2048$。
+
+但是由于seed是一个根据输入序列生成的值，所以在确定原序列各元素之间的大小关系的情况下，关键在于如何构造一个合法的序列使得$seed=2048$。
+
+所以可以先构造一个各元素值都尽量小的排列$A$，然后将所有大于$A[n]$的元素的值都加上个比如$10^6$，然后就可枚举$A[n]$，一点点把它的值变大，直到$seed=2048$。这样最后一个点就构造好了。
+
+~~然后恭喜你获得荣誉勋章：毒瘤出题人。~~
+
+### 代码
+
+#### Subtask #1
+
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//没有QwQ，手造</span></span><br></pre></td></tr></table></figure>
+
+#### Subtask #2
+
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">int</span> n,A[<span class="number">2000</span>];</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	n=<span class="number">1990</span>;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"%d\n"</span>,n);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++) A[i]=i;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=<span class="number">521</span>;i++) swap(A[i*<span class="number">2</span>],A[i*<span class="number">2</span><span class="number">-1</span>]);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"%d%c"</span>,A[i],i==n?<span class="string">'\n'</span>:<span class="string">' '</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+#### Subtask #3
+
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">int</span> n,A[<span class="number">5000</span>],counter;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	n=<span class="number">1984</span>;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"%d\n"</span>,n);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++) A[i]=i;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">int</span> j=(i+<span class="number">1</span>)/<span class="number">2</span>;</span><br><span class="line">		swap(A[i],A[j]);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"%d%c"</span>,A[i],i==n?<span class="string">'\n'</span>:<span class="string">' '</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+#### Subtask #4
+
+其实后面少了几个0，可以手动补上，不补也没关系。
+
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"%d\n"</span>,<span class="number">1012</span>);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">30</span>;i&gt;=<span class="number">0</span>;i--)</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">1</span>;j&lt;=<span class="number">32</span>;j++)</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"%d "</span>,i);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+#### Subtask #5
+
+用这个代码生成数据后还有手动乱搞一下QwQ。
+
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"%d\n"</span>,<span class="number">1015</span>);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">27</span>;i&gt;=<span class="number">0</span>;i--)</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">1</span>;j&lt;=<span class="number">40</span>;j++)</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"%d "</span>,i);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+#### Subtask #6
+
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">int</span> n,A[<span class="number">5000</span>],counter;<span class="keyword">unsigned</span> <span class="keyword">int</span> seed,RNG_a,RNG_b;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">RNG_init</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	counter++;</span><br><span class="line">	seed = <span class="number">2166136261u</span>;</span><br><span class="line">	counter++;</span><br><span class="line">	RNG_a = <span class="number">26648577u</span>;</span><br><span class="line">	counter++;</span><br><span class="line">	RNG_b = <span class="number">10108929u</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	freopen(<span class="string">"Shion.in"</span>,<span class="string">"wb"</span>,<span class="built_in">stdout</span>);</span><br><span class="line">	n=<span class="number">4096</span>;seed=<span class="number">2166136261u</span>;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"%d\n"</span>,n);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++) A[i]=i;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=n;i;i--)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">int</span> j=(i+<span class="number">2048</span>)%<span class="number">4096</span>+<span class="number">1</span>;</span><br><span class="line">		swap(A[i],A[j]);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line">		<span class="keyword">if</span>(A[i]&gt;A[n])</span><br><span class="line">			A[i]+=<span class="number">1000000</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;n;i++)</span><br><span class="line">		seed=(seed*<span class="number">16777619u</span>)^A[i];</span><br><span class="line">	<span class="keyword">while</span>(((seed*<span class="number">16777619u</span>)^A[n])%(<span class="keyword">unsigned</span> <span class="keyword">int</span>)<span class="number">4096</span>!=(<span class="keyword">unsigned</span> <span class="keyword">int</span>)<span class="number">2048</span>) A[n]++;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"%d%c"</span>,A[i],i==n?<span class="string">'\n'</span>:<span class="string">' '</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+### 答案
+
+[戳我呀^w^](https://www.chnxuzhiyuan.cn/files/「ZJOI2019模拟赛-十二」紫苑-Solution.zip)
+
+终于写完了QwQ~~，出题人真是毒瘤QwQ~~。
       
     </div>
     
@@ -478,8 +541,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/03/04/「SNOI2017」一个简单的询问-Solution/" rel="prev" title="「SNOI2017」一个简单的询问">
-                「SNOI2017」一个简单的询问 <i class="fa fa-chevron-right"></i>
+              <a href="/2019/03/04/「AHOI2001」多项式乘法-Solution/" rel="prev" title="「AHOI2001」多项式乘法">
+                「AHOI2001」多项式乘法 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -535,17 +598,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -562,7 +616,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-count">38</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -641,22 +695,6 @@
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#传送门"><span class="nav-number">1.</span> <span class="nav-text">传送门</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#题解"><span class="nav-number">2.</span> <span class="nav-text">题解</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Subtask-1"><span class="nav-number">2.1.</span> <span class="nav-text">Subtask #1</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Subtask-2"><span class="nav-number">2.2.</span> <span class="nav-text">Subtask #2</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Subtask-3"><span class="nav-number">2.3.</span> <span class="nav-text">Subtask #3</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Subtask-4"><span class="nav-number">2.4.</span> <span class="nav-text">Subtask #4</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Subtask-5"><span class="nav-number">2.5.</span> <span class="nav-text">Subtask #5</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Subtask-6"><span class="nav-number">2.6.</span> <span class="nav-text">Subtask #6</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码"><span class="nav-number">3.</span> <span class="nav-text">代码</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Subtask-1-1"><span class="nav-number">3.1.</span> <span class="nav-text">Subtask #1</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Subtask-2-1"><span class="nav-number">3.2.</span> <span class="nav-text">Subtask #2</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Subtask-3-1"><span class="nav-number">3.3.</span> <span class="nav-text">Subtask #3</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Subtask-4-1"><span class="nav-number">3.4.</span> <span class="nav-text">Subtask #4</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Subtask-5-1"><span class="nav-number">3.5.</span> <span class="nav-text">Subtask #5</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Subtask-6-1"><span class="nav-number">3.6.</span> <span class="nav-text">Subtask #6</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#答案"><span class="nav-number">4.</span> <span class="nav-text">答案</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       

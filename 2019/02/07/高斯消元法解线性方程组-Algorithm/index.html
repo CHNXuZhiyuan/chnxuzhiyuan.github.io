@@ -400,21 +400,34 @@
       
 
       
-        <p>骚年？高斯消元了解一下！！！</p>
+        
+骚年？高斯消元了解一下！！！
+
 <a id="more"></a>
-<h3 id="引入问题"><a href="#引入问题" class="headerlink" title="引入问题"></a>引入问题</h3><p>昨天，蒟蒻我遇到了一道题（<a href="https://www.chnxuzhiyuan.cn/2019/02/06/%E3%80%8CJSOI2008%E3%80%8D%E7%90%83%E5%BD%A2%E7%A9%BA%E9%97%B4%E4%BA%A7%E7%94%9F%E5%99%A8-Solution/" target="_blank" rel="noopener">传送门</a>）。需要解一个<strong>n元非齐次线性方程组</strong>，才发现蒟蒻我这些玩意儿都忘得差不多了，吓得我赶紧掏出线性代数小紫书补一补，然后马上写个博客压压惊。</p>
-<p>什么？您不知道什么是n元非齐次线性方程组？就是n元一次方程组啊！</p>
-<p>什么？您还是不知道？那肯定是dalao您又在嘲讽蒟蒻我了。请dalao您自行Ctrl+W！！！</p>
-<p>写得可能有不周到或者有问题的地方，还请dalao们多多指教。</p>
-<h3 id="理论基础"><a href="#理论基础" class="headerlink" title="理论基础"></a>理论基础</h3><p>比如说，有这样一个由$n$个方程组成的$n$元线性方程组：</p>
-<script type="math/tex; mode=display">
+
+### 引入问题
+
+昨天，蒟蒻我遇到了一道题（[传送门](https://www.chnxuzhiyuan.cn/2019/02/06/%E3%80%8CJSOI2008%E3%80%8D%E7%90%83%E5%BD%A2%E7%A9%BA%E9%97%B4%E4%BA%A7%E7%94%9F%E5%99%A8-Solution/)）。需要解一个**n元非齐次线性方程组**，才发现蒟蒻我这些玩意儿都忘得差不多了，吓得我赶紧掏出线性代数小紫书补一补，然后马上写个博客压压惊。
+
+什么？您不知道什么是n元非齐次线性方程组？就是n元一次方程组啊！
+
+什么？您还是不知道？那肯定是dalao您又在嘲讽蒟蒻我了。请dalao您自行Ctrl+W！！！
+
+写得可能有不周到或者有问题的地方，还请dalao们多多指教。
+
+### 理论基础
+
+比如说，有这样一个由$n$个方程组成的$n$元线性方程组：
+$$
 \begin{cases}
 a_{11}x_1+a_{12}x_2+\cdots+a_{1n}x_n=b_1\\
 a_{21}x_1+a_{22}x_2+\cdots+a_{2n}x_n=b_2\\
 \vdots\\
 a_{n1}x_1+a_{n2}x_2+\cdots+a_{nn}x_n=b_n\\
-\end{cases}</script><p>我们可以把它表示成矩阵乘法的形式：</p>
-<script type="math/tex; mode=display">
+\end{cases}
+$$
+我们可以把它表示成矩阵乘法的形式：
+$$
 \begin{Bmatrix}
 {a_{11}}&{a_{12}}&{\cdots}&{a_{1n}}\\
 {a_{21}}&{a_{22}}&{\cdots}&{a_{2n}}\\
@@ -434,8 +447,10 @@ a_{n1}x_1+a_{n2}x_2+\cdots+a_{nn}x_n=b_n\\
 {b_2}\\
 {\vdots}\\
 {b_n}\\
-\end{Bmatrix}</script><p>有这样几个有用的矩阵：</p>
-<script type="math/tex; mode=display">
+\end{Bmatrix}
+$$
+有这样几个有用的矩阵：
+$$
 A=(a_{ij}),
 x=
 \begin{Bmatrix}
@@ -457,42 +472,66 @@ B=
 {a_{21}}&{a_{22}}&{\cdots}&{a_{2n}}&{b_2}\\
 {\vdots}&{\vdots}&{\ddots}&{\vdots}&{\vdots}\\
 {a_{n1}}&{a_{n2}}&{\cdots}&{a_{nn}}&{b_n}\\
-\end{Bmatrix}</script><p>其中$A$称为<strong>系数矩阵</strong>，$x$称为<strong>未知数矩阵</strong>，$b$称为<strong>常数项矩阵</strong>，$B$称为<strong>增广矩阵</strong>。</p>
-<p>如果系数矩阵是形如下面这个样子上三角矩阵（即对角线以下都为0），那么就很爽了：</p>
-<script type="math/tex; mode=display">
+\end{Bmatrix}
+$$
+其中$A$称为**系数矩阵**，$x$称为**未知数矩阵**，$b$称为**常数项矩阵**，$B$称为**增广矩阵**。
+
+如果系数矩阵是形如下面这个样子上三角矩阵（即对角线以下都为0），那么就很爽了：
+$$
 \begin{Bmatrix}
 {a_{11}}&{a_{12}}&{\cdots}&{a_{1n}}\\
 {0}&{a_{22}}&{\cdots}&{a_{2n}}\\
 {\vdots}&{\vdots}&{\ddots}&{\vdots}\\
 {0}&{0}&{\cdots}&{a_{nn}}\\
-\end{Bmatrix}</script><p>其中$a_{nn}$的值就是$x_n$的值，这样就解出了一个未知数的值，然后代入上一个方程中，就能解出$x_{n-1}$的值然后一直往上代入并求解，这样方程组就解出来了耶！</p>
-<p>但是很显然这么好的事情并不是每次都有（<del>特别是对于我这种脸黑的蒟蒻来说`</del>）。</p>
-<p>所以我们就要想办法把系数矩阵变成这个样子，高斯消元就是干这个的。</p>
-<p>我们就先把增广矩阵拎出来，其他的扔到一边<del>腌制半个小时待用</del>不管了。</p>
-<p>我们可以把增广矩阵的一行乘以任意一个系数然后加到另一行，方程组的解不变。</p>
-<p>其实就是相当于把原方程组的一个方程乘以一个系数再加到另一个方程组上。</p>
-<p>我们可以把第一行的元素乘以一个系数加到第二行，乘以另一个系数加到第三行……一直加到第$n$行。</p>
-<p>然后就可以把矩阵变成这样：</p>
-<script type="math/tex; mode=display">
+\end{Bmatrix}
+$$
+其中$a_{nn}$的值就是$x_n$的值，这样就解出了一个未知数的值，然后代入上一个方程中，就能解出$x_{n-1}$的值然后一直往上代入并求解，这样方程组就解出来了耶！
+
+但是很显然这么好的事情并不是每次都有（~~特别是对于我这种脸黑的蒟蒻来说`~~）。
+
+所以我们就要想办法把系数矩阵变成这个样子，高斯消元就是干这个的。
+
+我们就先把增广矩阵拎出来，其他的扔到一边~~腌制半个小时待用~~不管了。
+
+我们可以把增广矩阵的一行乘以任意一个系数然后加到另一行，方程组的解不变。
+
+其实就是相当于把原方程组的一个方程乘以一个系数再加到另一个方程组上。
+
+我们可以把第一行的元素乘以一个系数加到第二行，乘以另一个系数加到第三行......一直加到第$n$行。
+
+然后就可以把矩阵变成这样：
+$$
 \begin{Bmatrix}
 {a_{11}}&{a_{12}}&{\cdots}&{a_{1n}}&{b_1}\\
 {0}&{a_{22}'}&{\cdots}&{a_{2n}'}&{b_2'}\\
 {\vdots}&{\vdots}&{\ddots}&{\vdots}&{\vdots}\\
 {0}&{a_{n2}'}&{\cdots}&{a_{nn}'}&{b_n'}\\
-\end{Bmatrix}</script><p>然后再把操作后的矩阵的第二行乘以一个系数加到第三行、第四行重复上面的操作，然后矩阵就会变成这样：</p>
-<script type="math/tex; mode=display">
+\end{Bmatrix}
+$$
+然后再把操作后的矩阵的第二行乘以一个系数加到第三行、第四行重复上面的操作，然后矩阵就会变成这样：
+$$
 \begin{Bmatrix}
 {a_{11}}&{a_{12}}&{\cdots}&{a_{1n}}&{b_1}\\
 {0}&{a_{22}'}&{\cdots}&{a_{2n}'}&{b_2'}\\
 {\vdots}&{\vdots}&{\ddots}&{\vdots}&{\vdots}\\
 {0}&{0}&{\cdots}&{a_{nn}''}&{b_n''}\\
-\end{Bmatrix}</script><p>再重复上面的操作，最终矩阵就会变成理想状态了。然后依次代入消元即可。</p>
-<p>需要注意的是，如果系数矩阵的对角线上有$0$的话是会出事的，记得特殊处理一下。</p>
-<p>然后就没有然后了，理论部分就是这样。</p>
-<h3 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h3><p><a href="https://www.chnxuzhiyuan.cn/2019/02/06/%E3%80%8CJSOI2008%E3%80%8D%E7%90%83%E5%BD%A2%E7%A9%BA%E9%97%B4%E4%BA%A7%E7%94%9F%E5%99%A8-Solution/" target="_blank" rel="noopener">详见我的上一篇博客</a></p>
-<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><p>参考资料 ： 工程数学——线性代数  第六版 同济大学数学系。</p>
-<p>话说MathJax的数学公式用起来真是赏心悦目。</p>
+\end{Bmatrix}
+$$
+再重复上面的操作，最终矩阵就会变成理想状态了。然后依次代入消元即可。
 
+需要注意的是，如果系数矩阵的对角线上有$0$的话是会出事的，记得特殊处理一下。
+
+然后就没有然后了，理论部分就是这样。
+
+### 代码实现
+
+[详见我的上一篇博客](https://www.chnxuzhiyuan.cn/2019/02/06/%E3%80%8CJSOI2008%E3%80%8D%E7%90%83%E5%BD%A2%E7%A9%BA%E9%97%B4%E4%BA%A7%E7%94%9F%E5%99%A8-Solution/)
+
+### 其他
+
+参考资料 ： 工程数学——线性代数  第六版 同济大学数学系。
+
+话说MathJax的数学公式用起来真是赏心悦目。
       
     </div>
     
@@ -593,17 +632,8 @@ B=
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -620,7 +650,7 @@ B=
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-count">38</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -699,22 +729,6 @@ B=
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#引入问题"><span class="nav-number">1.</span> <span class="nav-text">引入问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#理论基础"><span class="nav-number">2.</span> <span class="nav-text">理论基础</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码实现"><span class="nav-number">3.</span> <span class="nav-text">代码实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他"><span class="nav-number">4.</span> <span class="nav-text">其他</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       

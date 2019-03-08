@@ -69,7 +69,7 @@
 
 
 
-  <meta name="keywords" content="DP,BFS,">
+  <meta name="keywords" content="BFS,DP,">
 
 
 
@@ -81,7 +81,7 @@
 
 
 <meta name="description" content="这题面，生动形象，饶有趣味，interesting！出题人呢？">
-<meta name="keywords" content="DP,BFS">
+<meta name="keywords" content="BFS,DP">
 <meta property="og:type" content="article">
 <meta property="og:title" content="「AHOI2017&#x2F;HNOI2017」大佬">
 <meta property="og:url" content="http://chnxuzhiyuan.cn/2019/02/13/「AHOI2017 HNOI2017」大佬-Solution/index.html">
@@ -400,20 +400,41 @@
       
 
       
-        <p>这题面，生动形象，饶有趣味，interesting！出题人呢？</p>
+        
+这题面，生动形象，饶有趣味，interesting！出题人呢？
+
 <a id="more"></a>
-<h3 id="传送门"><a href="#传送门" class="headerlink" title="传送门"></a>传送门</h3><p><a href="https://www.luogu.org/problemnew/show/P3724" target="_blank" rel="noopener">洛谷P3724</a></p>
-<p><a href="https://www.lydsy.com/JudgeOnline/problem.php?id=4828" target="_blank" rel="noopener">BZOJ4828</a></p>
-<h3 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h3><p>先把又臭又长的题面读两遍，然后很显然，保证自己不死和把大佬怼死是两个不同的环节，两个问题，分别解决，互不干扰（<del>这话咋这么耳熟呢</del>）。</p>
-<p>设$F[i][j]​$表示到了第$i​$天，自己的自信值为$j​$，最多可以多少天不刷水题。</p>
-<p>那么就可以腾出$\max_{i=1}^{n}{\max_{j=0}^{mc}{F[i][j]}}​$天来专门怼大佬。</p>
-<p>注意不是$\max_{j=0}^{mc}{F[n][j]}​$，可能还没到第$n​$天就可以把大佬怼死，但是到了第$n​$天不可能不被大佬怼死。</p>
-<p>那么问题就转化为：给你$D​$天，每天可以执行操作1、3、4或5，问你能不能把大佬的自信值怼到$0​$？</p>
-<p>注意是怼到$0​$，不能单纯刷DP取最大值，那样可能把大佬的自信值怼到负，而且可以怼的自信值不一定连续。</p>
-<p>设一种只用操作3、4、5的怼大佬方案为$(Hurt，Day)​$表示用了$Day​$天对大佬产生了$Hurt​$点伤害，发现数据范围并不大，所以就可以用BFS把所有方案都列出来。至于到底有多少种方案，玄学，反正数组开大点就好了。$Hash​$判重，直接调STL里的map的话时效会差一些。（<del>但是我懒，所以调了map</del>）</p>
-<p>然后把所有怼大佬的方案按照伤害排序，用两个指针，一头一尾扫过去就好了，注意两个方案的伤害之和不能超过大佬的自信值，且剩下位怼完的自信值可以用剩余的天数通过操作1把大佬怼死就行了。</p>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><p>稍微有点长QwQ</p>
+
+### 传送门
+
+[洛谷P3724](https://www.luogu.org/problemnew/show/P3724)
+
+[BZOJ4828](https://www.lydsy.com/JudgeOnline/problem.php?id=4828)
+
+### 题解
+
+先把又臭又长的题面读两遍，然后很显然，保证自己不死和把大佬怼死是两个不同的环节，两个问题，分别解决，互不干扰（~~这话咋这么耳熟呢~~）。
+
+设$F[i][j]​$表示到了第$i​$天，自己的自信值为$j​$，最多可以多少天不刷水题。
+
+那么就可以腾出$\max_{i=1}^{n}{\max_{j=0}^{mc}{F[i][j]}}​$天来专门怼大佬。
+
+注意不是$\max_{j=0}^{mc}{F[n][j]}​$，可能还没到第$n​$天就可以把大佬怼死，但是到了第$n​$天不可能不被大佬怼死。
+
+那么问题就转化为：给你$D​$天，每天可以执行操作1、3、4或5，问你能不能把大佬的自信值怼到$0​$？
+
+注意是怼到$0​$，不能单纯刷DP取最大值，那样可能把大佬的自信值怼到负，而且可以怼的自信值不一定连续。
+
+设一种只用操作3、4、5的怼大佬方案为$(Hurt，Day)​$表示用了$Day​$天对大佬产生了$Hurt​$点伤害，发现数据范围并不大，所以就可以用BFS把所有方案都列出来。至于到底有多少种方案，玄学，反正数组开大点就好了。$Hash​$判重，直接调STL里的map的话时效会差一些。（~~但是我懒，所以调了map~~）
+
+然后把所有怼大佬的方案按照伤害排序，用两个指针，一头一尾扫过去就好了，注意两个方案的伤害之和不能超过大佬的自信值，且剩下位怼完的自信值可以用剩余的天数通过操作1把大佬怼死就行了。
+
+### 代码
+
+稍微有点长QwQ
+
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;map&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">long</span> LL;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn=<span class="number">105</span>,inf=<span class="number">0x3F3F3F3F</span>;</span><br><span class="line"><span class="keyword">int</span> n,m,mc,a[maxn],w[maxn],D,F[maxn][maxn],tot,T[<span class="number">2000005</span>];</span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">read</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> ret=<span class="number">0</span>,f=<span class="number">1</span>;<span class="keyword">char</span> ch=getchar();</span><br><span class="line">	<span class="keyword">while</span>(ch&lt;<span class="string">'0'</span>||ch&gt;<span class="string">'9'</span>)&#123;<span class="keyword">if</span>(ch==<span class="string">'-'</span>)f=-f;ch=getchar();&#125;</span><br><span class="line">	<span class="keyword">while</span>(ch&gt;=<span class="string">'0'</span>&amp;&amp;ch&lt;=<span class="string">'9'</span>)&#123;ret=ret*<span class="number">10</span>+ch-<span class="string">'0'</span>;ch=getchar();&#125;</span><br><span class="line">	<span class="keyword">return</span> ret*f;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">GetFightDays</span><span class="params">()</span>            <span class="comment">//刷DP计算天数</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">memset</span>(F,<span class="number">-1</span>,<span class="keyword">sizeof</span>(F));F[<span class="number">0</span>][mc]=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j=a[i];j&lt;=mc;j++)       <span class="comment">//注意不要越界</span></span><br><span class="line">		&#123;</span><br><span class="line">			F[i][j-a[i]]=max(F[i][j-a[i]],F[i<span class="number">-1</span>][j]+<span class="number">1</span>);</span><br><span class="line">			<span class="keyword">int</span> x=min(mc,j-a[i]+w[i] );</span><br><span class="line">			F[i][x]=max(F[i][x],F[i<span class="number">-1</span>][j]);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;=mc;j++)</span><br><span class="line">			<span class="keyword">if</span>(F[i][j]&gt;D)</span><br><span class="line">				D=F[i][j];</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Node</span>&#123;</span><span class="keyword">int</span> F,L;&#125;Q[<span class="number">2000005</span>];</span><br><span class="line"><span class="built_in">map</span>&lt;<span class="keyword">int</span>,<span class="built_in">map</span>&lt;<span class="keyword">int</span>,<span class="keyword">int</span>&gt; &gt; Day;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Plan</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	<span class="keyword">int</span> Hurt,Days;</span><br><span class="line">	<span class="keyword">bool</span> <span class="keyword">operator</span> &lt; (<span class="keyword">const</span> Plan&amp; b)<span class="keyword">const</span>&#123;<span class="keyword">return</span> Hurt&lt;b.Hurt;&#125;</span><br><span class="line">&#125;P[<span class="number">2000005</span>];</span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">BFS</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> hed=<span class="number">0</span>,til=<span class="number">1</span>,ddd;</span><br><span class="line">	Q[<span class="number">1</span>]=(Node)&#123;<span class="number">1</span>,<span class="number">0</span>&#125;;Day[<span class="number">1</span>][<span class="number">0</span>]=T[<span class="number">1</span>]=<span class="number">1</span>;<span class="comment">//刷BFS搞出所有可能的方案</span></span><br><span class="line">	<span class="keyword">while</span>(hed!=til)</span><br><span class="line">	&#123;</span><br><span class="line">		hed++;ddd=Day[Q[hed].F][Q[hed].L];</span><br><span class="line">		<span class="keyword">if</span>(ddd&gt;=D) <span class="keyword">continue</span>;</span><br><span class="line">		<span class="keyword">if</span>(!Day[Q[hed].F][Q[hed].L+<span class="number">1</span>])</span><br><span class="line">		&#123;</span><br><span class="line">			til++;Q[til].F=Q[hed].F;Q[til].L=Q[hed].L+<span class="number">1</span>;</span><br><span class="line">			Day[Q[til].F][Q[til].L]=T[til]=ddd+<span class="number">1</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>((LL)Q[hed].F*Q[hed].L&lt;=<span class="number">100000000</span>&amp;&amp;!Day[Q[hed].F*Q[hed].L][Q[hed].L])</span><br><span class="line">		&#123;</span><br><span class="line">			til++;Q[til].F=Q[hed].F*Q[hed].L;Q[til].L=Q[hed].L;</span><br><span class="line">			Day[Q[til].F][Q[til].L]=T[til]=ddd+<span class="number">1</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	P[++tot]=(Plan)&#123;<span class="number">0</span>,<span class="number">0</span>&#125;;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=til;i++)</span><br><span class="line">		P[++tot]=(Plan)&#123;Q[i].F,Day[Q[i].F][Q[i].L]&#125;;</span><br><span class="line">	sort(P+<span class="number">1</span>,P+<span class="number">1</span>+tot);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Check</span><span class="params">(<span class="keyword">int</span> C)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> j=<span class="number">1</span>,mi=inf;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=tot;i;i--)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">while</span>(i&gt;j&amp;&amp;P[i].Hurt+P[j].Hurt&lt;=C)</span><br><span class="line">		&#123;</span><br><span class="line">			mi=min(mi,P[j].Days-P[j].Hurt);</span><br><span class="line">			j++;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>(D&gt;=C-P[i].Hurt+P[i].Days+mi) <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	n=read();m=read();mc=read();</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++) a[i]=read();</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++) w[i]=read();</span><br><span class="line">	GetFightDays();</span><br><span class="line">	BFS();</span><br><span class="line">	<span class="keyword">while</span>(m--)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">int</span> Ci=read();</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"%d\n"</span>,Check(Ci));</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 
       
     </div>
@@ -431,9 +452,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/DP/" rel="tag"># DP</a>
-          
             <a href="/tags/BFS/" rel="tag"># BFS</a>
+          
+            <a href="/tags/DP/" rel="tag"># DP</a>
           
         </div>
       
@@ -513,17 +534,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -540,7 +552,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-count">38</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -619,22 +631,6 @@
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#传送门"><span class="nav-number">1.</span> <span class="nav-text">传送门</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#题解"><span class="nav-number">2.</span> <span class="nav-text">题解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码"><span class="nav-number">3.</span> <span class="nav-text">代码</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       

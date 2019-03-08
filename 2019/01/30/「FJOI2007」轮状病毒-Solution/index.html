@@ -69,7 +69,7 @@
 
 
 
-  <meta name="keywords" content="数数,DP,递推,高精度,">
+  <meta name="keywords" content="DP,数数,递推,高精度,">
 
 
 
@@ -80,18 +80,18 @@
 
 
 
-<meta name="description" content="数数题怎么这么讨厌呀QwQ…">
-<meta name="keywords" content="数数,DP,递推,高精度">
+<meta name="description" content="数数题怎么这么讨厌呀QwQ...">
+<meta name="keywords" content="DP,数数,递推,高精度">
 <meta property="og:type" content="article">
 <meta property="og:title" content="「FJOI2007」轮状病毒">
 <meta property="og:url" content="http://chnxuzhiyuan.cn/2019/01/30/「FJOI2007」轮状病毒-Solution/index.html">
 <meta property="og:site_name" content="Welcome to XuZhiyuan&#39;s blog">
-<meta property="og:description" content="数数题怎么这么讨厌呀QwQ…">
+<meta property="og:description" content="数数题怎么这么讨厌呀QwQ...">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2019-01-30T10:58:21.763Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="「FJOI2007」轮状病毒">
-<meta name="twitter:description" content="数数题怎么这么讨厌呀QwQ…">
+<meta name="twitter:description" content="数数题怎么这么讨厌呀QwQ...">
 
 
 
@@ -400,59 +400,56 @@
       
 
       
-        <p>数数题怎么这么讨厌呀QwQ…</p>
+        
+数数题怎么这么讨厌呀QwQ...
+
 <a id="more"></a>
-<h3 id="传送门"><a href="#传送门" class="headerlink" title="传送门"></a>传送门</h3><p><a href="https://www.luogu.org/problemnew/show/P2144" target="_blank" rel="noopener">洛谷P2144</a></p>
-<p><a href="https://www.lydsy.com/JudgeOnline/problem.php?id=1002" target="_blank" rel="noopener">BZOJ1002</a></p>
-<h3 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h3><p>这种数数题当然要先找规律呀poi！</p>
-<p>通过手玩或者暴力，可以得到以下表格：</p>
-<div class="table-container">
-<table>
-<thead>
-<tr>
-<th>n</th>
-<th>ans</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1</td>
-<td>1</td>
-</tr>
-<tr>
-<td>2</td>
-<td>5</td>
-</tr>
-<tr>
-<td>3</td>
-<td>16</td>
-</tr>
-<tr>
-<td>4</td>
-<td>45</td>
-</tr>
-<tr>
-<td>5</td>
-<td>121</td>
-</tr>
-<tr>
-<td>6</td>
-<td>320</td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>咦？当$n$为奇数时，$ans$都是完全平方数哇！！！</p>
-<p>那么当$n$为偶数时呢？</p>
-<p>哟，$ans$加上4之后也都是完全平方数呢！！！</p>
-<p>把这些完全平方数开个方试试看！！！</p>
-<p>就得到了这样的一个序列：1 3 4 7 11 18…</p>
-<p>呀呀呀！这不就是一个变形的斐波那契数列么？</p>
-<p>并且$n​$很小，直接上高精度就好了呢poi。</p>
-<p>然后这题就做完了QwQ…</p>
-<p>别问我为什么有这样的规律，我也不知道QwQ…</p>
-<p><del>码完代码测样例，才发现高精度都写挂了，我好菜啊QwQ</del></p>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn=<span class="number">105</span>;</span><br><span class="line"><span class="keyword">int</span> n;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">BigInt</span>                //封装好的高精度</span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	<span class="keyword">int</span> a[<span class="number">50</span>],len;</span><br><span class="line">	BigInt()&#123;len=<span class="number">0</span>;<span class="built_in">memset</span>(a,<span class="number">0</span>,<span class="keyword">sizeof</span>(a));&#125;</span><br><span class="line">	BigInt(<span class="keyword">int</span> x)</span><br><span class="line">	&#123;</span><br><span class="line">		len=<span class="number">0</span>;<span class="built_in">memset</span>(a,<span class="number">0</span>,<span class="keyword">sizeof</span>(a));</span><br><span class="line">		<span class="keyword">while</span>(x)&#123;len++;a[len]=x%<span class="number">10</span>;x/=<span class="number">10</span>;&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	BigInt <span class="keyword">operator</span> + (<span class="keyword">const</span> BigInt&amp; b)</span><br><span class="line">	&#123;</span><br><span class="line">		BigInt c;</span><br><span class="line">		c.len=max(len,b.len);</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=c.len;i++)</span><br><span class="line">		&#123;</span><br><span class="line">			c.a[i]+=a[i]+b.a[i];</span><br><span class="line">			c.a[i+<span class="number">1</span>]+=c.a[i]/<span class="number">10</span>;</span><br><span class="line">			c.a[i]%=<span class="number">10</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>(c.a[c.len+<span class="number">1</span>]) c.len++;</span><br><span class="line">		<span class="keyword">return</span> c;</span><br><span class="line">	&#125;</span><br><span class="line">	BigInt <span class="keyword">operator</span> * (<span class="keyword">const</span> BigInt&amp; b)</span><br><span class="line">	&#123;</span><br><span class="line">		BigInt c;</span><br><span class="line">		c.len=len+b.len<span class="number">-1</span>;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=len;i++)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">1</span>;j&lt;=b.len;j++)</span><br><span class="line">			&#123;</span><br><span class="line">				c.a[i+j<span class="number">-1</span>]+=a[i]*b.a[j];</span><br><span class="line">				c.a[i+j]+=c.a[i+j<span class="number">-1</span>]/<span class="number">10</span>;</span><br><span class="line">				c.a[i+j<span class="number">-1</span>]%=<span class="number">10</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>(c.a[c.len+<span class="number">1</span>]) c.len++;</span><br><span class="line">		<span class="keyword">return</span> c;</span><br><span class="line">	&#125;</span><br><span class="line">	BigInt <span class="keyword">operator</span> - (<span class="keyword">const</span> <span class="keyword">int</span>&amp; b)           <span class="comment">//这个减法只能减去10以内的数</span></span><br><span class="line">	&#123;</span><br><span class="line">		BigInt c=*<span class="keyword">this</span>;</span><br><span class="line">		c.a[<span class="number">1</span>]-=b;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=c.len&amp;&amp;c.a[i]&lt;<span class="number">0</span>;i++)</span><br><span class="line">		&#123;</span><br><span class="line">			c.a[i]+=<span class="number">10</span>;</span><br><span class="line">			c.a[i+<span class="number">1</span>]--;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">while</span>(!c.a[c.len]) c.len--;</span><br><span class="line">		<span class="keyword">return</span> c;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">Print</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i=len;i;i--) <span class="built_in">printf</span>(<span class="string">"%d"</span>,a[i]);</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"\n"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;F[maxn],ans;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;n);F[<span class="number">1</span>]=<span class="number">1</span>;F[<span class="number">2</span>]=<span class="number">3</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">3</span>;i&lt;=n;i++) F[i]=F[i<span class="number">-1</span>]+F[i<span class="number">-2</span>];</span><br><span class="line">	ans=F[n]*F[n];</span><br><span class="line">	<span class="keyword">if</span>(n%<span class="number">2</span>==<span class="number">0</span>) ans=ans<span class="number">-4</span>;           <span class="comment">//n为偶数时记得减去4哟</span></span><br><span class="line">	ans.Print();</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+### 传送门
+
+[洛谷P2144](https://www.luogu.org/problemnew/show/P2144)
+
+[BZOJ1002](https://www.lydsy.com/JudgeOnline/problem.php?id=1002)
+
+###  题解
+
+这种数数题当然要先找规律呀poi！
+
+通过手玩或者暴力，可以得到以下表格：
+
+| n    | ans  |
+| ---- | ---- |
+| 1    | 1    |
+| 2    | 5    |
+| 3    | 16   |
+| 4    | 45   |
+| 5    | 121  |
+| 6    | 320  |
+
+咦？当$n$为奇数时，$ans$都是完全平方数哇！！！
+
+那么当$n$为偶数时呢？
+
+哟，$ans$加上4之后也都是完全平方数呢！！！
+
+把这些完全平方数开个方试试看！！！
+
+就得到了这样的一个序列：1 3 4 7 11 18...
+
+呀呀呀！这不就是一个变形的斐波那契数列么？
+
+并且$n​$很小，直接上高精度就好了呢poi。
+
+然后这题就做完了QwQ...
+
+别问我为什么有这样的规律，我也不知道QwQ...
+
+~~码完代码测样例，才发现高精度都写挂了，我好菜啊QwQ~~
+
+### 代码
+
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn=<span class="number">105</span>;</span><br><span class="line"><span class="keyword">int</span> n;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">BigInt</span>                //封装好的高精度</span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	<span class="keyword">int</span> a[<span class="number">50</span>],len;</span><br><span class="line">	BigInt()&#123;len=<span class="number">0</span>;<span class="built_in">memset</span>(a,<span class="number">0</span>,<span class="keyword">sizeof</span>(a));&#125;</span><br><span class="line">	BigInt(<span class="keyword">int</span> x)</span><br><span class="line">	&#123;</span><br><span class="line">		len=<span class="number">0</span>;<span class="built_in">memset</span>(a,<span class="number">0</span>,<span class="keyword">sizeof</span>(a));</span><br><span class="line">		<span class="keyword">while</span>(x)&#123;len++;a[len]=x%<span class="number">10</span>;x/=<span class="number">10</span>;&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	BigInt <span class="keyword">operator</span> + (<span class="keyword">const</span> BigInt&amp; b)</span><br><span class="line">	&#123;</span><br><span class="line">		BigInt c;</span><br><span class="line">		c.len=max(len,b.len);</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=c.len;i++)</span><br><span class="line">		&#123;</span><br><span class="line">			c.a[i]+=a[i]+b.a[i];</span><br><span class="line">			c.a[i+<span class="number">1</span>]+=c.a[i]/<span class="number">10</span>;</span><br><span class="line">			c.a[i]%=<span class="number">10</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>(c.a[c.len+<span class="number">1</span>]) c.len++;</span><br><span class="line">		<span class="keyword">return</span> c;</span><br><span class="line">	&#125;</span><br><span class="line">	BigInt <span class="keyword">operator</span> * (<span class="keyword">const</span> BigInt&amp; b)</span><br><span class="line">	&#123;</span><br><span class="line">		BigInt c;</span><br><span class="line">		c.len=len+b.len<span class="number">-1</span>;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=len;i++)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">1</span>;j&lt;=b.len;j++)</span><br><span class="line">			&#123;</span><br><span class="line">				c.a[i+j<span class="number">-1</span>]+=a[i]*b.a[j];</span><br><span class="line">				c.a[i+j]+=c.a[i+j<span class="number">-1</span>]/<span class="number">10</span>;</span><br><span class="line">				c.a[i+j<span class="number">-1</span>]%=<span class="number">10</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>(c.a[c.len+<span class="number">1</span>]) c.len++;</span><br><span class="line">		<span class="keyword">return</span> c;</span><br><span class="line">	&#125;</span><br><span class="line">	BigInt <span class="keyword">operator</span> - (<span class="keyword">const</span> <span class="keyword">int</span>&amp; b)           <span class="comment">//这个减法只能减去10以内的数</span></span><br><span class="line">	&#123;</span><br><span class="line">		BigInt c=*<span class="keyword">this</span>;</span><br><span class="line">		c.a[<span class="number">1</span>]-=b;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=c.len&amp;&amp;c.a[i]&lt;<span class="number">0</span>;i++)</span><br><span class="line">		&#123;</span><br><span class="line">			c.a[i]+=<span class="number">10</span>;</span><br><span class="line">			c.a[i+<span class="number">1</span>]--;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">while</span>(!c.a[c.len]) c.len--;</span><br><span class="line">		<span class="keyword">return</span> c;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">Print</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i=len;i;i--) <span class="built_in">printf</span>(<span class="string">"%d"</span>,a[i]);</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"\n"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;F[maxn],ans;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;n);F[<span class="number">1</span>]=<span class="number">1</span>;F[<span class="number">2</span>]=<span class="number">3</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">3</span>;i&lt;=n;i++) F[i]=F[i<span class="number">-1</span>]+F[i<span class="number">-2</span>];</span><br><span class="line">	ans=F[n]*F[n];</span><br><span class="line">	<span class="keyword">if</span>(n%<span class="number">2</span>==<span class="number">0</span>) ans=ans<span class="number">-4</span>;           <span class="comment">//n为偶数时记得减去4哟</span></span><br><span class="line">	ans.Print();</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 
       
     </div>
@@ -470,9 +467,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/数数/" rel="tag"># 数数</a>
-          
             <a href="/tags/DP/" rel="tag"># DP</a>
+          
+            <a href="/tags/数数/" rel="tag"># 数数</a>
           
             <a href="/tags/递推/" rel="tag"># 递推</a>
           
@@ -556,17 +553,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -583,7 +571,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-count">38</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -662,22 +650,6 @@
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#传送门"><span class="nav-number">1.</span> <span class="nav-text">传送门</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#题解"><span class="nav-number">2.</span> <span class="nav-text">题解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码"><span class="nav-number">3.</span> <span class="nav-text">代码</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       

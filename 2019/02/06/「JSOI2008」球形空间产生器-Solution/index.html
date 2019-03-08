@@ -400,20 +400,41 @@
       
 
       
-        <p>纳尼？n维空间？什么鬼？？？</p>
+        
+纳尼？n维空间？什么鬼？？？
+
 <a id="more"></a>
-<h3 id="传送门"><a href="#传送门" class="headerlink" title="传送门"></a>传送门</h3><p><a href="https://www.luogu.org/problemnew/show/P4035" target="_blank" rel="noopener">洛谷P4035</a></p>
-<p><a href="https://www.lydsy.com/JudgeOnline/problem.php?id=1013" target="_blank" rel="noopener">BZOJ1013</a></p>
-<h3 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h3><p>根据题目的说明，设球心的坐标为$O_j(j \in [1,n])$，$n+1$个点的坐标为$X_{ij}(i \in[1,n+1],j\in{1,n})$，$R$为半径，那么就有$n+1$个这样的式子：</p>
-<script type="math/tex; mode=display">
-\sum_{j=1}^{n}{(O_j-X_{ij})^2}=R^2</script><p>将$R$消去，平方展开，移项后，可以得到$n$个这样的方程：</p>
-<script type="math/tex; mode=display">
-\sum_{j=1}^{n}{2\cdot (X_{i+1j}-X_{ij})}\cdot O_j=\sum_{j=1}^{n}{X_{i+1j}^2-X_{ij}^2}</script><p>狠狠盯着方程几秒钟，然后你就会发现方程中只有$O_j$是未知数，其他都是常数，所以这$n​$个方程构成了一个<strong>n元非齐次线性方程组</strong>（<del>说人话叫做n元一次方程组</del>）。</p>
-<p>怎么解呢？</p>
-<p>上高斯消元啊啊啊！！！</p>
-<p><del>才发现什么矩阵行列式之类的东西都忘得差不多了，吓得我赶紧掏出了线性代数小紫书</del></p>
-<p>那么 ，怎么用高斯消元法 解线性方程组呢？<del>且听下回分解</del><a href="https://www.chnxuzhiyuan.cn/2019/02/07/%E9%AB%98%E6%96%AF%E6%B6%88%E5%85%83%E6%B3%95%E8%A7%A3%E7%BA%BF%E6%80%A7%E6%96%B9%E7%A8%8B%E7%BB%84-Algorithm/" target="_blank" rel="noopener">请左拐至…</a>！</p>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">int</span> n;<span class="keyword">double</span> a[<span class="number">15</span>][<span class="number">15</span>],A[<span class="number">15</span>][<span class="number">15</span>];</span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">ABS</span><span class="params">(<span class="keyword">double</span> x)</span></span>&#123;<span class="keyword">return</span> x&lt;<span class="number">0</span>?-x:x;&#125;</span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">Gauss</span><span class="params">()</span>     <span class="comment">//高斯消元解方程</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">int</span> now=i;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j=i+<span class="number">1</span>;j&lt;=n;j++)</span><br><span class="line">			<span class="keyword">if</span>(ABS(A[j][i]&gt;A[now][i]))</span><br><span class="line">				now=j;</span><br><span class="line">		<span class="keyword">if</span>(now!=i)</span><br><span class="line">			<span class="keyword">for</span>(<span class="keyword">int</span> j=i;j&lt;=n+<span class="number">1</span>;j++)</span><br><span class="line">				swap(A[now][j],A[i][j]);</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> k=i+<span class="number">1</span>;k&lt;=n;k++)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">double</span> t=A[k][i]/A[i][i];</span><br><span class="line">			<span class="keyword">for</span>(<span class="keyword">int</span> j=i;j&lt;=n+<span class="number">1</span>;j++) A[k][j]-=A[i][j]*t;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=n;i;i--)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j=i+<span class="number">1</span>;j&lt;=n;j++)</span><br><span class="line">			A[i][n+<span class="number">1</span>]-=A[j][n+<span class="number">1</span>]*A[i][j];</span><br><span class="line">		A[i][n+<span class="number">1</span>]/=A[i][i];</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;n);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n+<span class="number">1</span>;i++)</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">1</span>;j&lt;=n;j++)</span><br><span class="line">			<span class="built_in">scanf</span>(<span class="string">"%lf"</span>,&amp;a[i][j]);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">1</span>;j&lt;=n;j++)</span><br><span class="line">		&#123;</span><br><span class="line">			A[i][j]=<span class="number">2</span>*(a[i+<span class="number">1</span>][j]-a[i][j]);</span><br><span class="line">			A[i][n+<span class="number">1</span>]+=a[i+<span class="number">1</span>][j]*a[i+<span class="number">1</span>][j]-a[i][j]*a[i][j];</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">    <span class="comment">//A数组是该n元非齐次线性方程组的增广矩阵</span></span><br><span class="line">	Gauss();</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"%.3lf%c"</span>,A[i][n+<span class="number">1</span>],i==n?<span class="string">'\n'</span>:<span class="string">' '</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+### 传送门
+
+[洛谷P4035](https://www.luogu.org/problemnew/show/P4035)
+
+[BZOJ1013](https://www.lydsy.com/JudgeOnline/problem.php?id=1013)
+
+### 题解
+
+根据题目的说明，设球心的坐标为$O_j(j \in [1,n])$，$n+1$个点的坐标为$X_{ij}(i \in[1,n+1],j\in{1,n})$，$R$为半径，那么就有$n+1$个这样的式子：
+$$
+\sum_{j=1}^{n}{(O_j-X_{ij})^2}=R^2
+$$
+将$R$消去，平方展开，移项后，可以得到$n$个这样的方程：
+$$
+\sum_{j=1}^{n}{2\cdot (X_{i+1j}-X_{ij})}\cdot O_j=\sum_{j=1}^{n}{X_{i+1j}^2-X_{ij}^2}
+$$
+狠狠盯着方程几秒钟，然后你就会发现方程中只有$O_j$是未知数，其他都是常数，所以这$n​$个方程构成了一个**n元非齐次线性方程组**（~~说人话叫做n元一次方程组~~）。
+
+怎么解呢？
+
+上高斯消元啊啊啊！！！
+
+~~才发现什么矩阵行列式之类的东西都忘得差不多了，吓得我赶紧掏出了线性代数小紫书~~
+
+那么 ，怎么用高斯消元法 解线性方程组呢？~~且听下回分解~~[请左拐至...](https://www.chnxuzhiyuan.cn/2019/02/07/%E9%AB%98%E6%96%AF%E6%B6%88%E5%85%83%E6%B3%95%E8%A7%A3%E7%BA%BF%E6%80%A7%E6%96%B9%E7%A8%8B%E7%BB%84-Algorithm/)！
+
+### 代码
+
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">int</span> n;<span class="keyword">double</span> a[<span class="number">15</span>][<span class="number">15</span>],A[<span class="number">15</span>][<span class="number">15</span>];</span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">ABS</span><span class="params">(<span class="keyword">double</span> x)</span></span>&#123;<span class="keyword">return</span> x&lt;<span class="number">0</span>?-x:x;&#125;</span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">Gauss</span><span class="params">()</span>     <span class="comment">//高斯消元解方程</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">int</span> now=i;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j=i+<span class="number">1</span>;j&lt;=n;j++)</span><br><span class="line">			<span class="keyword">if</span>(ABS(A[j][i]&gt;A[now][i]))</span><br><span class="line">				now=j;</span><br><span class="line">		<span class="keyword">if</span>(now!=i)</span><br><span class="line">			<span class="keyword">for</span>(<span class="keyword">int</span> j=i;j&lt;=n+<span class="number">1</span>;j++)</span><br><span class="line">				swap(A[now][j],A[i][j]);</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> k=i+<span class="number">1</span>;k&lt;=n;k++)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">double</span> t=A[k][i]/A[i][i];</span><br><span class="line">			<span class="keyword">for</span>(<span class="keyword">int</span> j=i;j&lt;=n+<span class="number">1</span>;j++) A[k][j]-=A[i][j]*t;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=n;i;i--)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j=i+<span class="number">1</span>;j&lt;=n;j++)</span><br><span class="line">			A[i][n+<span class="number">1</span>]-=A[j][n+<span class="number">1</span>]*A[i][j];</span><br><span class="line">		A[i][n+<span class="number">1</span>]/=A[i][i];</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;n);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n+<span class="number">1</span>;i++)</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">1</span>;j&lt;=n;j++)</span><br><span class="line">			<span class="built_in">scanf</span>(<span class="string">"%lf"</span>,&amp;a[i][j]);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">1</span>;j&lt;=n;j++)</span><br><span class="line">		&#123;</span><br><span class="line">			A[i][j]=<span class="number">2</span>*(a[i+<span class="number">1</span>][j]-a[i][j]);</span><br><span class="line">			A[i][n+<span class="number">1</span>]+=a[i+<span class="number">1</span>][j]*a[i+<span class="number">1</span>][j]-a[i][j]*a[i][j];</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">    <span class="comment">//A数组是该n元非齐次线性方程组的增广矩阵</span></span><br><span class="line">	Gauss();</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"%.3lf%c"</span>,A[i][n+<span class="number">1</span>],i==n?<span class="string">'\n'</span>:<span class="string">' '</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 
       
     </div>
@@ -513,17 +534,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -540,7 +552,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-count">38</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -619,22 +631,6 @@
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#传送门"><span class="nav-number">1.</span> <span class="nav-text">传送门</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#题解"><span class="nav-number">2.</span> <span class="nav-text">题解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码"><span class="nav-number">3.</span> <span class="nav-text">代码</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       

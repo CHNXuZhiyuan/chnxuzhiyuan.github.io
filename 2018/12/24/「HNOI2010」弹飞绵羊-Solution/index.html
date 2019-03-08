@@ -400,19 +400,38 @@
       
 
       
-        <p>什么？LCT？不存在的。蒟蒻我怎么可能会LCT。</p>
+        什么？LCT？不存在的。蒟蒻我怎么可能会LCT。
+
 <a id="more"></a>
-<h3 id="传送门"><a href="#传送门" class="headerlink" title="传送门"></a>传送门</h3><p><a href="https://www.luogu.org/problemnew/show/P3203" target="_blank" rel="noopener">洛谷传送门(咕咕咕)</a></p>
-<p><a href="https://www.lydsy.com/JudgeOnline/problem.php?id=2002" target="_blank" rel="noopener"><del>爆炸</del>BZOJ传送门</a></p>
-<h3 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h3><p>听说这题的标算是LCT？我这么菜！怎么可能会LCT！！！看了一眼数据范围，很亲切啊！二话不说直接上分块！</p>
-<p>首先，按照分块的套路，把$n$个弹力装置分成若干个块(块的大小取$\sqrt{n}$即可)。然后需要提前构造好两个数组：</p>
-<p>1：$step[]$。$step[i]$表示落到第i个弹力装置上的绵羊还需几次才能跳到下一个块里（或者被弹飞）。</p>
-<p>2：$pos[]$。$pos[i]$表示落到第i个弹力装置上的绵羊在被弹出当前块后会被弹到哪一个位置上。</p>
-<p>这两个数组可以一开始从后往前在$\Theta(n*\sqrt{n})$的时间复杂度内构造出来。(<del>我才不会告诉你我写这个是为了测试markdown的数学公式</del>)询问的时候借助这两个数组就可以在$\Theta(\sqrt{n})$的时间复杂度内通过模拟计算出答案。</p>
-<p>然后让我们再来考虑修改的问题。</p>
-<p>自己思考一下，不难发现，修改了一个弹力系数之后，只有该块内的两个数组的值可能发生改变，然后从后往前暴力更新一下即可。</p>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><p><del>比LCT短了不少</del></p>
+
+### 传送门
+
+[洛谷传送门(咕咕咕)](https://www.luogu.org/problemnew/show/P3203)
+
+[~~爆炸~~BZOJ传送门](https://www.lydsy.com/JudgeOnline/problem.php?id=2002)
+
+### 题解
+
+听说这题的标算是LCT？我这么菜！怎么可能会LCT！！！看了一眼数据范围，很亲切啊！二话不说直接上分块！
+
+首先，按照分块的套路，把$n$个弹力装置分成若干个块(块的大小取$\sqrt{n}$即可)。然后需要提前构造好两个数组：
+
+1：$step[]$。$step[i]$表示落到第i个弹力装置上的绵羊还需几次才能跳到下一个块里（或者被弹飞）。
+
+2：$pos[]$。$pos[i]$表示落到第i个弹力装置上的绵羊在被弹出当前块后会被弹到哪一个位置上。
+
+这两个数组可以一开始从后往前在$\Theta(n*\sqrt{n})$的时间复杂度内构造出来。(~~我才不会告诉你我写这个是为了测试markdown的数学公式~~)询问的时候借助这两个数组就可以在$\Theta(\sqrt{n})$的时间复杂度内通过模拟计算出答案。
+
+然后让我们再来考虑修改的问题。
+
+自己思考一下，不难发现，修改了一个弹力系数之后，只有该块内的两个数组的值可能发生改变，然后从后往前暴力更新一下即可。
+
+### 代码
+
+~~比LCT短了不少~~
+
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cmath&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn=<span class="number">200005</span>;</span><br><span class="line"><span class="keyword">int</span> n,m,S,Area[maxn],K[maxn],step[maxn],pos[maxn];</span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">read</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> ret=<span class="number">0</span>,f=<span class="number">1</span>;<span class="keyword">char</span> ch=getchar();</span><br><span class="line">	<span class="keyword">while</span>(ch&lt;<span class="string">'0'</span>||ch&gt;<span class="string">'9'</span>)&#123;<span class="keyword">if</span>(ch==<span class="string">'-'</span>)f=-f;ch=getchar();&#125;</span><br><span class="line">	<span class="keyword">while</span>(ch&gt;=<span class="string">'0'</span>&amp;&amp;ch&lt;=<span class="string">'9'</span>)&#123;ret=ret*<span class="number">10</span>+ch-<span class="string">'0'</span>;ch=getchar();&#125;</span><br><span class="line">	<span class="keyword">return</span> ret*f;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">Solve</span><span class="params">(<span class="keyword">int</span> s)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> p=s+K[s],ret=<span class="number">1</span>;</span><br><span class="line">	<span class="keyword">while</span>(Area[p]==Area[s])&#123;p=p+K[p];ret++;&#125;</span><br><span class="line">	step[s]=ret;pos[s]=p;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">Update</span><span class="params">(<span class="keyword">int</span> s)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> p=s+K[s],ret=<span class="number">1</span>;</span><br><span class="line">	<span class="keyword">while</span>(Area[p]==Area[s])&#123;p=p+K[p];ret++;&#125;</span><br><span class="line">	step[s]=ret;pos[s]=p;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=s<span class="number">-1</span>;Area[i]==Area[s];i--)</span><br><span class="line">		<span class="keyword">if</span>(Area[i+K[i]]==Area[i])</span><br><span class="line">			&#123;step[i]=step[i+K[i]]+<span class="number">1</span>;pos[i]=pos[i+K[i]];&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">Query</span><span class="params">(<span class="keyword">int</span> s)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> p=s,ret=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">while</span>(p&lt;=n)&#123;ret+=step[p];p=pos[p];&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"%d\n"</span>,ret);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	n=read();S=<span class="built_in">sqrt</span>(n)+<span class="number">1e-10</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++) Area[i]=(i<span class="number">-1</span>)/S+<span class="number">1</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++) K[i]=read();</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=n;i&gt;=<span class="number">1</span>;i--) Solve(i);</span><br><span class="line">	m=read();</span><br><span class="line">	<span class="keyword">while</span>(m--)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">int</span> a=read(),b=read()+<span class="number">1</span>;</span><br><span class="line">		<span class="keyword">if</span>(a==<span class="number">1</span>) Query(b);</span><br><span class="line">		<span class="keyword">else</span>&#123;<span class="keyword">int</span> c=read();K[b]=c;Update(b);&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 
       
     </div>
@@ -512,17 +531,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -539,7 +549,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-count">38</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -618,22 +628,6 @@
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#传送门"><span class="nav-number">1.</span> <span class="nav-text">传送门</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#题解"><span class="nav-number">2.</span> <span class="nav-text">题解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码"><span class="nav-number">3.</span> <span class="nav-text">代码</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       

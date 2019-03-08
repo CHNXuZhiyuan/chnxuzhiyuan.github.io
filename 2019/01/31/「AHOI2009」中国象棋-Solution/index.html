@@ -69,7 +69,7 @@
 
 
 
-  <meta name="keywords" content="数数,DP,递推,三维DP,">
+  <meta name="keywords" content="DP,数数,递推,三维DP,">
 
 
 
@@ -80,18 +80,18 @@
 
 
 
-<meta name="description" content="数数万岁…">
-<meta name="keywords" content="数数,DP,递推,三维DP">
+<meta name="description" content="数数万岁...">
+<meta name="keywords" content="DP,数数,递推,三维DP">
 <meta property="og:type" content="article">
 <meta property="og:title" content="「AHOI2009」中国象棋">
 <meta property="og:url" content="http://chnxuzhiyuan.cn/2019/01/31/「AHOI2009」中国象棋-Solution/index.html">
 <meta property="og:site_name" content="Welcome to XuZhiyuan&#39;s blog">
-<meta property="og:description" content="数数万岁…">
+<meta property="og:description" content="数数万岁...">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2019-01-31T01:25:05.783Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="「AHOI2009」中国象棋">
-<meta name="twitter:description" content="数数万岁…">
+<meta name="twitter:description" content="数数万岁...">
 
 
 
@@ -400,33 +400,57 @@
       
 
       
-        <p>数数万岁…</p>
+        
+数数万岁...
+
 <a id="more"></a>
-<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>早晨起床，打开电脑，上了洛谷，打了个卡，发现智能推荐里面有几道上古时代的省选题。随便戳开了一道，发现是个应该是个DP数数题，而我数数又很差，正想补补，于是就很愉快的做起了此题…</p>
-<h3 id="传送门"><a href="#传送门" class="headerlink" title="传送门"></a>传送门</h3><p><a href="https://www.luogu.org/problemnew/show/P2051" target="_blank" rel="noopener">洛谷P2051</a></p>
-<p><a href="https://www.lydsy.com/JudgeOnline/problem.php?id=1801" target="_blank" rel="noopener">BZOJ1801</a></p>
-<h3 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h3><p>感觉2010年之前的省选题都不怎么难、代码量都不大(<del>对于个别题目当我没说</del>)…</p>
-<p>首先很显然，每一行每一列里，如果炮的个数都≤2，那么都是合法的啦！</p>
-<p>看了一眼，数据范围很亲切，然后就<del>自然而然地</del>想出了这样一个DP：（汗</p>
-<script type="math/tex; mode=display">
-F[i][j][k] 表示放了前i行，有j列放了2个炮，k列放了1个炮，那么就有m-i-j列没有放炮</script><p>首先是初始值$F[0][0][0]=1​$。</p>
-<p>然后考虑怎么从第$i-1$行转移过来。</p>
-<p>如果第$i$行一个炮也不放，那么就有$F[i][j][k]=F[i-1][j][k]$。</p>
-<p>如果放一个，那么有两种情况：</p>
-<ul>
-<li>放在空的列上： $F[i][j][k]+=F[i-1][j][k-1]*(m-j-k+1)​$；</li>
-<li>放在只放了1个炮的列上： $F[i][j][k]+=F[i-1][j-1][k+1]*(k+1)​$。</li>
-</ul>
-<p>如果放两个炮，那么有三种情况：</p>
-<ul>
-<li>两个都放在空的列上：$F[i][j][k]+=F[i-1][j][k-2]\cdot(m-j-k+2)\cdot(m-j-k+1)/2$；</li>
-<li>一个放在空列，一个放在只有一个的列上：$F[i][j][k]+=F[i-1][j-1][k]\cdot k\cdot(m-j-k+1)$；</li>
-<li>两个都放在只有一个的列上：$F[i][j][k]+=F[i-1][j-2][k+2]\cdot(k+2)\cdot(k+1)/2$。</li>
-</ul>
-<p>最后的答案：</p>
-<script type="math/tex; mode=display">
-\sum_{1=0}^{m}{\sum_{j=0}^{m-i}{F[n][i][j]}}</script><p>然后这题就做完了QwQ。</p>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">long</span> LL;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn=<span class="number">105</span>,TT=<span class="number">9999973</span>;</span><br><span class="line"><span class="keyword">int</span> n,m,F[maxn][maxn][maxn],ans;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%d%d"</span>,&amp;n,&amp;m);F[<span class="number">0</span>][<span class="number">0</span>][<span class="number">0</span>]=<span class="number">1</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;=m;j++)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">for</span>(<span class="keyword">int</span> k=<span class="number">0</span>;j+k&lt;=m;k++)</span><br><span class="line">			&#123;</span><br><span class="line">				F[i][j][k]=F[i<span class="number">-1</span>][j][k];<span class="comment">//这题的模数比较小，有些地方不需要马上模，可以写好看一点</span></span><br><span class="line">				<span class="keyword">if</span>(k&gt;=<span class="number">1</span>) F[i][j][k]+=F[i<span class="number">-1</span>][j][k<span class="number">-1</span>]*(m-j-k+<span class="number">1</span>);</span><br><span class="line">				<span class="keyword">if</span>(j&gt;=<span class="number">1</span>) F[i][j][k]+=F[i<span class="number">-1</span>][j<span class="number">-1</span>][k+<span class="number">1</span>]*(k+<span class="number">1</span>);</span><br><span class="line">				<span class="keyword">if</span>(k&gt;=<span class="number">2</span>) F[i][j][k]+=F[i<span class="number">-1</span>][j][k<span class="number">-2</span>]*(LL)(m-j-k+<span class="number">2</span>)*(m-j-k+<span class="number">1</span>)/<span class="number">2</span>%TT;</span><br><span class="line">				<span class="keyword">if</span>(j&gt;=<span class="number">1</span>) F[i][j][k]+=F[i<span class="number">-1</span>][j<span class="number">-1</span>][k]*(LL)k*(m-j-k+<span class="number">1</span>)%TT;</span><br><span class="line">				<span class="keyword">if</span>(j&gt;=<span class="number">2</span>) F[i][j][k]+=F[i<span class="number">-1</span>][j<span class="number">-2</span>][k+<span class="number">2</span>]*(LL)(k+<span class="number">2</span>)*(k+<span class="number">1</span>)/<span class="number">2</span>%TT;</span><br><span class="line">				F[i][j][k]%=TT;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;=m;j++)</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> k=<span class="number">0</span>;j+k&lt;=m;k++)</span><br><span class="line">			ans=(ans+F[n][j][k])%TT;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"%d\n"</span>,ans);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+### 前言
+
+早晨起床，打开电脑，上了洛谷，打了个卡，发现智能推荐里面有几道上古时代的省选题。随便戳开了一道，发现是个应该是个DP数数题，而我数数又很差，正想补补，于是就很愉快的做起了此题...
+
+### 传送门
+
+[洛谷P2051](https://www.luogu.org/problemnew/show/P2051)
+
+[BZOJ1801](https://www.lydsy.com/JudgeOnline/problem.php?id=1801)
+
+### 题解
+
+感觉2010年之前的省选题都不怎么难、代码量都不大(~~对于个别题目当我没说~~)...
+
+首先很显然，每一行每一列里，如果炮的个数都≤2，那么都是合法的啦！
+
+看了一眼，数据范围很亲切，然后就~~自然而然地~~想出了这样一个DP：（汗
+$$
+F[i][j][k] 表示放了前i行，有j列放了2个炮，k列放了1个炮，那么就有m-i-j列没有放炮
+$$
+首先是初始值$F[0][0][0]=1​$。
+
+然后考虑怎么从第$i-1$行转移过来。
+
+如果第$i$行一个炮也不放，那么就有$F[i][j][k]=F[i-1][j][k]$。
+
+如果放一个，那么有两种情况：
+
+- 放在空的列上： $F[i][j][k]+=F[i-1][j][k-1]*(m-j-k+1)​$；
+- 放在只放了1个炮的列上： $F[i][j][k]+=F[i-1][j-1][k+1]*(k+1)​$。
+
+如果放两个炮，那么有三种情况：
+
+- 两个都放在空的列上：$F[i][j][k]+=F[i-1][j][k-2]\cdot(m-j-k+2)\cdot(m-j-k+1)/2$；
+- 一个放在空列，一个放在只有一个的列上：$F[i][j][k]+=F[i-1][j-1][k]\cdot k\cdot(m-j-k+1)$；
+- 两个都放在只有一个的列上：$F[i][j][k]+=F[i-1][j-2][k+2]\cdot(k+2)\cdot(k+1)/2$。
+
+最后的答案：
+$$
+\sum_{1=0}^{m}{\sum_{j=0}^{m-i}{F[n][i][j]}}
+$$
+然后这题就做完了QwQ。
+
+### 代码
+
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">long</span> LL;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn=<span class="number">105</span>,TT=<span class="number">9999973</span>;</span><br><span class="line"><span class="keyword">int</span> n,m,F[maxn][maxn][maxn],ans;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%d%d"</span>,&amp;n,&amp;m);F[<span class="number">0</span>][<span class="number">0</span>][<span class="number">0</span>]=<span class="number">1</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;=m;j++)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">for</span>(<span class="keyword">int</span> k=<span class="number">0</span>;j+k&lt;=m;k++)</span><br><span class="line">			&#123;</span><br><span class="line">				F[i][j][k]=F[i<span class="number">-1</span>][j][k];<span class="comment">//这题的模数比较小，有些地方不需要马上模，可以写好看一点</span></span><br><span class="line">				<span class="keyword">if</span>(k&gt;=<span class="number">1</span>) F[i][j][k]+=F[i<span class="number">-1</span>][j][k<span class="number">-1</span>]*(m-j-k+<span class="number">1</span>);</span><br><span class="line">				<span class="keyword">if</span>(j&gt;=<span class="number">1</span>) F[i][j][k]+=F[i<span class="number">-1</span>][j<span class="number">-1</span>][k+<span class="number">1</span>]*(k+<span class="number">1</span>);</span><br><span class="line">				<span class="keyword">if</span>(k&gt;=<span class="number">2</span>) F[i][j][k]+=F[i<span class="number">-1</span>][j][k<span class="number">-2</span>]*(LL)(m-j-k+<span class="number">2</span>)*(m-j-k+<span class="number">1</span>)/<span class="number">2</span>%TT;</span><br><span class="line">				<span class="keyword">if</span>(j&gt;=<span class="number">1</span>) F[i][j][k]+=F[i<span class="number">-1</span>][j<span class="number">-1</span>][k]*(LL)k*(m-j-k+<span class="number">1</span>)%TT;</span><br><span class="line">				<span class="keyword">if</span>(j&gt;=<span class="number">2</span>) F[i][j][k]+=F[i<span class="number">-1</span>][j<span class="number">-2</span>][k+<span class="number">2</span>]*(LL)(k+<span class="number">2</span>)*(k+<span class="number">1</span>)/<span class="number">2</span>%TT;</span><br><span class="line">				F[i][j][k]%=TT;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;=m;j++)</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> k=<span class="number">0</span>;j+k&lt;=m;k++)</span><br><span class="line">			ans=(ans+F[n][j][k])%TT;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"%d\n"</span>,ans);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
       
     </div>
     
@@ -443,9 +467,9 @@ F[i][j][k] 表示放了前i行，有j列放了2个炮，k列放了1个炮，那�
       
         <div class="post-tags">
           
-            <a href="/tags/数数/" rel="tag"># 数数</a>
-          
             <a href="/tags/DP/" rel="tag"># DP</a>
+          
+            <a href="/tags/数数/" rel="tag"># 数数</a>
           
             <a href="/tags/递推/" rel="tag"># 递推</a>
           
@@ -529,17 +553,8 @@ F[i][j][k] 表示放了前i行，有j列放了2个炮，k列放了1个炮，那�
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -556,7 +571,7 @@ F[i][j][k] 表示放了前i行，有j列放了2个炮，k列放了1个炮，那�
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-count">38</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -635,22 +650,6 @@ F[i][j][k] 表示放了前i行，有j列放了2个炮，k列放了1个炮，那�
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#传送门"><span class="nav-number">2.</span> <span class="nav-text">传送门</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#题解"><span class="nav-number">3.</span> <span class="nav-text">题解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码"><span class="nav-number">4.</span> <span class="nav-text">代码</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       

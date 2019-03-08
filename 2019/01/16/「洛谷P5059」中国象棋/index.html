@@ -69,7 +69,7 @@
 
 
 
-  <meta name="keywords" content="数数,DP,快速幂,矩阵加速,斐波那契数列,">
+  <meta name="keywords" content="DP,数数,快速幂,矩阵加速,斐波那契数列,">
 
 
 
@@ -80,18 +80,18 @@
 
 
 
-<meta name="description" content="又是数数题QwQ…">
-<meta name="keywords" content="数数,DP,快速幂,矩阵加速,斐波那契数列">
+<meta name="description" content="又是数数题QwQ...">
+<meta name="keywords" content="DP,数数,快速幂,矩阵加速,斐波那契数列">
 <meta property="og:type" content="article">
 <meta property="og:title" content="「洛谷P5059」中国象棋">
 <meta property="og:url" content="http://chnxuzhiyuan.cn/2019/01/16/「洛谷P5059」中国象棋/index.html">
 <meta property="og:site_name" content="Welcome to XuZhiyuan&#39;s blog">
-<meta property="og:description" content="又是数数题QwQ…">
+<meta property="og:description" content="又是数数题QwQ...">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2019-01-16T12:53:37.329Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="「洛谷P5059」中国象棋">
-<meta name="twitter:description" content="又是数数题QwQ…">
+<meta name="twitter:description" content="又是数数题QwQ...">
 
 
 
@@ -400,32 +400,61 @@
       
 
       
-        <p>又是数数题QwQ…</p>
+        
+又是数数题QwQ...
+
 <a id="more"></a>
-<h3 id="传送门"><a href="#传送门" class="headerlink" title="传送门"></a>传送门</h3><p><a href="https://www.luogu.org/problemnew/show/P5059" target="_blank" rel="noopener">洛谷P5059</a></p>
-<h3 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h3><p>首先注意题目中说的是有$n^2$个格子，也就是$(n+1)^2$个格点。</p>
-<p>以下是出题人的推导：</p>
-<blockquote>
-<p>首先我们可以发现每一行是独立的，所以只需要处理一行的答案即可</p>
-<p>设$F[i][0]$表示一行中摆了$i$个位置且第$i$个位置不摆放棋子的方案数</p>
-<p>设$F[i][1]$表示一行中摆了$i$个位置且第$i$个位置摆放棋子的方案数</p>
-<p>设$Ans[i]$表示$F[i][0]+F[i][1]$</p>
-<p>那么忽略第二个限制可以发现有:</p>
-<p>$F[i][0]=F[i-1][0]+F[i-1][1]$</p>
-<p>$F[i][1]=F[i-1][0]$</p>
-<p>所以有</p>
-<p>$Ans[i]$</p>
-<p>$=F[i][0]+F[i][1]$</p>
-<p>$=2F[i-1][0]+F[i-1][1]$</p>
-<p>$=(F[i-1][0]+F[i-1][1])+(F[i-2][0]+F[i-2][1])$</p>
-<p>$=Ans[i-1]+Ans[i-2]$</p>
-</blockquote>
-<p>好了很显然这是一个斐波那契数列。自己再推一下，注意一下细节，不难发现最后的答案就是</p>
-<script type="math/tex; mode=display">
-(Fib_{n+3}-n-2)^{n+1}</script><p>矩阵加快速幂就可以在$\Theta(\log n)$的复杂内求解。</p>
-<p>还有一个问题，由于n和P都非常大，直接乘long long也会boom。所以这里用了一个类似于快速幂的方法来求$(a*b)\mod P$的值。虽然复杂度多了一只log，但是很好写，并且避免了高精度又臭又长的代码和大常数复杂度。</p>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><p>还挺好写的呢poi。</p>
+
+### 传送门
+
+[洛谷P5059](https://www.luogu.org/problemnew/show/P5059)
+
+### 题解
+
+首先注意题目中说的是有$n^2$个格子，也就是$(n+1)^2$个格点。
+
+以下是出题人的推导：
+
+>首先我们可以发现每一行是独立的，所以只需要处理一行的答案即可
+>
+>设$F[i][0]$表示一行中摆了$i$个位置且第$i$个位置不摆放棋子的方案数
+>
+>设$F[i][1]$表示一行中摆了$i$个位置且第$i$个位置摆放棋子的方案数
+>
+>设$Ans[i]$表示$F[i][0]+F[i][1]$
+>
+>那么忽略第二个限制可以发现有:
+>
+>$F[i][0]=F[i-1][0]+F[i-1][1]$
+>
+>$F[i][1]=F[i-1][0]$
+>
+>所以有
+>
+>$Ans[i]$
+>
+>$=F[i][0]+F[i][1]$
+>
+>$=2F[i-1][0]+F[i-1][1]$
+>
+>$=(F[i-1][0]+F[i-1][1])+(F[i-2][0]+F[i-2][1])$
+>
+>$=Ans[i-1]+Ans[i-2]$
+
+好了很显然这是一个斐波那契数列。自己再推一下，注意一下细节，不难发现最后的答案就是
+$$
+(Fib_{n+3}-n-2)^{n+1}
+$$
+矩阵加快速幂就可以在$\Theta(\log n)$的复杂内求解。
+
+还有一个问题，由于n和P都非常大，直接乘long long也会boom。所以这里用了一个类似于快速幂的方法来求$(a*b)\mod P$的值。虽然复杂度多了一只log，但是很好写，并且避免了高精度又臭又长的代码和大常数复杂度。
+
+### 代码
+
+还挺好写的呢poi。
+
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">long</span> LL;</span><br><span class="line">LL n,P;</span><br><span class="line"><span class="function">LL <span class="title">Multiply</span><span class="params">(LL x,LL y)</span>          <span class="comment">//两个10^18级别的数在模P意义下的乘法</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	LL ret=<span class="number">0</span>,w=x;</span><br><span class="line">	<span class="keyword">while</span>(y)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span>(y&amp;<span class="number">1</span>) ret=(ret+w)%P;</span><br><span class="line">		w=(w+w)%P;y&gt;&gt;=<span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> ret;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Matrix</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	LL a[<span class="number">2</span>][<span class="number">2</span>];</span><br><span class="line">	Matrix()&#123;a[<span class="number">0</span>][<span class="number">0</span>]=a[<span class="number">0</span>][<span class="number">1</span>]=a[<span class="number">1</span>][<span class="number">0</span>]=a[<span class="number">1</span>][<span class="number">1</span>]=<span class="number">0</span>;&#125;</span><br><span class="line">	Matrix <span class="keyword">operator</span> * (Matrix b)   <span class="comment">//矩阵乘法</span></span><br><span class="line">	&#123;</span><br><span class="line">		Matrix c;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">2</span>;i++)</span><br><span class="line">			<span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;<span class="number">2</span>;j++)</span><br><span class="line">				<span class="keyword">for</span>(<span class="keyword">int</span> k=<span class="number">0</span>;k&lt;<span class="number">2</span>;k++)</span><br><span class="line">					c.a[i][j]=(c.a[i][j]+Multiply(a[k][j],b.a[i][k]))%P;</span><br><span class="line">		<span class="keyword">return</span> c;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;ans,mat,tep;</span><br><span class="line"><span class="function">LL <span class="title">QP</span><span class="params">(LL a,LL b)</span>               <span class="comment">//普通快速幂</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	LL ret=<span class="number">1</span>,w=a;</span><br><span class="line">	<span class="keyword">while</span>(b)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span>(b&amp;<span class="number">1</span>) ret=Multiply(ret,w);</span><br><span class="line">		w=Multiply(w,w);b&gt;&gt;=<span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> ret;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%lld%lld"</span>,&amp;n,&amp;P);</span><br><span class="line">	ans.a[<span class="number">0</span>][<span class="number">0</span>]=ans.a[<span class="number">0</span>][<span class="number">1</span>]=mat.a[<span class="number">0</span>][<span class="number">0</span>]=mat.a[<span class="number">0</span>][<span class="number">1</span>]=mat.a[<span class="number">1</span>][<span class="number">0</span>]=<span class="number">1</span>;</span><br><span class="line">	LL b=n+<span class="number">1</span>;tep=mat;</span><br><span class="line">	<span class="keyword">while</span>(b)                <span class="comment">//矩阵加速斐波那契数列</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span>(b&amp;<span class="number">1</span>) mat=mat*tep;</span><br><span class="line">		tep=tep*tep;b&gt;&gt;=<span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	ans=ans*mat;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"%lld\n"</span>,QP(((ans.a[<span class="number">0</span>][<span class="number">0</span>]-n<span class="number">-2</span>)%P+P)%P,n+<span class="number">1</span>));</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 
       
     </div>
@@ -443,9 +472,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/数数/" rel="tag"># 数数</a>
-          
             <a href="/tags/DP/" rel="tag"># DP</a>
+          
+            <a href="/tags/数数/" rel="tag"># 数数</a>
           
             <a href="/tags/快速幂/" rel="tag"># 快速幂</a>
           
@@ -531,17 +560,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -558,7 +578,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-count">38</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -637,22 +657,6 @@
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#传送门"><span class="nav-number">1.</span> <span class="nav-text">传送门</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#题解"><span class="nav-number">2.</span> <span class="nav-text">题解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码"><span class="nav-number">3.</span> <span class="nav-text">代码</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       

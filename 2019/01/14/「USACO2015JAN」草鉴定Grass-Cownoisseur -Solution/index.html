@@ -400,24 +400,43 @@
       
 
       
-        <p>骚年，快来看！奶牛Bessie又在吃草了QwQ。</p>
+        
+骚年，快来看！奶牛Bessie又在吃草了QwQ。
+
 <a id="more"></a>
-<h3 id="传送门"><a href="#传送门" class="headerlink" title="传送门"></a>传送门</h3><p><a href="https://www.luogu.org/problemnew/show/P3119" target="_blank" rel="noopener">洛谷P3119</a></p>
-<h3 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h3><p>单向道路？求一次能遍历到的最大点的数量？二话不说先上个Tarjan缩个点压压惊poi。</p>
-<p>如果没有逆行这种操作，那么很显然起点所在强联通分量点的个数就是答案。</p>
-<p><del>可是Bessie就是Bessie，总要搞点事情出来才符合她的性格。</del></p>
-<p>于是乎我们缩点之后正反建图，刷两趟SPFA求每个点到起点的最长路。</p>
-<p>然后枚举缩完点的图上的一条边，用来<del>搞事情</del>逆行。设当前枚举到的边为$(u,v)$，那么$u$在正建的图上到起点的最长路加上$v$在反建图上到起点的最长路就是逆行这条边时的最优解。在所有边里刷个最大值就行了呢poi。</p>
-<p>有几个坑：</p>
-<ol>
-<li>在最后计算答案时起点的权值会被算两次，记得减去一个。</li>
-<li>枚举用于逆行的边时需要确保可以走到这条边并且走到这条边后可以走回起点。</li>
-<li>由于需要建三套图(没缩过点的一套正建图一套反建图一套)，不要把数组名搞混了。此时封装可能是个好办法（但是会长一些，所以我没封装）。</li>
-</ol>
-<p>其实总体上讲这题的想法并不难，但是代码有点难码QwQ。</p>
-<p>于是乎这题就解完了。时间复杂度为$\Theta(n)$。</p>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><p><del>我觉得我写的挺简洁的poi。</del></p>
+
+### 传送门
+
+[洛谷P3119](https://www.luogu.org/problemnew/show/P3119)
+
+### 题解
+
+单向道路？求一次能遍历到的最大点的数量？二话不说先上个Tarjan缩个点压压惊poi。
+
+如果没有逆行这种操作，那么很显然起点所在强联通分量点的个数就是答案。
+
+~~可是Bessie就是Bessie，总要搞点事情出来才符合她的性格。~~
+
+于是乎我们缩点之后正反建图，刷两趟SPFA求每个点到起点的最长路。
+
+然后枚举缩完点的图上的一条边，用来~~搞事情~~逆行。设当前枚举到的边为$(u,v)$，那么$u$在正建的图上到起点的最长路加上$v$在反建图上到起点的最长路就是逆行这条边时的最优解。在所有边里刷个最大值就行了呢poi。
+
+有几个坑：
+
+1. 在最后计算答案时起点的权值会被算两次，记得减去一个。
+2. 枚举用于逆行的边时需要确保可以走到这条边并且走到这条边后可以走回起点。
+3. 由于需要建三套图(没缩过点的一套正建图一套反建图一套)，不要把数组名搞混了。此时封装可能是个好办法（但是会长一些，所以我没封装）。
+
+其实总体上讲这题的想法并不难，但是代码有点难码QwQ。
+
+于是乎这题就解完了。时间复杂度为$\Theta(n)$。
+
+### 代码
+
+~~我觉得我写的挺简洁的poi。~~
+
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn=<span class="number">100005</span>;</span><br><span class="line"><span class="keyword">int</span> n,m,tot[<span class="number">3</span>],lnk[<span class="number">3</span>][maxn],son[<span class="number">3</span>][maxn],nxt[<span class="number">3</span>][maxn],w[maxn],idx,dfn[maxn],low[maxn],top,<span class="built_in">stack</span>[maxn],cnt,id[maxn],dist[<span class="number">3</span>][maxn],que[maxn],ans;<span class="keyword">bool</span> vis[maxn];</span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">read</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> ret=<span class="number">0</span>,f=<span class="number">1</span>;<span class="keyword">char</span> ch=getchar();</span><br><span class="line">	<span class="keyword">while</span>(ch&lt;<span class="string">'0'</span>||ch&gt;<span class="string">'9'</span>)&#123;<span class="keyword">if</span>(ch==<span class="string">'-'</span>)f=-f;ch=getchar();&#125;</span><br><span class="line">	<span class="keyword">while</span>(ch&gt;=<span class="string">'0'</span>&amp;&amp;ch&lt;=<span class="string">'9'</span>)&#123;ret=ret*<span class="number">10</span>+ch-<span class="string">'0'</span>;ch=getchar();&#125;</span><br><span class="line">	<span class="keyword">return</span> ret*f;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">add_e</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> y,<span class="keyword">int</span> id)</span></span>&#123;tot[id]++;son[id][tot[id]]=y;nxt[id][tot[id]]=lnk[id][x];lnk[id][x]=tot[id];&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Tarjan</span><span class="params">(<span class="keyword">int</span> now)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	idx++;top++;vis[now]=<span class="literal">true</span>;</span><br><span class="line">	dfn[now]=low[now]=idx;<span class="built_in">stack</span>[top]=now;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=lnk[<span class="number">0</span>][now];i;i=nxt[<span class="number">0</span>][i])</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span>(!dfn[son[<span class="number">0</span>][i]])</span><br><span class="line">		&#123;</span><br><span class="line">			Tarjan(son[<span class="number">0</span>][i]);</span><br><span class="line">			<span class="keyword">if</span>(low[son[<span class="number">0</span>][i]]&lt;low[now]) low[now]=low[son[<span class="number">0</span>][i]];</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span>(vis[son[<span class="number">0</span>][i]]&amp;&amp;dfn[son[<span class="number">0</span>][i]]&lt;low[now]) low[now]=dfn[son[<span class="number">0</span>][i]];</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(dfn[now]==low[now])</span><br><span class="line">	&#123;</span><br><span class="line">		cnt++;</span><br><span class="line">		<span class="keyword">do</span></span><br><span class="line">		&#123;</span><br><span class="line">			id[<span class="built_in">stack</span>[top]]=cnt;w[cnt]++;</span><br><span class="line">			vis[<span class="built_in">stack</span>[top]]=<span class="literal">false</span>;top--;</span><br><span class="line">		&#125;<span class="keyword">while</span>(<span class="built_in">stack</span>[top+<span class="number">1</span>]!=now);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">SPFA</span><span class="params">(<span class="keyword">int</span> id)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">memset</span>(vis,<span class="literal">false</span>,<span class="keyword">sizeof</span>(vis));</span><br><span class="line">	<span class="keyword">int</span> hed=<span class="number">0</span>,til=<span class="number">1</span>;</span><br><span class="line">	que[<span class="number">1</span>]=::id[<span class="number">1</span>];vis[que[<span class="number">1</span>]]=<span class="literal">true</span>;dist[id][que[<span class="number">1</span>]]=w[que[<span class="number">1</span>]];</span><br><span class="line">	<span class="keyword">while</span>(hed!=til)</span><br><span class="line">	&#123;</span><br><span class="line">		hed=(hed+<span class="number">1</span>)%maxn;vis[que[hed]]=<span class="literal">false</span>;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j=lnk[id][que[hed]];j;j=nxt[id][j])</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span>(dist[id][que[hed]]+w[son[id][j]]&gt;dist[id][son[id][j]])</span><br><span class="line">			&#123;</span><br><span class="line">				dist[id][son[id][j]]=dist[id][que[hed]]+w[son[id][j]];</span><br><span class="line">				<span class="keyword">if</span>(!vis[son[id][j]])</span><br><span class="line">				&#123;</span><br><span class="line">					vis[son[id][j]]=<span class="literal">true</span>;</span><br><span class="line">					til=(til+<span class="number">1</span>)%maxn;</span><br><span class="line">					que[til]=son[id][j];</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	n=read();m=read();</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=m;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">int</span> a=read(),b=read();</span><br><span class="line">		add_e(a,b,<span class="number">0</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++) <span class="keyword">if</span>(!dfn[i]) Tarjan(i);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j=lnk[<span class="number">0</span>][i];j;j=nxt[<span class="number">0</span>][j])</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span>(id[i]!=id[son[<span class="number">0</span>][j]])</span><br><span class="line">			&#123;</span><br><span class="line">				add_e(id[i],id[son[<span class="number">0</span>][j]],<span class="number">1</span>);</span><br><span class="line">				add_e(id[son[<span class="number">0</span>][j]],id[i],<span class="number">2</span>);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	SPFA(<span class="number">1</span>);SPFA(<span class="number">2</span>);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=cnt;i++)</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j=lnk[<span class="number">2</span>][i];j;j=nxt[<span class="number">2</span>][j])</span><br><span class="line">			<span class="keyword">if</span>(dist[<span class="number">1</span>][i]&amp;&amp;dist[<span class="number">2</span>][son[<span class="number">2</span>][j]]&amp;&amp;dist[<span class="number">1</span>][i]+dist[<span class="number">2</span>][son[<span class="number">2</span>][j]]-w[id[<span class="number">1</span>]]&gt;ans)</span><br><span class="line">				ans=dist[<span class="number">1</span>][i]+dist[<span class="number">2</span>][son[<span class="number">2</span>][j]]-w[id[<span class="number">1</span>]];</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"%d\n"</span>,ans);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 
       
     </div>
@@ -521,17 +540,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -548,7 +558,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-count">38</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -627,22 +637,6 @@
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#传送门"><span class="nav-number">1.</span> <span class="nav-text">传送门</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#题解"><span class="nav-number">2.</span> <span class="nav-text">题解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码"><span class="nav-number">3.</span> <span class="nav-text">代码</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
