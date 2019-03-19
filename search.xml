@@ -1,6 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[「ZJOI模拟赛」线段树]]></title>
+    <url>%2F2019%2F03%2F19%2F%E3%80%8CZJOI%E6%A8%A1%E6%8B%9F%E8%B5%9B%E3%80%8D%E7%BA%BF%E6%AE%B5%E6%A0%91-Solution%2F</url>
+    <content type="text"><![CDATA[骚年，你只要种一棵主席树和两棵线段树就能A了这题了，多环保啊！ 题面出于一些原因，这里不放题面。 题解考虑询问的实质。 其实询问的答案必然是序列A中一整段连续区间的最大值。 将$m$个操作进行处理，每个操作都往离它最近的有交集的两个操作（一个操作向左延伸，一个向右）建边。 然后询问的时候倍增，就能很快找到询问实际的左右边界。 用主席树又可以很快找到一个点在操作区间$[L,R]$中最后覆盖它的是哪一个操作。 于是乎建边的时候开一棵线段树，维护全局最大值的时候再开一棵，一共三棵树。 然后就好了。 代码123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107108109110111112113114115116117118119120121122123124125126127128129130131132133134135136137138#include&lt;cstdio&gt;#include&lt;algorithm&gt;using namespace std;const int maxn=100005,LOG=18;int n,m,q,A[maxn],QL[maxn],QR[maxn],FL[maxn][LOG],FR[maxn][LOG];inline int read()&#123; int ret=0,f=1;char ch=getchar(); while(ch&lt;'0'||ch&gt;'9')&#123;if(ch=='-')f=-f;ch=getchar();&#125; while(ch&gt;='0'&amp;&amp;ch&lt;='9')&#123;ret=ret*10+ch-'0';ch=getchar();&#125; return ret*f;&#125;struct SegmentTree&#123; struct Node&#123;int Max,Tag;&#125;Tree[maxn*4]; inline void PushUp(int rt)&#123;Tree[rt].Max=max(Tree[rt*2].Max,Tree[rt*2+1].Max);&#125; inline void PushDown(int rt) &#123; if(Tree[rt].Tag==0) return; Tree[rt*2].Max=Tree[rt].Tag;Tree[rt*2+1].Max=Tree[rt].Tag; Tree[rt*2].Tag=Tree[rt].Tag;Tree[rt*2+1].Tag=Tree[rt].Tag; Tree[rt].Tag=0; &#125; inline void RangeUpdate(int LL,int RR,int num,int L=1,int R=n,int rt=1) &#123; if(LL&lt;=L&amp;&amp;R&lt;=RR)&#123;Tree[rt].Max=Tree[rt].Tag=num;return;&#125; PushDown(rt); int M=(L+R)&gt;&gt;1; if(LL&lt;=M) RangeUpdate(LL,RR,num,L,M,rt*2); if(M&lt;RR) RangeUpdate(LL,RR,num,M+1,R,rt*2+1); PushUp(rt); &#125; inline int RangeQuery(int LL,int RR,int L=1,int R=n,int rt=1) &#123; if(LL&lt;=L&amp;&amp;R&lt;=RR) return Tree[rt].Max; PushDown(rt); int M=(L+R)&gt;&gt;1,ret=0; if(LL&lt;=M) ret=max(ret,RangeQuery(LL,RR,L,M,rt*2)); if(M&lt;RR) ret=max(ret,RangeQuery(LL,RR,M+1,R,rt*2+1)); return ret; &#125; void Build(int* A,int L=1,int R=n,int rt=1) &#123; if(L==R)&#123;Tree[rt].Max=A[L];return;&#125; int M=(L+R)&gt;&gt;1; Build(A,L,M,rt*2); Build(A,M+1,R,rt*2+1); PushUp(rt); &#125;&#125;TA,TB;struct ChairmanTree&#123; int tot,R[maxn]; struct Node&#123;int L,R,Val;&#125;Tree[maxn*4*LOG]; int New()&#123;return ++tot;&#125; void Build(int rt,int L=1,int R=n) &#123; if(L==R) return; if(rt==1) this-&gt;R[0]=1; Tree[rt].L=New(); Tree[rt].R=New(); int M=(L+R)&gt;&gt;1; Build(Tree[rt].L,L,M); Build(Tree[rt].R,M+1,R); &#125; void RangeUpdate(int LL,int RR,int num,int pre,int rt,int L=1,int R=n) &#123; Tree[rt]=Tree[pre]; if(LL&lt;=L&amp;&amp;R&lt;=RR)&#123;Tree[rt].Val=num;return;&#125; int M=(L+R)&gt;&gt;1; if(LL&lt;=M) &#123; Tree[rt].L=New(); RangeUpdate(LL,RR,num,Tree[pre].L,Tree[rt].L,L,M); &#125; if(M&lt;RR) &#123; Tree[rt].R=New(); RangeUpdate(LL,RR,num,Tree[pre].R,Tree[rt].R,M+1,R); &#125; &#125; int Query(int P,int rt,int L=1,int R=n) &#123; if(L==R) return Tree[rt].Val; int M=(L+R)&gt;&gt;1,ret=Tree[rt].Val; if(P&lt;=M) return max(ret,Query(P,Tree[rt].L,L,M)); else return max(ret,Query(P,Tree[rt].R,M+1,R)); &#125;&#125;TC;int main()&#123; freopen("segment.in","r",stdin); freopen("segment.out","w",stdout); n=read();m=read();q=read(); for(int i=1;i&lt;=n;i++) A[i]=read(); TA.Build(A); TC.Build(TC.New()); for(int i=1;i&lt;=m;i++) &#123; QL[i]=read();QR[i]=read(); FL[i][0]=TB.RangeQuery(QL[i],QL[i]); FR[i][0]=TB.RangeQuery(QR[i],QR[i]); TC.R[i]=TC.New(); TC.RangeUpdate(QL[i],QR[i],i,TC.R[i-1],TC.R[i]); TB.RangeUpdate(QL[i],QR[i],i); &#125; for(int i=1;i&lt;=m;i++) &#123; for(int j=1;j&lt;=16;j++) &#123; FL[i][j]=FL[FL[i][j-1]][j-1]; FR[i][j]=FR[FR[i][j-1]][j-1]; &#125; &#125; while(q--) &#123; if(read()==1) &#123; int u=read(),v=read(); TA.RangeUpdate(u,u,v); &#125; else &#123; int L=read(),R=read(),K=read(); int Lm=TC.Query(K,TC.R[R]),Rm=Lm; if(Lm&lt;L) Lm=Rm=0; for(int i=16;i&gt;=0;i--) &#123; if(FL[Lm][i]&gt;=L) Lm=FL[Lm][i]; if(FR[Rm][i]&gt;=L) Rm=FR[Rm][i]; &#125; Lm=QL[Lm];Rm=QR[Rm]; if(Lm&gt;0) printf("%d\n",TA.RangeQuery(Lm,Rm)); else printf("%d\n",TA.RangeQuery(K,K)); &#125; &#125; return 0;&#125;]]></content>
+      <categories>
+        <category>倍增</category>
+      </categories>
+      <tags>
+        <tag>主席树</tag>
+        <tag>线段树</tag>
+        <tag>可持久化</tag>
+        <tag>倍增</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[「网络流24题」试题库问题]]></title>
+    <url>%2F2019%2F03%2F18%2F%E3%80%8C%E7%BD%91%E7%BB%9C%E6%B5%8124%E9%A2%98%E3%80%8D%E8%AF%95%E9%A2%98%E5%BA%93%E9%97%AE%E9%A2%98-Solution%2F</url>
+    <content type="text"><![CDATA[又是一道经典题。 传送门洛谷P2763 LOJ6006 题解考虑如何建模。 很显然这是一个二分图。 对于题库中的每一道题，像试卷中的所有可行的空位连边。 比如题库中一道题可以属于$1$类或者$2类$，那么就往试卷中所有$1类$和$2$类的位置连边。 由于一道题只能用在试卷上的一个位置，且试卷上的一个位置也只能放一道题。 所以直接上匈牙利算法求解该二分图的最大匹配即可。 当最大匹配数小于$m$时即为无解。（洛谷上的数据真水，一开始我没考虑无解的情况竟然AC了） 也可以转化成最大流问题，然后用EK、Dinic等求解。 代码12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061#include&lt;cstdio&gt;#include&lt;cstring&gt;using namespace std;const int maxn=1005;int k,st[maxn],grp[maxn],n,m,tot,lnk[maxn],son[maxn*maxn],nxt[maxn*maxn],cp[maxn],len[maxn],A[25][maxn],sum;bool vis[maxn];inline int read()&#123; int ret=0,f=1;char ch=getchar(); while(ch&lt;'0'||ch&gt;'9')&#123;if(ch=='-')f=-f;ch=getchar();&#125; while(ch&gt;='0'&amp;&amp;ch&lt;='9')&#123;ret=ret*10+ch-'0';ch=getchar();&#125; return ret*f;&#125;inline void add_e(int x,int y)&#123;tot++;son[tot]=y;nxt[tot]=lnk[x];lnk[x]=tot;&#125;bool Hungary(int now)&#123; for(int i=lnk[now];i;i=nxt[i]) &#123; if(!vis[son[i]]) &#123; vis[son[i]]=true; if(!cp[son[i]]||Hungary(cp[son[i]])) &#123; cp[son[i]]=now; return true; &#125; &#125; &#125; return false;&#125;int main()&#123; k=read();n=read(); for(int i=1;i&lt;=k;i++) &#123; int cnt=read();st[i]=m+1; for(int j=1;j&lt;=cnt;j++) grp[++m]=i; &#125; for(int i=1;i&lt;=n;i++) &#123; int cnt=read(); for(int j=1;j&lt;=cnt;j++) &#123; int to=read(); for(int k=st[to];grp[k]==to;k++) add_e(i,k); &#125; &#125; for(int i=1;i&lt;=n;i++)&#123;memset(vis,false,n+3);Hungary(i);&#125; for(int i=1;i&lt;=m;i++) if(cp[i]) &#123;len[grp[i]]++;A[grp[i]][len[grp[i]]]=cp[i];&#125; for(int i=1;i&lt;=k;i++) sum+=len[i]; if(sum&lt;m)&#123;printf("No Solution!");return 0;&#125; for(int i=1;i&lt;=k;i++) &#123; printf("%d:",i); for(int j=1;j&lt;=len[i];j++) printf(" %d",A[i][j]); printf("\n"); &#125; return 0;&#125;]]></content>
+      <categories>
+        <category>二分图最大匹配</category>
+      </categories>
+      <tags>
+        <tag>网络流</tag>
+        <tag>最大流</tag>
+        <tag>匈牙利算法</tag>
+        <tag>二分图</tag>
+        <tag>二分图最大匹配</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[「网络流24题」魔术球问题]]></title>
+    <url>%2F2019%2F03%2F18%2F%E3%80%8C%E7%BD%91%E7%BB%9C%E6%B5%8124%E9%A2%98%E3%80%8D%E9%AD%94%E6%9C%AF%E7%90%83%E9%97%AE%E9%A2%98-Solution%2F</url>
+    <content type="text"><![CDATA[纳尼？这是网络流？？？ 传送门洛谷P2765 LOJ6003 题解这题一眼看上去就是一个贪心。 从小到大枚举球的编号，然后从$1$到$n$枚举柱子，找到第一个可以放上去的柱子后就把球放上去，直到放不了位置。 这个贪心看起来很假，但是是对的。 考虑网络流的做法，对于两个球，如果编号加和为完全平方数，那么就从编号小的球往编号大的球建一条边。然后整张图的最小路径覆盖就等于所需柱子的数量。从小到大枚举球的个数，当所需柱子的数量大于$n​$时就上一次的个数就是答案。 考虑贪心和网络流的关系。 其实贪心的过程就是往网络里加点的过程。由于优先考虑加到有球的柱子上，所以就相当于在维护最小路径覆盖是的数量。 所以贪心的做法本质上和网络流的做法是一样的。 代码123456789101112131415161718192021222324252627#include&lt;cmath&gt;#include&lt;cstdio&gt;using namespace std;const int maxn=60;int n,ans,top[maxn],A[maxn][maxn];inline bool check(int x)&#123; int sq=sqrt(x)+1e-10; return sq*sq==x;&#125;int main()&#123; scanf("%d",&amp;n); while(true) &#123; bool suc=false; for(int i=1;i&lt;=n;i++) if(top[i]==0||check(A[i][top[i]]+ans+1)) &#123;ans++;top[i]++;A[i][top[i]]=ans;suc=true;break;&#125; if(!suc) break; &#125; printf("%d\n",ans); for(int i=1;i&lt;=n;i++) for(int j=1;j&lt;=top[i];j++) printf("%d%c",A[i][j],j==top[i]?'\n':' '); return 0;&#125;]]></content>
+      <categories>
+        <category>贪心</category>
+      </categories>
+      <tags>
+        <tag>贪心</tag>
+        <tag>网络流</tag>
+        <tag>最大流</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[「网络流24题」运输问题]]></title>
     <url>%2F2019%2F03%2F18%2F%E3%80%8C%E7%BD%91%E7%BB%9C%E6%B5%8124%E9%A2%98%E3%80%8D%E8%BF%90%E8%BE%93%E9%97%AE%E9%A2%98-Solution%2F</url>
     <content type="text"><![CDATA[好经典的模型。 传送门洛谷P4015 LOJ6011 题解乍一看就是一个二分图。 但是要求很明显要求最小费用最大流。 考虑如何建模。 由于每一个仓库只能流出定量的货物，但是又不能把每一个仓库看做源。 所以把所有货物都连到同一个源上，连到第$i​$个仓库的边嘚的容量为$A_i​$，费用为$0​$。 每一家零售店又都连到一个汇上，从第$i$家零售店连出的边的容量为$B_i$，费用为$0$。 中间从仓库到零售店的边就按照题目里的说的那样连，容量为$+\infty$。 然后直接跑最小费用最大流就好了。 代码1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374757677787980818283848586#include&lt;cstdio&gt;#include&lt;cstring&gt;#include&lt;algorithm&gt;using namespace std;const int maxn=210,maxm=20205,inf=0x3F3F3F3F;int m,n,S,T,tot,lnk[maxn],son[maxm],nxt[maxm],w[maxm],cap[maxm],que[maxn],lst[maxn],pre[maxn],dist[maxn],flow[maxn],ans;bool vis[maxn];inline int read()&#123; int ret=0,f=1;char ch=getchar(); while(ch&lt;'0'||ch&gt;'9')&#123;if(ch=='-')f=-f;ch=getchar();&#125; while(ch&gt;='0'&amp;&amp;ch&lt;='9')&#123;ret=ret*10+ch-'0';ch=getchar();&#125; return ret*f;&#125;inline void add_e(int x,int y,int z,int c)&#123;tot++;son[tot]=y;w[tot]=z;cap[tot]=c;nxt[tot]=lnk[x];lnk[x]=tot;&#125;inline void MinCostMaxFlow(int flg)&#123; while(true) &#123; if(flg==1) memset(dist,63,sizeof(dist)); else memset(dist,192,sizeof(dist)); memset(flow,63,sizeof(flow)); int hed=0,til=1; que[1]=S;dist[S]=0;vis[S]=true;pre[T]=0; while(hed!=til) &#123; hed=(hed+1)%maxn;vis[que[hed]]=false; for(int i=lnk[que[hed]];i;i=nxt[i]) &#123; if(cap[i]&amp;&amp;((flg==1&amp;&amp;dist[que[hed]]+w[i]&lt;dist[son[i]])||(flg==-1&amp;&amp;dist[que[hed]]+w[i]&gt;dist[son[i]]))) &#123; dist[son[i]]=dist[que[hed]]+w[i]; pre[son[i]]=que[hed]; lst[son[i]]=i; flow[son[i]]=min(flow[que[hed]],cap[i]); if(!vis[son[i]]) &#123; vis[son[i]]=true; til=(til+1)%maxn; que[til]=son[i]; &#125; &#125; &#125; &#125; if(pre[T]==0) return; ans+=flow[T]*dist[T]; int p=T; while(p!=S) &#123; cap[lst[p]]-=flow[T]; cap[(lst[p]&amp;1)?lst[p]+1:lst[p]-1]+=flow[T]; p=pre[p]; &#125; &#125;&#125;int main()&#123; m=read();n=read();S=1;T=m+n+2; for(int i=1;i&lt;=m;i++) &#123; int ai=read(); add_e(S,i+1,0,ai); add_e(i+1,S,0,0); &#125; for(int i=1;i&lt;=n;i++) &#123; int bi=read(); add_e(i+m+1,T,0,bi); add_e(T,i+m+1,0,0); &#125; for(int i=1;i&lt;=m;i++) &#123; for(int j=1;j&lt;=n;j++) &#123; int cij=read(); add_e(i+1,j+m+1,cij,inf); add_e(j+m+1,i+1,-cij,0); &#125; &#125; MinCostMaxFlow(1); printf("%d\n",ans); for(int i=2;i&lt;=tot;i+=2)&#123;cap[i-1]+=cap[i];cap[i]=0;&#125; ans=0; MinCostMaxFlow(-1); printf("%d\n",ans); return 0;&#125;]]></content>
@@ -12,20 +54,6 @@
         <tag>最大流</tag>
         <tag>费用流</tag>
         <tag>最小费用最大流</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[「网络流24题」飞行员配对方案问题]]></title>
-    <url>%2F2019%2F03%2F18%2F%E3%80%8C%E7%BD%91%E7%BB%9C%E6%B5%8124%E9%A2%98%E3%80%8D%E9%A3%9E%E8%A1%8C%E5%91%98%E9%85%8D%E5%AF%B9%E6%96%B9%E6%A1%88%E9%97%AE%E9%A2%98-Solution%2F</url>
-    <content type="text"><![CDATA[没啥好说的，就是二分图的最大匹配 传送门洛谷P2756 LOJ6000 输入输出格式有所不同。 题解就是一个二分图的最大匹配问题啊，裸的一批，直接上匈牙利搞就好了。 代码1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950#include&lt;cstdio&gt;#include&lt;cstring&gt;using namespace std;const int maxn=105;int n,m,tot,lnk[maxn],son[maxn*maxn],nxt[maxn*maxn],cp[maxn],ans;bool vis[maxn];inline int read()&#123; int ret=0,f=1;char ch=getchar(); while(ch&lt;'0'||ch&gt;'9')&#123;if(ch=='-')f=-f;ch=getchar();&#125; while(ch&gt;='0'&amp;&amp;ch&lt;='9')&#123;ret=ret*10+ch-'0';ch=getchar();&#125; return ret*f;&#125;inline void add_e(int x,int y)&#123;tot++;son[tot]=y;nxt[tot]=lnk[x];lnk[x]=tot;&#125;bool Hungary(int now)&#123; for(int i=lnk[now];i;i=nxt[i]) &#123; if(!vis[son[i]]) &#123; vis[son[i]]=true; if(!cp[son[i]]||Hungary(cp[son[i]])) &#123; cp[son[i]]=now; return true; &#125; &#125; &#125; return false;&#125;int main()&#123; m=read();n=read(); while(true) &#123; int a=read(),b=read()-m; if(a&lt;0&amp;&amp;b&lt;0) break; add_e(b,a); &#125; for(int i=1;i&lt;=n;i++) &#123; memset(vis,false,sizeof(vis)); ans+=Hungary(i); &#125; if(ans==0)&#123;printf("No Solution!\n");return 0;&#125; printf("%d\n",ans); for(int i=1;i&lt;=m;i++) if(cp[i]) printf("%d %d\n",i,cp[i]+m); return 0;&#125;]]></content>
-      <categories>
-        <category>二分图最大匹配</category>
-      </categories>
-      <tags>
-        <tag>网络流</tag>
-        <tag>最大流</tag>
-        <tag>二分图最大匹配</tag>
-        <tag>匈牙利</tag>
       </tags>
   </entry>
   <entry>
@@ -56,31 +84,17 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[「网络流24题」试题库问题]]></title>
-    <url>%2F2019%2F03%2F18%2F%E3%80%8C%E7%BD%91%E7%BB%9C%E6%B5%8124%E9%A2%98%E3%80%8D%E8%AF%95%E9%A2%98%E5%BA%93%E9%97%AE%E9%A2%98-Solution%2F</url>
-    <content type="text"><![CDATA[又是一道经典题。 传送门洛谷P2763 LOJ6006 题解考虑如何建模。 很显然这是一个二分图。 对于题库中的每一道题，像试卷中的所有可行的空位连边。 比如题库中一道题可以属于$1$类或者$2类$，那么就往试卷中所有$1类$和$2$类的位置连边。 由于一道题只能用在试卷上的一个位置，且试卷上的一个位置也只能放一道题。 所以直接上匈牙利算法求解该二分图的最大匹配即可。 当最大匹配数小于$m$时即为无解。（洛谷上的数据真水，一开始我没考虑无解的情况竟然AC了） 也可以转化成最大流问题，然后用EK、Dinic等求解。 代码12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061#include&lt;cstdio&gt;#include&lt;cstring&gt;using namespace std;const int maxn=1005;int k,st[maxn],grp[maxn],n,m,tot,lnk[maxn],son[maxn*maxn],nxt[maxn*maxn],cp[maxn],len[maxn],A[25][maxn],sum;bool vis[maxn];inline int read()&#123; int ret=0,f=1;char ch=getchar(); while(ch&lt;'0'||ch&gt;'9')&#123;if(ch=='-')f=-f;ch=getchar();&#125; while(ch&gt;='0'&amp;&amp;ch&lt;='9')&#123;ret=ret*10+ch-'0';ch=getchar();&#125; return ret*f;&#125;inline void add_e(int x,int y)&#123;tot++;son[tot]=y;nxt[tot]=lnk[x];lnk[x]=tot;&#125;bool Hungary(int now)&#123; for(int i=lnk[now];i;i=nxt[i]) &#123; if(!vis[son[i]]) &#123; vis[son[i]]=true; if(!cp[son[i]]||Hungary(cp[son[i]])) &#123; cp[son[i]]=now; return true; &#125; &#125; &#125; return false;&#125;int main()&#123; k=read();n=read(); for(int i=1;i&lt;=k;i++) &#123; int cnt=read();st[i]=m+1; for(int j=1;j&lt;=cnt;j++) grp[++m]=i; &#125; for(int i=1;i&lt;=n;i++) &#123; int cnt=read(); for(int j=1;j&lt;=cnt;j++) &#123; int to=read(); for(int k=st[to];grp[k]==to;k++) add_e(i,k); &#125; &#125; for(int i=1;i&lt;=n;i++)&#123;memset(vis,false,n+3);Hungary(i);&#125; for(int i=1;i&lt;=m;i++) if(cp[i]) &#123;len[grp[i]]++;A[grp[i]][len[grp[i]]]=cp[i];&#125; for(int i=1;i&lt;=k;i++) sum+=len[i]; if(sum&lt;m)&#123;printf("No Solution!");return 0;&#125; for(int i=1;i&lt;=k;i++) &#123; printf("%d:",i); for(int j=1;j&lt;=len[i];j++) printf(" %d",A[i][j]); printf("\n"); &#125; return 0;&#125;]]></content>
+    <title><![CDATA[「网络流24题」飞行员配对方案问题]]></title>
+    <url>%2F2019%2F03%2F18%2F%E3%80%8C%E7%BD%91%E7%BB%9C%E6%B5%8124%E9%A2%98%E3%80%8D%E9%A3%9E%E8%A1%8C%E5%91%98%E9%85%8D%E5%AF%B9%E6%96%B9%E6%A1%88%E9%97%AE%E9%A2%98-Solution%2F</url>
+    <content type="text"><![CDATA[没啥好说的，就是二分图的最大匹配 传送门洛谷P2756 LOJ6000 输入输出格式有所不同。 题解就是一个二分图的最大匹配问题啊，裸的一批，直接上匈牙利搞就好了。 代码1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950#include&lt;cstdio&gt;#include&lt;cstring&gt;using namespace std;const int maxn=105;int n,m,tot,lnk[maxn],son[maxn*maxn],nxt[maxn*maxn],cp[maxn],ans;bool vis[maxn];inline int read()&#123; int ret=0,f=1;char ch=getchar(); while(ch&lt;'0'||ch&gt;'9')&#123;if(ch=='-')f=-f;ch=getchar();&#125; while(ch&gt;='0'&amp;&amp;ch&lt;='9')&#123;ret=ret*10+ch-'0';ch=getchar();&#125; return ret*f;&#125;inline void add_e(int x,int y)&#123;tot++;son[tot]=y;nxt[tot]=lnk[x];lnk[x]=tot;&#125;bool Hungary(int now)&#123; for(int i=lnk[now];i;i=nxt[i]) &#123; if(!vis[son[i]]) &#123; vis[son[i]]=true; if(!cp[son[i]]||Hungary(cp[son[i]])) &#123; cp[son[i]]=now; return true; &#125; &#125; &#125; return false;&#125;int main()&#123; m=read();n=read(); while(true) &#123; int a=read(),b=read()-m; if(a&lt;0&amp;&amp;b&lt;0) break; add_e(b,a); &#125; for(int i=1;i&lt;=n;i++) &#123; memset(vis,false,sizeof(vis)); ans+=Hungary(i); &#125; if(ans==0)&#123;printf("No Solution!\n");return 0;&#125; printf("%d\n",ans); for(int i=1;i&lt;=m;i++) if(cp[i]) printf("%d %d\n",i,cp[i]+m); return 0;&#125;]]></content>
       <categories>
         <category>二分图最大匹配</category>
       </categories>
       <tags>
         <tag>网络流</tag>
         <tag>最大流</tag>
-        <tag>匈牙利算法</tag>
-        <tag>二分图</tag>
         <tag>二分图最大匹配</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[「网络流24题」魔术球问题]]></title>
-    <url>%2F2019%2F03%2F18%2F%E3%80%8C%E7%BD%91%E7%BB%9C%E6%B5%8124%E9%A2%98%E3%80%8D%E9%AD%94%E6%9C%AF%E7%90%83%E9%97%AE%E9%A2%98-Solution%2F</url>
-    <content type="text"><![CDATA[纳尼？这是网络流？？？ 传送门洛谷P2765 LOJ6003 题解这题一眼看上去就是一个贪心。 从小到大枚举球的编号，然后从$1$到$n$枚举柱子，找到第一个可以放上去的柱子后就把球放上去，直到放不了位置。 这个贪心看起来很假，但是是对的。 考虑网络流的做法，对于两个球，如果编号加和为完全平方数，那么就从编号小的球往编号大的球建一条边。然后整张图的最小路径覆盖就等于所需柱子的数量。从小到大枚举球的个数，当所需柱子的数量大于$n​$时就上一次的个数就是答案。 考虑贪心和网络流的关系。 其实贪心的过程就是往网络里加点的过程。由于优先考虑加到有球的柱子上，所以就相当于在维护最小路径覆盖是的数量。 所以贪心的做法本质上和网络流的做法是一样的。 代码123456789101112131415161718192021222324252627#include&lt;cmath&gt;#include&lt;cstdio&gt;using namespace std;const int maxn=60;int n,ans,top[maxn],A[maxn][maxn];inline bool check(int x)&#123; int sq=sqrt(x)+1e-10; return sq*sq==x;&#125;int main()&#123; scanf("%d",&amp;n); while(true) &#123; bool suc=false; for(int i=1;i&lt;=n;i++) if(top[i]==0||check(A[i][top[i]]+ans+1)) &#123;ans++;top[i]++;A[i][top[i]]=ans;suc=true;break;&#125; if(!suc) break; &#125; printf("%d\n",ans); for(int i=1;i&lt;=n;i++) for(int j=1;j&lt;=top[i];j++) printf("%d%c",A[i][j],j==top[i]?'\n':' '); return 0;&#125;]]></content>
-      <categories>
-        <category>贪心</category>
-      </categories>
-      <tags>
-        <tag>贪心</tag>
-        <tag>网络流</tag>
-        <tag>最大流</tag>
+        <tag>匈牙利</tag>
       </tags>
   </entry>
   <entry>
@@ -150,18 +164,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[「HNOI2008」遥远的行星]]></title>
-    <url>%2F2019%2F03%2F07%2F%E3%80%8CHNOI2008%E3%80%8D%E9%81%A5%E8%BF%9C%E7%9A%84%E8%A1%8C%E6%98%9F-Solution%2F</url>
-    <content type="text"><![CDATA[又是一道玄学的题目QwQ。 传送门洛谷P3198 BZOJ1011 题解首先要一眼看到这题的重点：结果的相对误差不超过$5\%$即可。 所以考虑非完美算法。 首先，对于第$i​$个行星，对它有贡献的星球区间是$[1,\lfloor A\cdot i\rfloor]​$。设$R=\lfloor A\cdot i\rfloor​$。 然后再设一个阈值$S$比如$S=n^{0.4}$。 接下来的操作类似于分块，把区间$[1,R]$分成若干个块，每个块的大小为$S$，剩下的零头暴力搞，对于每一个完整的块，设这个块为$[a,b]$，那么这个块的贡献约等于 \frac{M[i]\cdot\sum_{j=a}^{b}M[j]}{i-\frac{a+b}{2}}这个式子可以构造前缀和来求。 把所有块的贡献加起来，注意下细节，就能过了QwQ。 代码12345678910111213141516171819202122232425262728#include&lt;cmath&gt;#include&lt;cstdio&gt;using namespace std;typedef long long LL;const int maxn=100005;int n,S,M[maxn];double A,ans;LL sum[maxn];inline int read()&#123; int ret=0,f=1;char ch=getchar(); while(ch&lt;'0'||ch&gt;'9')&#123;if(ch=='-')f=-f;ch=getchar();&#125; while(ch&gt;='0'&amp;&amp;ch&lt;='9')&#123;ret=ret*10+ch-'0';ch=getchar();&#125; return ret*f;&#125;int main()&#123; n=read();scanf("%lf",&amp;A);S=pow(n,0.38)+1e-10; for(int i=1;i&lt;=n;i++)&#123;M[i]=read();sum[i]=sum[i-1]+M[i];&#125; //构造前缀和 for(int i=1;i&lt;=n;i++) &#123; int R=i*A+1e-10,j;ans=0; //加上1e-10是为了防止精度损失 for(j=1;j+S&lt;=R;j+=S) //处理整块 ans+=(double)M[i]*(sum[j+S-1]-sum[j-1])/(i-(double)(2*j+S-1)/2); for(;j&lt;=R;j++) //处理零头 ans+=(double)M[i]*M[j]/(i-j); printf("%lf\n",ans); &#125; return 0;&#125;]]></content>
-      <categories>
-        <category>分块</category>
-      </categories>
-      <tags>
-        <tag>分块</tag>
-        <tag>概率</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[「USACO」Haywire]]></title>
     <url>%2F2019%2F03%2F07%2F%E3%80%8CUSACO%E3%80%8DHaywire-Solution%2F</url>
     <content type="text"><![CDATA[什么神仙题目。蒟蒻我前前后后一共交了13次，才终于把这个退火搞懂了QwQ。 传送门洛谷P2210 题解蒟蒻我之前一直对模拟退火保持一个懵逼状态，今天是差不多把大概原理终于理清楚了QwQ。 其实基本上就是个退火的板子，但是蒟蒻我一直搞不清楚计算接受较差答案的概率。 一般来说，计算改成的式子是这样的： exp((now-ans)/T)&gt;rand()/RAND_MAX 其中now表示当前的答案，ans表示已知最优答案，也有可能是ans-now，总之应该是个负数。满足上式，则接受较差的答案。 其中$exp(x)$表示$e^x$，函数图像大概是这样的： 所以与当前最优答案差距越大，温度越低，$exp()$的值就越小，接受这个较差的答案的概率就越小。 还有，调参的时候，降温系数，停止退火的温度下限，温度初始值，退火的次数要一起调，尤其是退火的次数，多退几次还是很有必要的。种子可以用神仙学长ZZK的生日20020222。 代码1234567891011121314151617181920212223242526272829303132333435363738394041#include&lt;cmath&gt;#include&lt;cstdio&gt;#include&lt;cstdlib&gt;#include&lt;algorithm&gt;using namespace std;const double delta=0.99;int n,fri[20][5],Q[20],ans;inline int Calc()&#123; int ret=0; for(int i=1;i&lt;=n;i++) for(int j=1;j&lt;=3;j++) if(Q[i]&gt;Q[fri[i][j]]) ret+=Q[i]-Q[fri[i][j]]; return ret;&#125;inline void SA(double T)&#123; while(T&gt;1e-12) &#123; int a=rand()%n+1,b=rand()%n+1; while(a==b)&#123;a=rand()%n+1;b=rand()%n+1;&#125; swap(Q[a],Q[b]); int now=Calc(); if(now&lt;ans) ans=now; else if(exp((ans-now)/T)&lt;(double)rand()/RAND_MAX) swap(Q[a],Q[b]); T*=delta; &#125;&#125;int main()&#123; srand(19260817); scanf("%d",&amp;n); for(int i=1;i&lt;=n;i++) scanf("%d%d%d",&amp;fri[i][1],&amp;fri[i][2],&amp;fri[i][3]); for(int i=1;i&lt;=n;i++) Q[i]=i; ans=Calc(); for(int i=1;i&lt;=500;i++) SA(19260817); printf("%d\n",ans); return 0;&#125;]]></content>
@@ -172,6 +174,18 @@
         <tag>随机算法</tag>
         <tag>模拟退火</tag>
         <tag>搜索</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[「HNOI2008」遥远的行星]]></title>
+    <url>%2F2019%2F03%2F07%2F%E3%80%8CHNOI2008%E3%80%8D%E9%81%A5%E8%BF%9C%E7%9A%84%E8%A1%8C%E6%98%9F-Solution%2F</url>
+    <content type="text"><![CDATA[又是一道玄学的题目QwQ。 传送门洛谷P3198 BZOJ1011 题解首先要一眼看到这题的重点：结果的相对误差不超过$5\%$即可。 所以考虑非完美算法。 首先，对于第$i​$个行星，对它有贡献的星球区间是$[1,\lfloor A\cdot i\rfloor]​$。设$R=\lfloor A\cdot i\rfloor​$。 然后再设一个阈值$S$比如$S=n^{0.4}$。 接下来的操作类似于分块，把区间$[1,R]$分成若干个块，每个块的大小为$S$，剩下的零头暴力搞，对于每一个完整的块，设这个块为$[a,b]$，那么这个块的贡献约等于 \frac{M[i]\cdot\sum_{j=a}^{b}M[j]}{i-\frac{a+b}{2}}这个式子可以构造前缀和来求。 把所有块的贡献加起来，注意下细节，就能过了QwQ。 代码12345678910111213141516171819202122232425262728#include&lt;cmath&gt;#include&lt;cstdio&gt;using namespace std;typedef long long LL;const int maxn=100005;int n,S,M[maxn];double A,ans;LL sum[maxn];inline int read()&#123; int ret=0,f=1;char ch=getchar(); while(ch&lt;'0'||ch&gt;'9')&#123;if(ch=='-')f=-f;ch=getchar();&#125; while(ch&gt;='0'&amp;&amp;ch&lt;='9')&#123;ret=ret*10+ch-'0';ch=getchar();&#125; return ret*f;&#125;int main()&#123; n=read();scanf("%lf",&amp;A);S=pow(n,0.38)+1e-10; for(int i=1;i&lt;=n;i++)&#123;M[i]=read();sum[i]=sum[i-1]+M[i];&#125; //构造前缀和 for(int i=1;i&lt;=n;i++) &#123; int R=i*A+1e-10,j;ans=0; //加上1e-10是为了防止精度损失 for(j=1;j+S&lt;=R;j+=S) //处理整块 ans+=(double)M[i]*(sum[j+S-1]-sum[j-1])/(i-(double)(2*j+S-1)/2); for(;j&lt;=R;j++) //处理零头 ans+=(double)M[i]*M[j]/(i-j); printf("%lf\n",ans); &#125; return 0;&#125;]]></content>
+      <categories>
+        <category>分块</category>
+      </categories>
+      <tags>
+        <tag>分块</tag>
+        <tag>概率</tag>
       </tags>
   </entry>
   <entry>
@@ -188,9 +202,9 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[「IOI2011」Race]]></title>
-    <url>%2F2019%2F03%2F05%2F%E3%80%8CIOI2011%E3%80%8DRace-Solution%2F</url>
-    <content type="text"><![CDATA[又是一个赤裸裸的点分治QwQ。 传送门洛谷P4149 BZOJ2599 题解基本上就是点分治的裸题QwQ。 每次找重心，然后刷出当前处理的子树中每个点到重心的距离和经过的边的数量，直接搞就行了，记得要刷边数的最小值，还要判无解。没啥好说的QwQ。 代码12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667#include&lt;cstdio&gt;#include&lt;cstring&gt;using namespace std;const int maxn=200005,maxk=1000005,inf=0x3F3F3F3F;int n,K,tot,lnk[maxn],son[maxn*2],w[maxn*2],nxt[maxn*2],sum,siz[maxn],maxp[maxn],rt,dist[maxn],cnt[maxn],num,Q[maxn][2],ans=inf,jud[maxk],que[maxn];bool vis[maxn];inline int read()&#123; int ret=0,f=1;char ch=getchar(); while(ch&lt;'0'||ch&gt;'9')&#123;if(ch=='-')f=-f;ch=getchar();&#125; while(ch&gt;='0'&amp;&amp;ch&lt;='9')&#123;ret=ret*10+ch-'0';ch=getchar();&#125; return ret*f;&#125;inline void add_e(int x,int y,int z)&#123;tot++;son[tot]=y;w[tot]=z;nxt[tot]=lnk[x];lnk[x]=tot;&#125;void GetRoot(int now,int fa)&#123; siz[now]=1;maxp[now]=0; for(int i=lnk[now];i;i=nxt[i]) &#123; if(vis[son[i]]||son[i]==fa) continue; GetRoot(son[i],now);siz[now]+=siz[son[i]]; if(siz[son[i]]&gt;maxp[now]) maxp[now]=siz[son[i]]; &#125; if(sum-siz[now]&gt;maxp[now]) maxp[now]=sum-siz[now]; if(maxp[now]&lt;maxp[rt]) rt=now;&#125;void GetDist(int now,int fa)&#123; if(dist[now]&gt;K||cnt[now]&gt;ans) return; num++;Q[num][0]=dist[now];Q[num][1]=cnt[now]; for(int i=lnk[now];i;i=nxt[i]) if(!vis[son[i]]&amp;&amp;son[i]!=fa) &#123;dist[son[i]]=dist[now]+w[i];cnt[son[i]]=cnt[now]+1;GetDist(son[i],now);&#125;&#125;void Solve(int now)&#123; int len=1;que[1]=0;vis[now]=true;jud[0]=0; for(int i=lnk[now];i;i=nxt[i]) &#123; if(vis[son[i]]) continue; num=0;dist[son[i]]=w[i];cnt[son[i]]=1;GetDist(son[i],0); for(int j=1;j&lt;=num;j++) if(Q[j][1]+jud[K-Q[j][0]]&lt;ans) ans=Q[j][1]+jud[K-Q[j][0]]; for(int j=1;j&lt;=num;j++) &#123; if(Q[j][1]&lt;jud[Q[j][0]]) jud[Q[j][0]]=Q[j][1]; que[++len]=Q[j][0]; &#125; &#125; for(int i=1;i&lt;=len;i++) jud[que[i]]=inf; for(int i=lnk[now];i;i=nxt[i]) if(!vis[son[i]]) &#123;sum=siz[son[i]];rt=0;GetRoot(son[i],0);Solve(rt);&#125;&#125;int main()&#123; n=read();K=read(); for(int i=1;i&lt;n;i++) &#123; int a=read()+1,b=read()+1,c=read(); add_e(a,b,c);add_e(b,a,c); &#125; memset(jud,63,sizeof(jud)); maxp[0]=sum=n;GetRoot(1,0);Solve(rt); printf("%d\n",ans==inf?-1:ans); return 0;&#125;]]></content>
+    <title><![CDATA[「洛谷P4886」快递员]]></title>
+    <url>%2F2019%2F03%2F05%2F%E3%80%8C%E6%B4%9B%E8%B0%B7P4886%E3%80%8D%E5%BF%AB%E9%80%92%E5%91%98-Solution%2F</url>
+    <content type="text"><![CDATA[完了…没高中读了QwQ，我要去打工送快递！！！QwQ 传送门洛谷P4886 题解这题其实还是挺好玩的。 首先随便钦定一个点，临时作为快递中心 。 然后可以$O(n)$计算出每一组点对到快递中心的距离和。设点对到快递中心最大距离和为$Max$，可能有多个点对到快递中心的距离和都是$Max$那么就把它们都存下来。 如果当前的快递中心在任意一组距离最大的点对之间最短路径上，那么答案就是$Max$不可能再小了。 如果有任意两组点对，一组在当前快递中心的一棵子树里，另一组在另一棵子树里，那么答案同样也无法更小。 否则答案最优时的快递中心就有可能在当前唯一一棵有点对的子树中，那么就取这棵子树的重心作为临时快递中心，然后递归。由于每次取的都是重心，所以只会递归$\log n$层，总时间复杂度为$O(n\log n)​$。 代码12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667#include&lt;cstdio&gt;#include&lt;cstdlib&gt;using namespace std;const int maxn=100005;int n,m,u[maxn],v[maxn],tot,lnk[maxn],son[maxn*2],w[maxn*2],nxt[maxn*2],sum,siz[maxn],maxp[maxn],rt,sub[maxn],dist[maxn],que[maxn],ans=1000000000;bool vis[maxn];inline int read()&#123; int ret=0,f=1;char ch=getchar(); while(ch&lt;'0'||ch&gt;'9')&#123;if(ch=='-')f=-f;ch=getchar();&#125; while(ch&gt;='0'&amp;&amp;ch&lt;='9')&#123;ret=ret*10+ch-'0';ch=getchar();&#125; return ret*f;&#125;inline void add_e(int x,int y,int z)&#123;tot++;son[tot]=y;w[tot]=z;nxt[tot]=lnk[x];lnk[x]=tot;&#125;void GetRoot(int now,int fa) //找重心&#123; siz[now]=1;maxp[now]=0; for(int i=lnk[now];i;i=nxt[i]) &#123; if(vis[son[i]]||son[i]==fa) continue; GetRoot(son[i],now);siz[now]+=siz[son[i]]; if(siz[son[i]]&gt;maxp[now]) maxp[now]=siz[son[i]]; &#125; if(sum-siz[now]&gt;maxp[now]) maxp[now]=sum-siz[now]; if(maxp[now]&lt;maxp[rt]) rt=now;&#125;void GetDist(int now,int fa,int st)&#123; sub[now]=st; for(int i=lnk[now];i;i=nxt[i]) if(son[i]!=fa) &#123;dist[son[i]]=dist[now]+w[i];GetDist(son[i],now,st);&#125;&#125;inline void Print()&#123;printf("%d\n",ans);exit(0);&#125; //输出答案void Solve(int now)&#123; if(vis[now]) Print(); vis[now]=true;dist[now]=0; for(int i=lnk[now];i;i=nxt[i]) &#123;dist[son[i]]=w[i];GetDist(son[i],now,son[i]);&#125; //先暴力计算距离 int Max=0,len=0,las=0; for(int i=1;i&lt;=m;i++) &#123; if(dist[u[i]]+dist[v[i]]&gt;Max)&#123;len=1;que[len]=i;Max=dist[u[i]]+dist[v[i]];&#125; else if(dist[u[i]]+dist[v[i]]==Max) que[++len]=i; //刷最大距离和 &#125; if(Max&lt;ans) ans=Max; for(int i=1;i&lt;=len;i++) &#123; if(sub[u[que[i]]]!=sub[v[que[i]]]) Print(); //分情况考虑答案 if(!las) las=sub[u[que[i]]]; if(sub[u[que[i]]]!=las) Print(); &#125; rt=0;sum=siz[las];GetRoot(las,0);Solve(rt); //递归解决&#125;int main()&#123; n=read();m=read(); for(int i=1;i&lt;n;i++) &#123; int a=read(),b=read(),c=read(); add_e(a,b,c);add_e(b,a,c); &#125; for(int i=1;i&lt;=m;i++)&#123;u[i]=read();v[i]=read();&#125; sum=maxp[0]=n;GetRoot(1,0);Solve(rt); Print(); return 0;&#125;]]></content>
       <categories>
         <category>点分治</category>
       </categories>
@@ -199,9 +213,9 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[「洛谷P4886」快递员]]></title>
-    <url>%2F2019%2F03%2F05%2F%E3%80%8C%E6%B4%9B%E8%B0%B7P4886%E3%80%8D%E5%BF%AB%E9%80%92%E5%91%98-Solution%2F</url>
-    <content type="text"><![CDATA[完了…没高中读了QwQ，我要去打工送快递！！！QwQ 传送门洛谷P4886 题解这题其实还是挺好玩的。 首先随便钦定一个点，临时作为快递中心 。 然后可以$O(n)$计算出每一组点对到快递中心的距离和。设点对到快递中心最大距离和为$Max$，可能有多个点对到快递中心的距离和都是$Max$那么就把它们都存下来。 如果当前的快递中心在任意一组距离最大的点对之间最短路径上，那么答案就是$Max$不可能再小了。 如果有任意两组点对，一组在当前快递中心的一棵子树里，另一组在另一棵子树里，那么答案同样也无法更小。 否则答案最优时的快递中心就有可能在当前唯一一棵有点对的子树中，那么就取这棵子树的重心作为临时快递中心，然后递归。由于每次取的都是重心，所以只会递归$\log n$层，总时间复杂度为$O(n\log n)​$。 代码12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667#include&lt;cstdio&gt;#include&lt;cstdlib&gt;using namespace std;const int maxn=100005;int n,m,u[maxn],v[maxn],tot,lnk[maxn],son[maxn*2],w[maxn*2],nxt[maxn*2],sum,siz[maxn],maxp[maxn],rt,sub[maxn],dist[maxn],que[maxn],ans=1000000000;bool vis[maxn];inline int read()&#123; int ret=0,f=1;char ch=getchar(); while(ch&lt;'0'||ch&gt;'9')&#123;if(ch=='-')f=-f;ch=getchar();&#125; while(ch&gt;='0'&amp;&amp;ch&lt;='9')&#123;ret=ret*10+ch-'0';ch=getchar();&#125; return ret*f;&#125;inline void add_e(int x,int y,int z)&#123;tot++;son[tot]=y;w[tot]=z;nxt[tot]=lnk[x];lnk[x]=tot;&#125;void GetRoot(int now,int fa) //找重心&#123; siz[now]=1;maxp[now]=0; for(int i=lnk[now];i;i=nxt[i]) &#123; if(vis[son[i]]||son[i]==fa) continue; GetRoot(son[i],now);siz[now]+=siz[son[i]]; if(siz[son[i]]&gt;maxp[now]) maxp[now]=siz[son[i]]; &#125; if(sum-siz[now]&gt;maxp[now]) maxp[now]=sum-siz[now]; if(maxp[now]&lt;maxp[rt]) rt=now;&#125;void GetDist(int now,int fa,int st)&#123; sub[now]=st; for(int i=lnk[now];i;i=nxt[i]) if(son[i]!=fa) &#123;dist[son[i]]=dist[now]+w[i];GetDist(son[i],now,st);&#125;&#125;inline void Print()&#123;printf("%d\n",ans);exit(0);&#125; //输出答案void Solve(int now)&#123; if(vis[now]) Print(); vis[now]=true;dist[now]=0; for(int i=lnk[now];i;i=nxt[i]) &#123;dist[son[i]]=w[i];GetDist(son[i],now,son[i]);&#125; //先暴力计算距离 int Max=0,len=0,las=0; for(int i=1;i&lt;=m;i++) &#123; if(dist[u[i]]+dist[v[i]]&gt;Max)&#123;len=1;que[len]=i;Max=dist[u[i]]+dist[v[i]];&#125; else if(dist[u[i]]+dist[v[i]]==Max) que[++len]=i; //刷最大距离和 &#125; if(Max&lt;ans) ans=Max; for(int i=1;i&lt;=len;i++) &#123; if(sub[u[que[i]]]!=sub[v[que[i]]]) Print(); //分情况考虑答案 if(!las) las=sub[u[que[i]]]; if(sub[u[que[i]]]!=las) Print(); &#125; rt=0;sum=siz[las];GetRoot(las,0);Solve(rt); //递归解决&#125;int main()&#123; n=read();m=read(); for(int i=1;i&lt;n;i++) &#123; int a=read(),b=read(),c=read(); add_e(a,b,c);add_e(b,a,c); &#125; for(int i=1;i&lt;=m;i++)&#123;u[i]=read();v[i]=read();&#125; sum=maxp[0]=n;GetRoot(1,0);Solve(rt); Print(); return 0;&#125;]]></content>
+    <title><![CDATA[「IOI2011」Race]]></title>
+    <url>%2F2019%2F03%2F05%2F%E3%80%8CIOI2011%E3%80%8DRace-Solution%2F</url>
+    <content type="text"><![CDATA[又是一个赤裸裸的点分治QwQ。 传送门洛谷P4149 BZOJ2599 题解基本上就是点分治的裸题QwQ。 每次找重心，然后刷出当前处理的子树中每个点到重心的距离和经过的边的数量，直接搞就行了，记得要刷边数的最小值，还要判无解。没啥好说的QwQ。 代码12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667#include&lt;cstdio&gt;#include&lt;cstring&gt;using namespace std;const int maxn=200005,maxk=1000005,inf=0x3F3F3F3F;int n,K,tot,lnk[maxn],son[maxn*2],w[maxn*2],nxt[maxn*2],sum,siz[maxn],maxp[maxn],rt,dist[maxn],cnt[maxn],num,Q[maxn][2],ans=inf,jud[maxk],que[maxn];bool vis[maxn];inline int read()&#123; int ret=0,f=1;char ch=getchar(); while(ch&lt;'0'||ch&gt;'9')&#123;if(ch=='-')f=-f;ch=getchar();&#125; while(ch&gt;='0'&amp;&amp;ch&lt;='9')&#123;ret=ret*10+ch-'0';ch=getchar();&#125; return ret*f;&#125;inline void add_e(int x,int y,int z)&#123;tot++;son[tot]=y;w[tot]=z;nxt[tot]=lnk[x];lnk[x]=tot;&#125;void GetRoot(int now,int fa)&#123; siz[now]=1;maxp[now]=0; for(int i=lnk[now];i;i=nxt[i]) &#123; if(vis[son[i]]||son[i]==fa) continue; GetRoot(son[i],now);siz[now]+=siz[son[i]]; if(siz[son[i]]&gt;maxp[now]) maxp[now]=siz[son[i]]; &#125; if(sum-siz[now]&gt;maxp[now]) maxp[now]=sum-siz[now]; if(maxp[now]&lt;maxp[rt]) rt=now;&#125;void GetDist(int now,int fa)&#123; if(dist[now]&gt;K||cnt[now]&gt;ans) return; num++;Q[num][0]=dist[now];Q[num][1]=cnt[now]; for(int i=lnk[now];i;i=nxt[i]) if(!vis[son[i]]&amp;&amp;son[i]!=fa) &#123;dist[son[i]]=dist[now]+w[i];cnt[son[i]]=cnt[now]+1;GetDist(son[i],now);&#125;&#125;void Solve(int now)&#123; int len=1;que[1]=0;vis[now]=true;jud[0]=0; for(int i=lnk[now];i;i=nxt[i]) &#123; if(vis[son[i]]) continue; num=0;dist[son[i]]=w[i];cnt[son[i]]=1;GetDist(son[i],0); for(int j=1;j&lt;=num;j++) if(Q[j][1]+jud[K-Q[j][0]]&lt;ans) ans=Q[j][1]+jud[K-Q[j][0]]; for(int j=1;j&lt;=num;j++) &#123; if(Q[j][1]&lt;jud[Q[j][0]]) jud[Q[j][0]]=Q[j][1]; que[++len]=Q[j][0]; &#125; &#125; for(int i=1;i&lt;=len;i++) jud[que[i]]=inf; for(int i=lnk[now];i;i=nxt[i]) if(!vis[son[i]]) &#123;sum=siz[son[i]];rt=0;GetRoot(son[i],0);Solve(rt);&#125;&#125;int main()&#123; n=read();K=read(); for(int i=1;i&lt;n;i++) &#123; int a=read()+1,b=read()+1,c=read(); add_e(a,b,c);add_e(b,a,c); &#125; memset(jud,63,sizeof(jud)); maxp[0]=sum=n;GetRoot(1,0);Solve(rt); printf("%d\n",ans==inf?-1:ans); return 0;&#125;]]></content>
       <categories>
         <category>点分治</category>
       </categories>
@@ -476,21 +490,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[「洛谷P5059」中国象棋]]></title>
-    <url>%2F2019%2F01%2F16%2F%E3%80%8C%E6%B4%9B%E8%B0%B7P5059%E3%80%8D%E4%B8%AD%E5%9B%BD%E8%B1%A1%E6%A3%8B%2F</url>
-    <content type="text"><![CDATA[又是数数题QwQ… 传送门洛谷P5059 题解首先注意题目中说的是有$n^2$个格子，也就是$(n+1)^2$个格点。 以下是出题人的推导： 首先我们可以发现每一行是独立的，所以只需要处理一行的答案即可 设$F[i][0]$表示一行中摆了$i$个位置且第$i$个位置不摆放棋子的方案数 设$F[i][1]$表示一行中摆了$i$个位置且第$i$个位置摆放棋子的方案数 设$Ans[i]$表示$F[i][0]+F[i][1]$ 那么忽略第二个限制可以发现有: $F[i][0]=F[i-1][0]+F[i-1][1]$ $F[i][1]=F[i-1][0]$ 所以有 $Ans[i]$ $=F[i][0]+F[i][1]$ $=2F[i-1][0]+F[i-1][1]$ $=(F[i-1][0]+F[i-1][1])+(F[i-2][0]+F[i-2][1])$ $=Ans[i-1]+Ans[i-2]$ 好了很显然这是一个斐波那契数列。自己再推一下，注意一下细节，不难发现最后的答案就是 (Fib_{n+3}-n-2)^{n+1}矩阵加快速幂就可以在$\Theta(\log n)$的复杂内求解。 还有一个问题，由于n和P都非常大，直接乘long long也会boom。所以这里用了一个类似于快速幂的方法来求$(a*b)\mod P$的值。虽然复杂度多了一只log，但是很好写，并且避免了高精度又臭又长的代码和大常数复杂度。 代码还挺好写的呢poi。 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152#include&lt;cstdio&gt;using namespace std;typedef long long LL;LL n,P;LL Multiply(LL x,LL y) //两个10^18级别的数在模P意义下的乘法&#123; LL ret=0,w=x; while(y) &#123; if(y&amp;1) ret=(ret+w)%P; w=(w+w)%P;y&gt;&gt;=1; &#125; return ret;&#125;struct Matrix&#123; LL a[2][2]; Matrix()&#123;a[0][0]=a[0][1]=a[1][0]=a[1][1]=0;&#125; Matrix operator * (Matrix b) //矩阵乘法 &#123; Matrix c; for(int i=0;i&lt;2;i++) for(int j=0;j&lt;2;j++) for(int k=0;k&lt;2;k++) c.a[i][j]=(c.a[i][j]+Multiply(a[k][j],b.a[i][k]))%P; return c; &#125;&#125;ans,mat,tep;LL QP(LL a,LL b) //普通快速幂&#123; LL ret=1,w=a; while(b) &#123; if(b&amp;1) ret=Multiply(ret,w); w=Multiply(w,w);b&gt;&gt;=1; &#125; return ret;&#125;int main()&#123; scanf("%lld%lld",&amp;n,&amp;P); ans.a[0][0]=ans.a[0][1]=mat.a[0][0]=mat.a[0][1]=mat.a[1][0]=1; LL b=n+1;tep=mat; while(b) //矩阵加速斐波那契数列 &#123; if(b&amp;1) mat=mat*tep; tep=tep*tep;b&gt;&gt;=1; &#125; ans=ans*mat; printf("%lld\n",QP(((ans.a[0][0]-n-2)%P+P)%P,n+1)); return 0;&#125;]]></content>
-      <categories>
-        <category>矩阵加速DP</category>
-      </categories>
-      <tags>
-        <tag>DP</tag>
-        <tag>数数</tag>
-        <tag>快速幂</tag>
-        <tag>矩阵加速</tag>
-        <tag>斐波那契数列</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[「国家集训队」聪聪可可]]></title>
     <url>%2F2019%2F01%2F16%2F%E3%80%8C%E5%9B%BD%E5%AE%B6%E9%9B%86%E8%AE%AD%E9%98%9F%E3%80%8D%E8%81%AA%E8%81%AA%E5%8F%AF%E5%8F%AF%2F</url>
     <content type="text"><![CDATA[我数数最差了QwQ… 传送门洛谷P2634 BZOJ2152 题解很显然这是一道假的概率题。而是一道数数题，只要数出路径长度为3的倍数的点对的数量就行了呢poi。 隔壁dalao说这是一道点分治裸题，但是我还是觉得树形DP更好写一些QwQ。 定义$F_{ij}(j \in \lbrace 0,1,2 \rbrace)$表示节点$i$的子树中，到i的距离$\mod 3=j$的节点个数。如果当前遍历到的节点为i，我们需要计算出$i$及其子树中满足最短路径经过节点$i$且满足路径长是3的倍数的节点个数，累计到答案里最后除以$n^2$并约分就好了呢poi。 注意起点和终点可以相同，计算时小心点，不要算重复也不要漏算了哟poi。 代码12345678910111213141516171819202122232425262728293031323334353637383940414243#include&lt;cstdio&gt;using namespace std;const int maxn=20005;int n,tot,lnk[maxn],son[maxn*2],w[maxn*2],nxt[maxn*2],F[maxn][3],ans1,ans2;inline int read()&#123; int ret=0,f=1;char ch=getchar(); while(ch&lt;'0'||ch&gt;'9')&#123;if(ch=='-')f=-f;ch=getchar();&#125; while(ch&gt;='0'&amp;&amp;ch&lt;='9')&#123;ret=ret*10+ch-'0';ch=getchar();&#125; return ret*f;&#125;inline void add_e(int x,int y,int z)&#123;tot++;son[tot]=y;w[tot]=z;nxt[tot]=lnk[x];lnk[x]=tot;&#125;int gcd(int x,int y)&#123;return !y?x:gcd(y,x%y);&#125;void DFS(int now,int fa)&#123; F[now][0]=1; for(int i=lnk[now];i;i=nxt[i]) &#123; if(son[i]!=fa) &#123; DFS(son[i],now); for(int j=0;j&lt;3;j++) ans1+=F[son[i]][j]*F[now][((3-j-w[i])%3+3)%3]*2; for(int j=0;j&lt;3;j++) F[now][(j+w[i])%3]+=F[son[i]][j]; &#125; &#125;&#125;int main()&#123; n=read(); for(int i=1;i&lt;n;i++) &#123; int a=read(),b=read(),c=read(); add_e(a,b,c);add_e(b,a,c); &#125; DFS(1,0); ans1+=n;ans2=n*n; int gys=gcd(ans1,ans2); ans1/=gys;ans2/=gys; printf("%d/%d\n",ans1,ans2); return 0;&#125;]]></content>
@@ -504,6 +503,21 @@
         <tag>概率</tag>
         <tag>点分治</tag>
         <tag>树形DP</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[「洛谷P5059」中国象棋]]></title>
+    <url>%2F2019%2F01%2F16%2F%E3%80%8C%E6%B4%9B%E8%B0%B7P5059%E3%80%8D%E4%B8%AD%E5%9B%BD%E8%B1%A1%E6%A3%8B%2F</url>
+    <content type="text"><![CDATA[又是数数题QwQ… 传送门洛谷P5059 题解首先注意题目中说的是有$n^2$个格子，也就是$(n+1)^2$个格点。 以下是出题人的推导： 首先我们可以发现每一行是独立的，所以只需要处理一行的答案即可 设$F[i][0]$表示一行中摆了$i$个位置且第$i$个位置不摆放棋子的方案数 设$F[i][1]$表示一行中摆了$i$个位置且第$i$个位置摆放棋子的方案数 设$Ans[i]$表示$F[i][0]+F[i][1]$ 那么忽略第二个限制可以发现有: $F[i][0]=F[i-1][0]+F[i-1][1]$ $F[i][1]=F[i-1][0]$ 所以有 $Ans[i]$ $=F[i][0]+F[i][1]$ $=2F[i-1][0]+F[i-1][1]$ $=(F[i-1][0]+F[i-1][1])+(F[i-2][0]+F[i-2][1])$ $=Ans[i-1]+Ans[i-2]$ 好了很显然这是一个斐波那契数列。自己再推一下，注意一下细节，不难发现最后的答案就是 (Fib_{n+3}-n-2)^{n+1}矩阵加快速幂就可以在$\Theta(\log n)$的复杂内求解。 还有一个问题，由于n和P都非常大，直接乘long long也会boom。所以这里用了一个类似于快速幂的方法来求$(a*b)\mod P$的值。虽然复杂度多了一只log，但是很好写，并且避免了高精度又臭又长的代码和大常数复杂度。 代码还挺好写的呢poi。 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152#include&lt;cstdio&gt;using namespace std;typedef long long LL;LL n,P;LL Multiply(LL x,LL y) //两个10^18级别的数在模P意义下的乘法&#123; LL ret=0,w=x; while(y) &#123; if(y&amp;1) ret=(ret+w)%P; w=(w+w)%P;y&gt;&gt;=1; &#125; return ret;&#125;struct Matrix&#123; LL a[2][2]; Matrix()&#123;a[0][0]=a[0][1]=a[1][0]=a[1][1]=0;&#125; Matrix operator * (Matrix b) //矩阵乘法 &#123; Matrix c; for(int i=0;i&lt;2;i++) for(int j=0;j&lt;2;j++) for(int k=0;k&lt;2;k++) c.a[i][j]=(c.a[i][j]+Multiply(a[k][j],b.a[i][k]))%P; return c; &#125;&#125;ans,mat,tep;LL QP(LL a,LL b) //普通快速幂&#123; LL ret=1,w=a; while(b) &#123; if(b&amp;1) ret=Multiply(ret,w); w=Multiply(w,w);b&gt;&gt;=1; &#125; return ret;&#125;int main()&#123; scanf("%lld%lld",&amp;n,&amp;P); ans.a[0][0]=ans.a[0][1]=mat.a[0][0]=mat.a[0][1]=mat.a[1][0]=1; LL b=n+1;tep=mat; while(b) //矩阵加速斐波那契数列 &#123; if(b&amp;1) mat=mat*tep; tep=tep*tep;b&gt;&gt;=1; &#125; ans=ans*mat; printf("%lld\n",QP(((ans.a[0][0]-n-2)%P+P)%P,n+1)); return 0;&#125;]]></content>
+      <categories>
+        <category>矩阵加速DP</category>
+      </categories>
+      <tags>
+        <tag>DP</tag>
+        <tag>数数</tag>
+        <tag>快速幂</tag>
+        <tag>矩阵加速</tag>
+        <tag>斐波那契数列</tag>
       </tags>
   </entry>
   <entry>
