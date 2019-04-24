@@ -14,18 +14,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[「BZOJ3155|洛谷P4868」Preprefix sum]]></title>
-    <url>%2F2019%2F04%2F22%2F%E3%80%8CBZOJ3155%20%E6%B4%9B%E8%B0%B7P4868%E3%80%8DPreprefix-sum%20-Solution%2F</url>
-    <content type="text"><![CDATA[线段树大水题？？？ 传送门洛谷P4868 BZOJ3155 题解不难发现，如果$A_i$的值增加了$\Delta$，那么$S_i$~$S_n$都增加了$\Delta$。 又$SSi=\sum{i=1}^{i}{S_i}$。 所以直接弄个线段树维护一下就好了。 代码1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374#include&lt;cstdio&gt;#include&lt;cstring&gt;using namespace std;typedef long long LL;const int maxn=100005;int n,m,A[maxn];LL S[maxn];char cmd[16];inline int read()&#123; int ret=0,f=1;char ch=getchar(); while(ch&lt;'0'||ch&gt;'9')&#123;if(ch=='-')f=-f;ch=getchar();&#125; while(ch&gt;='0'&amp;&amp;ch&lt;='9')&#123;ret=ret*10+ch-'0';ch=getchar();&#125; return ret*f;&#125;struct SegmentTree&#123; struct Node&#123;LL Sum,Tag;&#125;Tree[maxn*4]; inline void PushUp(int rt)&#123;Tree[rt].Sum=Tree[rt*2].Sum+Tree[rt*2+1].Sum;&#125; inline void PushDown(int rt,int LC,int RC) &#123; if(!Tree[rt].Tag) return; Tree[rt*2].Tag+=Tree[rt].Tag;Tree[rt*2+1].Tag+=Tree[rt].Tag; Tree[rt*2].Sum+=Tree[rt].Tag*LC;Tree[rt*2+1].Sum+=Tree[rt].Tag*RC; Tree[rt].Tag=0; &#125; inline void Build(int L=1,int R=n,int rt=1) &#123; if(L==R)&#123;Tree[rt].Sum=S[L];return;&#125; int M=(L+R)&gt;&gt;1; Build(L,M,rt*2); Build(M+1,R,rt*2+1); PushUp(rt); &#125; inline void RangeUpdate(int LL,int RR,int delta,int L=1,int R=n,int rt=1) &#123; if(LL&lt;=L&amp;&amp;R&lt;=RR)&#123;Tree[rt].Sum+=(::LL)delta*(R-L+1);Tree[rt].Tag+=delta;return;&#125; int M=(L+R)&gt;&gt;1; PushDown(rt,M-L+1,R-M); if(LL&lt;=M) RangeUpdate(LL,RR,delta,L,M,rt*2); if(M&lt;RR) RangeUpdate(LL,RR,delta,M+1,R,rt*2+1); PushUp(rt); &#125; inline LL RangeQuery(int LL,int RR,int L=1,int R=n,int rt=1) &#123; if(LL&lt;=L&amp;&amp;R&lt;=RR) return Tree[rt].Sum; int M=(L+R)&gt;&gt;1;::LL ret=0; PushDown(rt,M-L+1,R-M); if(LL&lt;=M) ret+=RangeQuery(LL,RR,L,M,rt*2); if(M&lt;RR) ret+=RangeQuery(LL,RR,M+1,R,rt*2+1); return ret; &#125;&#125;ST;int main()&#123; n=read();m=read(); for(int i=1;i&lt;=n;i++) A[i]=read(); for(int i=1;i&lt;=n;i++) S[i]=S[i-1]+A[i]; ST.Build(); while(m--) &#123; scanf("%s",cmd); if(strcmp(cmd,"Query")==0) &#123; int x=read(); printf("%lld\n",ST.RangeQuery(1,x)); &#125; else &#123; int x=read(),a=read(); ST.RangeUpdate(x,n,a-A[x]); A[x]=a; &#125; &#125; return 0;&#125;]]></content>
-      <categories>
-        <category>线段树</category>
-      </categories>
-      <tags>
-        <tag>线段树</tag>
-        <tag>前缀和</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[「CQOI2016」手机号码]]></title>
     <url>%2F2019%2F04%2F22%2F%E3%80%8CCQOI2016%E3%80%8D%E6%89%8B%E6%9C%BA%E5%8F%B7%E7%A0%81-Solution%2F</url>
     <content type="text"><![CDATA[蒟蒻我得好好学学数位DP。 传送门洛谷P4124 BZOJ4521 题解这题定义出来的数组有点长QwQ。 定义$F[pos][pre][pree][thr][fur][eig]$表示长度为$pos$，上一个数字为$pre$，上上个数字为$pree$，是/否出现过连续三个相同数字，是/否出现过4，是/否出现8，时的合法方案数。 然后写个记忆化DFS就好了。 代码12345678910111213141516171819202122232425262728293031#include&lt;cstdio&gt;#include&lt;cstring&gt;using namespace std;typedef long long LL;int A[15],len;LL L,R,F[15][11][11][2][2][2][2];LL DFS(int pos,int pre,int pree,bool thr,bool fur,bool eig,bool lim)&#123; if(fur&amp;&amp;eig) return 0; if(pos==0) return thr; LL&amp; ret=F[pos][pre][pree][thr][fur][eig][lim]; if(ret!=-1) return ret; ret=0; int end=lim?A[pos]:9; for(int i=(pos==11?1:0);i&lt;=end;i++) ret+=DFS(pos-1,i,pre,thr||(i==pre&amp;&amp;pre==pree),fur||i==4,eig||i==8,lim&amp;&amp;i==end); return ret;&#125;LL Solve(LL n)&#123; if(n&lt;10000000000ll) return 0; len=0; while(n)&#123;A[++len]=n%10;n/=10;&#125; memset(F,-1,sizeof(F)); return DFS(11,10,10,0,0,0,1);&#125;int main()&#123; scanf("%lld%lld",&amp;L,&amp;R); printf("%lld\n",Solve(R)-Solve(L-1)); return 0;&#125;]]></content>
@@ -35,6 +23,18 @@
       <tags>
         <tag>数位DP</tag>
         <tag>记忆化搜索</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[「BZOJ3155|洛谷P4868」Preprefix sum]]></title>
+    <url>%2F2019%2F04%2F22%2F%E3%80%8CBZOJ3155%20%E6%B4%9B%E8%B0%B7P4868%E3%80%8DPreprefix-sum%20-Solution%2F</url>
+    <content type="text"><![CDATA[线段树大水题？？？ 传送门洛谷P4868 BZOJ3155 题解不难发现，如果$A_i$的值增加了$\Delta$，那么$S_i$~$S_n$都增加了$\Delta$。 又$SSi=\sum{i=1}^{i}{S_i}$。 所以直接弄个线段树维护一下就好了。 代码1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374#include&lt;cstdio&gt;#include&lt;cstring&gt;using namespace std;typedef long long LL;const int maxn=100005;int n,m,A[maxn];LL S[maxn];char cmd[16];inline int read()&#123; int ret=0,f=1;char ch=getchar(); while(ch&lt;'0'||ch&gt;'9')&#123;if(ch=='-')f=-f;ch=getchar();&#125; while(ch&gt;='0'&amp;&amp;ch&lt;='9')&#123;ret=ret*10+ch-'0';ch=getchar();&#125; return ret*f;&#125;struct SegmentTree&#123; struct Node&#123;LL Sum,Tag;&#125;Tree[maxn*4]; inline void PushUp(int rt)&#123;Tree[rt].Sum=Tree[rt*2].Sum+Tree[rt*2+1].Sum;&#125; inline void PushDown(int rt,int LC,int RC) &#123; if(!Tree[rt].Tag) return; Tree[rt*2].Tag+=Tree[rt].Tag;Tree[rt*2+1].Tag+=Tree[rt].Tag; Tree[rt*2].Sum+=Tree[rt].Tag*LC;Tree[rt*2+1].Sum+=Tree[rt].Tag*RC; Tree[rt].Tag=0; &#125; inline void Build(int L=1,int R=n,int rt=1) &#123; if(L==R)&#123;Tree[rt].Sum=S[L];return;&#125; int M=(L+R)&gt;&gt;1; Build(L,M,rt*2); Build(M+1,R,rt*2+1); PushUp(rt); &#125; inline void RangeUpdate(int LL,int RR,int delta,int L=1,int R=n,int rt=1) &#123; if(LL&lt;=L&amp;&amp;R&lt;=RR)&#123;Tree[rt].Sum+=(::LL)delta*(R-L+1);Tree[rt].Tag+=delta;return;&#125; int M=(L+R)&gt;&gt;1; PushDown(rt,M-L+1,R-M); if(LL&lt;=M) RangeUpdate(LL,RR,delta,L,M,rt*2); if(M&lt;RR) RangeUpdate(LL,RR,delta,M+1,R,rt*2+1); PushUp(rt); &#125; inline LL RangeQuery(int LL,int RR,int L=1,int R=n,int rt=1) &#123; if(LL&lt;=L&amp;&amp;R&lt;=RR) return Tree[rt].Sum; int M=(L+R)&gt;&gt;1;::LL ret=0; PushDown(rt,M-L+1,R-M); if(LL&lt;=M) ret+=RangeQuery(LL,RR,L,M,rt*2); if(M&lt;RR) ret+=RangeQuery(LL,RR,M+1,R,rt*2+1); return ret; &#125;&#125;ST;int main()&#123; n=read();m=read(); for(int i=1;i&lt;=n;i++) A[i]=read(); for(int i=1;i&lt;=n;i++) S[i]=S[i-1]+A[i]; ST.Build(); while(m--) &#123; scanf("%s",cmd); if(strcmp(cmd,"Query")==0) &#123; int x=read(); printf("%lld\n",ST.RangeQuery(1,x)); &#125; else &#123; int x=read(),a=read(); ST.RangeUpdate(x,n,a-A[x]); A[x]=a; &#125; &#125; return 0;&#125;]]></content>
+      <categories>
+        <category>线段树</category>
+      </categories>
+      <tags>
+        <tag>线段树</tag>
+        <tag>前缀和</tag>
       </tags>
   </entry>
   <entry>
