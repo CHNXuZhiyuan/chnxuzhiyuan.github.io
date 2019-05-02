@@ -1,0 +1,1406 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+
+
+
+
+
+  <meta name="keywords" content="游记,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="一个蒟蒻的ZJOI游记。">
+<meta name="keywords" content="游记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="「ZJOI2019」游记">
+<meta property="og:url" content="http://chnxuzhiyuan.cn/2019/04/26/「ZJOI2019」游记-Diary/index.html">
+<meta property="og:site_name" content="Welcome to XuZhiyuan&#39;s blog">
+<meta property="og:description" content="一个蒟蒻的ZJOI游记。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://www.chnxuzhiyuan.cn/images/「ZJOI2019」游记-Diary-1.jpg">
+<meta property="og:image" content="https://www.chnxuzhiyuan.cn/images/「ZJOI2019」游记-Diary-2.jpg">
+<meta property="og:updated_time" content="2019-05-02T10:10:16.401Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="「ZJOI2019」游记">
+<meta name="twitter:description" content="一个蒟蒻的ZJOI游记。">
+<meta name="twitter:image" content="https://www.chnxuzhiyuan.cn/images/「ZJOI2019」游记-Diary-1.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://chnxuzhiyuan.cn/2019/04/26/「ZJOI2019」游记-Diary/">
+
+
+
+<script src="/js/src/tagcanvas.min.js"></script>
+
+  <title>「ZJOI2019」游记 | Welcome to XuZhiyuan's blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Welcome to XuZhiyuan's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://chnxuzhiyuan.cn/2019/04/26/「ZJOI2019」游记-Diary/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="XuZhiyuan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Welcome to XuZhiyuan's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">「ZJOI2019」游记</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-26T00:00:00+08:00">
+                2019-04-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/游记/" itemprop="url" rel="index">
+                    <span itemprop="name">游记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/04/26/「ZJOI2019」游记-Diary/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/04/26/「ZJOI2019」游记-Diary/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i> 浏览量：
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>次
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>一个蒟蒻的ZJOI游记。<br><a id="more"></a></p>
+<h2 id="Round1"><a href="#Round1" class="headerlink" title="Round1"></a>Round1</h2><h3 id="Day1-2019-03-24"><a href="#Day1-2019-03-24" class="headerlink" title="Day1-2019.03.24"></a>Day1-2019.03.24</h3><p>今天早上8点过就早早到了机房，发现只有神仙黄霖和蒟蒻我。</p>
+<p>过了一会儿8:30过了大家都到了。9:00左右乘车出发。</p>
+<p>出发前和神仙赵章恺合个影沾点RP。</p>
+<p><img src="https://www.chnxuzhiyuan.cn/images/「ZJOI2019」游记-Diary-1.jpg" alt="1"></p>
+<p>中午服务区吃饭，吃了一个十块钱的烤饼，血亏。</p>
+<p>下午1点多钟到了镇海，先去了宾馆，老叶直接制定了宿舍分配方案，我有幸和哥哥陈浩杰分到一起。房间在二楼，进了房间，卧槽，一个硕大的CRT电视出现在了面前，连个HDMI接口都没有，看来电脑不能接到电视上爽了。差评。</p>
+<p>然后去了<del>填海</del>镇海中学，镇中的建筑风格我真是欣赏不来，古色古香的。</p>
+<p>报到领了狗牌、餐票，听说伙食贼差，不知道是不是真的。</p>
+<p>门口有免费的旅游手册，好评。</p>
+<p>学校里有小姐姐夹道欢迎，好评。</p>
+<p>去了报告厅参加颁奖大会（然而并没有蒟蒻我的奖<del>，可能是因为今年收不到钱了，所以没几个人有奖</del>）。看到了兴华的郭老师和杭二的李建老师上台领奖。</p>
+<p>然后又回到了宾馆。尝试联网，发现网速贼慢。就将就着用吧。</p>
+<p>晚饭是在镇中的食堂吃的，老叶给一个寝室买了一套饭票，让大家轮流到外面吃。一张票25块钱，有点小贵。一顿是两荤两素一水果。对于平时在学校里一荤一素都吃不完的我来说有点多。味道一般吧。</p>
+<p>晚上在宾馆做了几道题，其中有一道是网络流24题之一的餐巾计划问题的加强版，数据范围直接加上了两个0。这回真的是没法n方过百万了。陈浩杰看了一下题解，发现直接三分加贪心就好了，比网络流还好搞。写好一交结果不知什么原因就排到BZOJ的rank2了，然后又写了个读优就rank1了。陈浩杰又调了一会儿才过。东弄一下西搞一下就晚上11点多了，赶紧睡觉。</p>
+<h3 id="Day2-2019-03-25"><a href="#Day2-2019-03-25" class="headerlink" title="Day2-2019.03.25"></a>Day2-2019.03.25</h3><p>早上6:00钟的闹钟准时叫醒了自己，想再睡一会，结果就一觉睡到了7点钟。还好小威来叫了哥哥又叫了我，不然又要迟到了。</p>
+<p>早饭是酒店里吃的，一般般。</p>
+<p>早上集训队爷罗煜翔大佬给大家讲课。</p>
+<p>先讲了下降幂的定义等，然后就是与下降幂形式多项式相关的一大坨东西。</p>
+<p>蒟蒻我实在是太菜了，基本上全程掉线。</p>
+<p>9:40左右休息了一下，然后又开始讲斯特林数。</p>
+<p>斯特林数又被集训队爷写成了下降幂的形式。</p>
+<p>讲了斯特林数单行的求法。</p>
+<p>多项式平移。</p>
+<p>斯特林数列的求法。</p>
+<p>斯特林数单个的求法。</p>
+<p>我数学还是太差了，真的没办法。</p>
+<p>中午在外面吃的，吃了一碗红烧牛肉面，牛肉贼多，弄得我都开始怀疑是不是牛肉了。</p>
+<p>下午是杂题选讲，孔朝哲大佬讲课。</p>
+<p>感觉还是可以听懂一些的。</p>
+<p>有一题是BZOJ4657，昨天刚做过一个类似的题目叫做方格取数问题，于是我便一眼看出来是网络流，建模后求最小割然后转为最大流，然后用不一定合法的最优方案的值减去最大流就是答案。但是我网络流建模不咋地，所以还是没能当场建出模型然后切掉。</p>
+<p>下午和徐锐扬、徐瀚文坐在了一起，还看见了徐安矣。</p>
+<p>不可思议的是我这机子竟然用了一天还是有电。</p>
+<p>食堂吃了晚饭，然后去试机。</p>
+<p>机子的显示器长宽比例很有问题，是5:4的，1280*1024的分辨率，差评。</p>
+<p>键盘的手感不错，好评。</p>
+<p>机子比较老，酷睿2的处理器，只有两个框框，差评。</p>
+<p>其他都还好，就是软件的版本也有些旧。</p>
+<p>总之机器没有衢二的好。</p>
+<p>晚上回了宾馆，又写了会儿题，神仙赵章恺来了我们房间，我感觉明后天的运气不会差了。</p>
+<p>泡了一杯宾馆里免费的雀巢咖啡喝，因为怕苦，咖啡放得很少，而糖放得很多。感觉味道不错。</p>
+<p>今天睡得比昨天早，打算明天早一点起来。</p>
+<h3 id="Day3-2019-03-26"><a href="#Day3-2019-03-26" class="headerlink" title="Day3-2019.03.26"></a>Day3-2019.03.26</h3><p>今天早上5点半左右就醒了，春分刚过，太阳很早就出来了。又在床上躺了一会儿，6点过便起来了。早上也没干什么事，就看了一下板子。然后早早地就下楼去吃早饭。吃了早饭还是挺早的，又回房间待了一会儿，然后和大家一起出发去镇中。</p>
+<p>早上是范致远大佬讲课。又是杂题选讲。</p>
+<p>有一道题是以前在二中NOIP模拟赛的题，叫Maximum Tree Path，赵章恺上台切掉了，直接暴力枚举gcd然后动态加边维护直径即可。</p>
+<p>还有一道题叫做“Count on a Treap ”，赵章恺以前准备NOIP的时候做过，就给我讲了一下，感觉还是不怎么难的，然后我就上台口胡了。这题再想清楚一些性质之后就转化为了动态维护最长上升子序列，弄个线段树瞎搞一下就好了。</p>
+<ul>
+<li>ZJOI每年任务：上台口胡（1/1）</li>
+</ul>
+<p>中午跑到外面吃了一碗脆皮鸡米饭，一般般。</p>
+<p>下午是一位从来没有听说过名字的大佬给我们讲随机算法。</p>
+<p>讲到了DZY lovs Chinese II，然后衢州二中初三神仙华外之光黄霖便上台秒了此题。</p>
+<p>还讲到了什么Pollard Rho算法，这个算法以前听同学讲过，晚上就看到神仙学弟徐锐扬在切这个算法的模板题了。</p>
+<p>下午讲课的时候讲课人给大家下了半个小时的课，然后我就看到很多听得不耐烦的人走了。我便去找徐瀚文大佬，还看到了Dilute、张亲翰、欧阳锳杰、邵嘉男、memset0等大佬。之前只是在网上听过他们的名字，这回还真让我见到了。结果因为一些原因差点被他们一起阿掉。</p>
+<p>下午的课讲完之后，老叶请大家到学校边上的一家饭店吃饭，菜挺多的，还有海鲜，吃饭的时候我们这桌一直在互相fake。老叶说今年省选可能会比较简单，蒟蒻我的内心又划过一丝凉意。和徐锐扬开玩笑说如果明天我爆零了他就发三张女装照，没爆零我就发三张女装照。</p>
+<p>吃完晚饭，去边上的一鸣真鲜奶吧买了个面包当做明天考试的时候的点心，然后就回宾馆了。</p>
+<p>晚上感觉挺紧张的，明天就要省选考试了，不知道会不会爆零。更不知道能不能苟到二试。希望能考好点吧。晚上放了大悲咒、往生咒、般若波罗蜜多心经什么的，希望获得佛祖的保佑。</p>
+<p>今天房间里的雀巢咖啡换了一种，看起来更高大上，泡了一点喝，还不错。</p>
+<p>明天要考试了，今天打算再早一点睡觉。</p>
+<p>晚上洗了个澡，就早早地躺床上了。很担心明天会不会爆零。</p>
+<h3 id="Day4-2019-03-27"><a href="#Day4-2019-03-27" class="headerlink" title="Day4-2019.03.27"></a>Day4-2019.03.27</h3><p>今天就是ZJOI2019的一试了。</p>
+<p>早上准时起了床，看了会儿手机。才看到学弟徐锐扬又学习到凌晨。可怕。今天怕是要被踩了。然后下去吃了早饭。因为今天是考试，所以就不带电脑了。于是把电脑放在宾馆里，调大音量，继续放大悲咒。</p>
+<p>然后就和各路神仙一起去ZJOI考场了。</p>
+<p>密码迟了十分钟才公布，只好先打读优板子。</p>
+<p>密码公布之前，看了一下加密过的压缩包，发现大样例中题目的英文名并没有被加密。我去！竟然有麻将！</p>
+<p>密码公布之后，打开了试卷。T1果真是麻将。就是在只有一个人打的情况下，问期望的最小胡牌巡目数。想了半天，还是连$n=5$的暴力都没想到，复杂度都很假。主要还是不知道该怎样快速判断一副牌胡了没。本来想DP，但是发现复杂度过不去。后来才发现，好像直接爆搜组面子和对子就好了。终于知道20分的暴力大概怎么写了，于是蒟蒻我赶紧写掉了。样例很水，是一个叫做什么纯正九莲宝灯的牌型，随便来一张牌都能胡。但是由于复杂度实在太大，连样例都出不来。</p>
+<p>看T2，我去又是一个叫做线段树的题。</p>
+<p>我也没想什么高级一点的东西，直接先把20分的暴力写了。但是样例实在是太水了，一开始忘记PushDown都过了。由于每次非询问操作都会将线段树的数量扩大一倍，所以我写的大暴力的复杂度仍然是指数级的。</p>
+<p>接着看T3，题面又臭又长，跟什minimax搜索有关。我直接看部分分，瞎写了一个复杂度又是指数级的大暴力。由于没有细想性质，到底对不对也不知道。</p>
+<p>因为T1一个样例都没过，所以回头去造了几个小样例手玩检查正确性。不知不觉中时间就过去了。</p>
+<p>考试结束后，出来和同学们一交流，才发现原来T1在暴枚排列的时候可以加入很多剪枝。而我却为了图方便直接调用了STL里的next_permutation()，一点剪枝也没加。加了剪枝之后说不定能有50分，而我这个最多最多也就20分了。再一次因为自己傻逼没拿全部分分。不知道他们加剪枝的会不会被卡掉。</p>
+<p>后来听谁一说，才发现今年的三道题打的暴力都不是多项式级别的复杂度。</p>
+<p>然后会宾馆收拾了一下，就和大家一起坐车回家了。车上老叶给大家登记了一下预计的分数，神仙蓝天朗估分90，而且T1只算了20分，如果数据稍微水一点，就100+了，估计可以进队。</p>
+<p>哎，回想起去年ZJOI的情形，不禁想要感叹时间怎么过得这样快。感觉这一年又这样荒废掉了，我还是这么菜。以后继续努力吧。</p>
+<p>本来按照往年惯例，成绩应该下午还在路上的时候就出来了。但是今年好像说是领导有事情，所以要过两天才能知道成绩。</p>
+<p>回来的路上在东阳服务区休息了一下，买了个汉堡吃。一个小小的汉堡要15块钱，服务区的东西就是贵啊。</p>
+<p>在车上继续听大悲咒，苟进二试怕是没有希望了。希望佛祖保佑我暴力不要写挂吧。</p>
+<p>ZJOI，再见OI。</p>
+<p>才想起了翘了许久的文化课。回去之后怕是又要垫底了。</p>
+<p>P.S. 成绩终于在2019.04.01出来了，蒟蒻我没有翻车，但还是只有可怜的50分。</p>
+<h2 id="Round2"><a href="#Round2" class="headerlink" title="Round2"></a>Round2</h2><h3 id="Day1-2019-04-23"><a href="#Day1-2019-04-23" class="headerlink" title="Day1-2019.04.23"></a>Day1-2019.04.23</h3><p>按理来说，这一天应当就是我出发的日子。但是出于一些令我愤怒的原因，我必须先留下来准备明天初中里的实验操作考试。蒟蒻我心中有</p>
+<h3 id="Day2-2019-04-24"><a href="#Day2-2019-04-24" class="headerlink" title="Day2-2019.04.24"></a>Day2-2019.04.24</h3><p>早上回初中参加了实验操作考试，考完便马上和同校的徐翰文一起感到了火车站。</p>
+<p>到站时间比较早，离出发时间还有一个多小时。于是乎就和大佬徐翰文聊起了天。聊到离出发还有10分钟的时候，便起身去检票。过检票口的时候，我抬头看了一眼屏幕，卧槽，开车前7分钟停止检票（不应该是3分钟么？？？），再一看表，发现如果再晚2分钟就上不了车了。</p>
+<p>上了车，拿出了电脑开始搞事情。前两天发现自己博客贼卡，后来发现了是因为加载页面的时候需要调用别人网站上的一个文件，但是别人的网站现在卡的要死。把那个文件搬到自己网站上之后就不卡了。</p>
+<p>由于直达余姚的高铁票没了，蒟蒻我只好到杭州东转车。中午到了杭州，吃了自己带的一点东西。然后就上了去余姚的车了。</p>
+<p>到了余姚，和徐翰文一起打了一辆出租车去余姚中学。挺远的，十几公里。到了之后先去了学校边上的宾馆，把行李卸了。然后去报告厅听课。下午是杂题选讲，还有ZZQ的“水题”选讲。感觉都挺难的，蒟蒻我都做不来。</p>
+<p>课讲完之后，我先回了宾馆，然后去试机。刚进机房的时候，我看到显示器非常薄，看上去很不错的样子。坐下来之后，看了眼键盘。我去！这键盘也忒鬼畜了吧！标准键盘布局中上下左右四个方向键上方那六个键的布局被弄得鬼样。“Delete”键老大一个，都快和“Enter”一样大了。“Home”和“End”被弄到了上面去。敲了个NTT，快被键盘折磨死了。每次想按“End”就按到“Delete”。过了好久才差不多适应了。</p>
+<p>再看了一下显示器分辨率，1080P，不错。</p>
+<p>看了下CPU，Core i3-7100，不错。</p>
+<p>看了下内存，8GB，不错。</p>
+<p>看了下硬盘，不是SSD，但是无所谓了。</p>
+<p>但是，系统是Win7，还没有画图<del>和扫雷</del>，差评。</p>
+<p>Intel第六代处理器装Win7还是经常有的事情。但是第七代还装Win7，真的差评。</p>
+<p>不知为什么余姚中学门口的减速带上写着“Lots  of money？”。</p>
+<p><img src="https://www.chnxuzhiyuan.cn/images/「ZJOI2019」游记-Diary-2.jpg" alt="2"></p>
+<p>试完机，蒟蒻我和刘迅，陈浩杰等大佬去了万达吃完饭，走了好久才到。蒟蒻我吃了半个披萨，喝了一杯肥宅快乐水。黄霖一边打雀一边说他自己是神仙，而且一顿能吃一斤。蒟蒻我一听就怕。</p>
+<p>回来的时候实在不想走路了。叫了个滴滴，带了其他三个大佬一起回了宾馆。</p>
+<p>晚上也没搞什么事情，挺早就睡了。</p>
+<h3 id="Day3-2019-04-25"><a href="#Day3-2019-04-25" class="headerlink" title="Day3-2019.04.25"></a>Day3-2019.04.25</h3><p>早上起床之后和学长们去路边的小店买了煎饼果子吃。我感觉海星。</p>
+<p>听说今天学长毛一琛讲课。听ZS提到过他几次，想想就知道肯定很强。</p>
+<p>早上挺早就到了报告厅里，我和徐亦周坐在一起。离讲课开始还有挺长时间。今天先是一位学长讲构造题，一开始感觉还挺有趣的，到后面逐渐掉线。</p>
+<p>然后是杂题选讲，各种听不懂，看来我还是太菜了。</p>
+<p>中午在余姚中学的食堂吃了饭，感觉还行吧。听学长说去年余姚中学的食堂比今年差得多。吃完中饭去了趟小店，余姚中学的小店可以刷饭卡，物价普遍比较便宜，比衢二的好。神仙学长赵章恺从我这儿嫖了瓶饮料，蒟蒻我感到十分荣幸，感觉明天的运气应该不会差。</p>
+<p>下午和哥哥陈浩杰坐在了一起。</p>
+<p>有一个大佬讲课前先进行了自我介绍。介绍的内容包括了雀魂ID（大雾）。</p>
+<p>又是一个又强又稳又虚伪的大佬，说是水题选讲，但我还是做不来。</p>
+<p>有些题目其实还挺有趣的（虽然我做不来）。</p>
+<p>后面还讲了快速求阶乘、自然数倒数和的算法。但是我在多项式方面的知识储备几乎为零。真的得好好补补了。</p>
+<p>还有一些其他的黑科技。</p>
+<p>蒟蒻我基本上掉线。</p>
+<p>明天就是省选二试了，今天下午上完课之后，老叶带我们去边上的一家快餐店大家聚一起吃了顿饭。</p>
+<p>其他同学平均每人都拿了三个菜，蒟蒻我因为太菜，吃不完，只拿了两个菜。</p>
+<p>昨天黄霖还说他一顿能吃一斤，今天蓝天朗就说黄霖一顿能吃一机房的蒟蒻了。差点把蒟蒻我吓得半死。</p>
+<p>晚上回了宾馆，随便做了几道水题。</p>
+<p>有一道数位DP，调了半天没发现问题，后来才发现是模数写错了（大雾）。</p>
+<p>睡前看了下同房间的大佬姜华锦的桌面，我去那叫一个骚啊。</p>
+<p>同样挺早就睡了。照例今天又放了一晚上的大悲咒、往生咒和般若波罗蜜多心经。</p>
+<h3 id="Day4-2019-04-26"><a href="#Day4-2019-04-26" class="headerlink" title="Day4-2019.04.26"></a>Day4-2019.04.26</h3><p>考试日。</p>
+<p>早上起床之后调大音量继续放佛经。</p>
+<p>然后和大佬们在街边的小铺买了几个包子和一盒牛奶当早饭。</p>
+<p>到了学校，还是挺早的，在一楼的大厅里做了一会儿，然后把余智旺的事情给安排上了（斜眼笑.jpg）。</p>
+<p>然后进了考场。</p>
+<p>坐在我左边的是一个小姐姐。</p>
+<p>坐我右边的是杭二中的邵嘉男。</p>
+<p>解压密码有点鬼畜，左边的小姐姐输了好几次才成功，脾气稍微有点暴躁。</p>
+<p>打开试卷一看，咦？T1竟然不是麻将？说好的Day2三道题名字和Day1一模一样的呢？</p>
+<p>T1还是一个神仙期望题。求瞎按开关把开关按到指定状态的期望步数。</p>
+<p>我尝试着去推前两个点的式子。但是因为我太菜了，还是推不出来。</p>
+<p>T2看起来像是一个数据结构。</p>
+<p>我先写了用bitset的$\Theta(\frac{n^3}{\omega})$算法。</p>
+<p>大样例开O2的话0.2s。</p>
+<p>看时限挺宽松的，而且评测机听说不错，而且STL开O2应该挺快的，蒟蒻我就没去想$\Theta(n)$的算法。</p>
+<p>然后看T3。</p>
+<p>按照惯例，T3应该是计算几何，所以应该把每一个人看做一条直线。</p>
+<p>但是我实在是太菜了，不知道怎么搞，所以还是先想暴力算法。</p>
+<p>一开始有了一个$\Theta(n^3)$的想法，能有20分，想了一会儿发现可以降到$\Theta(n^2)$。蒟蒻我不放心，便又写了个暴力枚举$X$的算法来对拍。刚开始因为细节挂了几次，后来就拍不停了，感觉40分应该没事。</p>
+<p>然后开始开始考虑到底是搞T1、T2还是T3。</p>
+<p>T1的前两个点我又推了一会儿，发现还是推不出来。刚想放弃但是又觉得这20分挺诱人的。</p>
+<p>但是蒟蒻我太菜了，终究还是推不出来。</p>
+<p>坐在我边上的小姐姐全程把自己所有的想法都打在了一个记事本里。好像后来对拍的时候发现自己的想法是错了，然后脾气又暴躁起来。蒟蒻我都快被吓到了。</p>
+<p>T1的部分分搞不出来，只好再去想T2、T3。</p>
+<p>蒟蒻我多次在T2和T3间徘徊，还是没有更好的想法。</p>
+<p>然后去骗T1的分。</p>
+<p>其实T1在$n=2$且$s_1=s_2$时还是比较好推的，赶紧把这分骗了。</p>
+<p>这里搞一下那里弄一下，离考试结束只有半个小时左右了。</p>
+<p>突然发现T2链的情况只需要弄两棵线段树分别维护最大最小值就可以了。蒟蒻我赶紧码完，然后开始对拍。出乎我预料的是我竟然没怎么调试就拍不停了，不知是昨天沾了赵章恺的光还是得到了佛祖的保佑的缘故。</p>
+<p>然后不久后考试就结束了，我出了考场。</p>
+<p>和别人一讨论，发现T2上树剖什么的一搞能得到一个$\Theta(n\log^3n)$的做法。</p>
+<p>然后打开ZJOI2019讲课交流群一看，九条可怜亲口说T2的标算只有一个log，并且数据就是对着树剖造的。看来三个log的做法显然是过不了了。</p>
+<p>回了宾馆收拾行李后上了车，去余姚北火车站，准备参加明天上海的华东师范大学的ACM比赛。</p>
+<p>哎，希望这次能把写了的暴力分拿全，不要翻车吧。</p>
+<p>期望的分：0+60+40=100。</p>
+<p>P.S. 成绩几天后出来了，蒟蒻我只得了90分（脸黑）。T2被卡成40分。但是出乎我意料的是T1竟然骗到了10分。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/游记/" rel="tag"># 游记</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/04/22/「BZOJ3155 洛谷P4868」Preprefix-sum -Solution/" rel="next" title="「BZOJ3155|洛谷P4868」Preprefix sum">
+                <i class="fa fa-chevron-left"></i> 「BZOJ3155|洛谷P4868」Preprefix sum
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/04/27/「华东师范大学ACM」游记-Diary/" rel="prev" title="「华东师范大学ACM」游记">
+                「华东师范大学ACM」游记 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+<div class="sidebar-toggle">
+  <div class="sidebar-toggle-line-wrap">
+    <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+    <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+    <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+  </div>
+</div>
+
+<aside id="sidebar" class="sidebar">
+  <div class="sidebar-inner">
+
+    
+    
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+    
+
+
+
+    <section class="site-overview sidebar-panel">
+      <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+        <img class="site-author-image" itemprop="image" src="/images/avatar.gif" alt="XuZhiyuan">
+        <p class="site-author-name" itemprop="name">XuZhiyuan</p>
+         
+            <p class="site-description motion-element" itemprop="description"></p>
+        
+      </div>
+      <nav class="site-state motion-element">
+
+        
+          <div class="site-state-item site-state-posts">
+            <a href="/archives/ || archive">
+              <span class="site-state-item-count">64</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+        
+
+        
+          
+          
+          <div class="site-state-item site-state-categories">
+            <a href="/categories/index.html">
+              <span class="site-state-item-count">37</span>
+              <span class="site-state-item-name">分类</span>
+            </a>
+          </div>
+        
+
+        
+          
+          
+          <div class="site-state-item site-state-tags">
+            <a href="/tags/index.html">
+              <span class="site-state-item-count">99</span>
+              <span class="site-state-item-name">标签</span>
+            </a>
+          </div>
+        
+
+      </nav>
+
+      
+
+      <div class="links-of-author motion-element">
+        
+      </div>
+
+      
+      
+
+      
+      
+        <div class="links-of-blogroll motion-element links-of-blogroll-block">
+          <div class="links-of-blogroll-title">
+            <i class="fa  fa-fw fa-link"></i>
+            友链
+          </div>
+          <ul class="links-of-blogroll-list">
+            
+              <li class="links-of-blogroll-item">
+                <a href="https://xcfubuki.cn/" title="吹雪的老公XHW" target="_blank">吹雪的老公XHW</a>
+              </li>
+            
+              <li class="links-of-blogroll-item">
+                <a href="https://blog.csdn.net/qq_41533592" title="我的好哥哥CHJ" target="_blank">我的好哥哥CHJ</a>
+              </li>
+            
+              <li class="links-of-blogroll-item">
+                <a href="https://zigzagk.top/" title="我的好学长ZZK" target="_blank">我的好学长ZZK</a>
+              </li>
+            
+              <li class="links-of-blogroll-item">
+                <a href="https://chenyejin.github.io/" title="我的好同学JCY" target="_blank">我的好同学JCY</a>
+              </li>
+            
+              <li class="links-of-blogroll-item">
+                <a href="https://xsamsara.tk/" title="曾被阿掉的XCW" target="_blank">曾被阿掉的XCW</a>
+              </li>
+            
+              <li class="links-of-blogroll-item">
+                <a href="https://ypcypc.tk/" title="喜欢阿人的YPC" target="_blank">喜欢阿人的YPC</a>
+              </li>
+            
+              <li class="links-of-blogroll-item">
+                <a href="https://www.cnblogs.com/cjjsb" title="腿都打断的HL" target="_blank">腿都打断的HL</a>
+              </li>
+            
+              <li class="links-of-blogroll-item">
+                <a href="https://www.cnblogs.com/xryjr233" title="装弱的学弟XRY" target="_blank">装弱的学弟XRY</a>
+              </li>
+            
+              <li class="links-of-blogroll-item">
+                <a href="https://www.cnblogs.com/chenxiaoran666" title="吊打标程的CXR" target="_blank">吊打标程的CXR</a>
+              </li>
+            
+              <li class="links-of-blogroll-item">
+                <a href="https://me.csdn.net/qq_42403731" title="日常rk1的FMH" target="_blank">日常rk1的FMH</a>
+              </li>
+            
+              <li class="links-of-blogroll-item">
+                <a href="https://www.cnblogs.com/antiquality/" title="文化课大佬LX" target="_blank">文化课大佬LX</a>
+              </li>
+            
+          </ul>
+        </div>
+      
+
+      
+
+
+    </section>
+    
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Round1"><span class="nav-number">1.</span> <span class="nav-text">Round1</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Day1-2019-03-24"><span class="nav-number">1.1.</span> <span class="nav-text">Day1-2019.03.24</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Day2-2019-03-25"><span class="nav-number">1.2.</span> <span class="nav-text">Day2-2019.03.25</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Day3-2019-03-26"><span class="nav-number">1.3.</span> <span class="nav-text">Day3-2019.03.26</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Day4-2019-03-27"><span class="nav-number">1.4.</span> <span class="nav-text">Day4-2019.03.27</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Round2"><span class="nav-number">2.</span> <span class="nav-text">Round2</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Day1-2019-04-23"><span class="nav-number">2.1.</span> <span class="nav-text">Day1-2019.04.23</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Day2-2019-04-24"><span class="nav-number">2.2.</span> <span class="nav-text">Day2-2019.04.24</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Day3-2019-04-25"><span class="nav-number">2.3.</span> <span class="nav-text">Day3-2019.04.25</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Day4-2019-04-26"><span class="nav-number">2.4.</span> <span class="nav-text">Day4-2019.04.26</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+    
+
+    
+
+  </div>
+</aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">XuZhiyuan</span>
+
+  
+</div>
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i>
+<span id="busuanzi_container_site_pv">
+    本站总访问量：<span id="busuanzi_value_site_pv"></span>次 | 由Hexo强力驱动 | 主题 — NexT.Mist v5.1.4
+</span>
+</div>
+
+<script type="text/javascript">
+	window.onload = function() {
+		try {
+			TagCanvas.Start('TagCloud','',{
+				textColour: null,
+				outlineColour: '#5EB95E',
+				weight: true,
+				reverse: true,
+				depth: 1,
+				maxSpeed: 0.05,
+				freezeDecel: true
+			});
+		} catch(e) {
+			document.getElementById('MyTagCloud').style.display = 'none';
+		}
+	};
+</script>
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="/js/src/Valine.min.js"></script>
+
+  
+  
+  <script src="/js/src/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(function (item) {
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'GsTyRgy3jBT6UcP1EzonXROk-gzGzoHsz',
+        appKey: 'rcBJ8tdLfJXvn7KQaDxASwSK',
+        placeholder: '欢迎各位dalao为蒟蒻我指出不足',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
