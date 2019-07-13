@@ -104,8 +104,8 @@
       </categories>
       <tags>
         <tag>DP</tag>
-        <tag>树形DP</tag>
         <tag>基环树</tag>
+        <tag>树形DP</tag>
       </tags>
   </entry>
   <entry>
@@ -133,17 +133,15 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[「JLOI2014」松鼠的新家]]></title>
-    <url>%2F2019%2F04%2F07%2F%E3%80%8CJLOI2014%E3%80%8D%E6%9D%BE%E9%BC%A0%E7%9A%84%E6%96%B0%E5%AE%B6-Solution%2F</url>
-    <content type="text"><![CDATA[蒟蒻我差点把简单问题复杂化QwQ。 传送门洛谷P3258 BZOJ3631 题解这两天刚做了几道树剖题。 害得我这题一上来就像码树剖。 其实完全没必要。 由于修改操作只有将一整条路劲上的点都加1，所以直接树上差分就可以了。 设修改的路径的两个端点分别为$a,b$，那么只要让a和b的权值加1，LCA(a,b)和它的父亲的权值分别减1。然后对于任意一个节点，它整个子树的权值加和便是该节点真正的权值。 然后注意一下细节即可。 代码12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364#include&lt;cstdio&gt;#include&lt;algorithm&gt;using namespace std;const int maxn=300005;int n,A[maxn],tot,lnk[maxn],son[maxn*2],nxt[maxn*2],F[maxn],father[maxn][20],dep[maxn];inline char nc()&#123; const int S=131072;static char buf[S],*L,*R; return L==R&amp;&amp;(R=(L=buf)+fread(buf,1,S,stdin),L==R)?EOF:*L++;&#125;inline int read()&#123; int ret=0,f=1;char ch=nc(); while(ch&lt;'0'||ch&gt;'9')&#123;if(ch=='-')f=-f;ch=nc();&#125; while(ch&gt;='0'&amp;&amp;ch&lt;='9')&#123;ret=ret*10+ch-'0';ch=nc();&#125; return ret*f;&#125;inline void add_e(int x,int y)&#123;tot++;son[tot]=y;nxt[tot]=lnk[x];lnk[x]=tot;&#125;void Build(int now,int fa)&#123; father[now][0]=fa;dep[now]=dep[fa]+1; for(int i=1;i&lt;=18;i++) father[now][i]=father[father[now][i-1]][i-1]; for(int i=lnk[now];i;i=nxt[i]) if(son[i]!=fa) Build(son[i],now);&#125;inline int LCA(int u,int v)&#123; if(dep[u]&lt;dep[v]) swap(u,v); for(int i=18;i&gt;=0;i--) if(dep[father[u][i]]&gt;=dep[v]) u=father[u][i]; for(int i=18;i&gt;=0;i--) if(father[u][i]!=father[v][i])&#123;u=father[u][i];v=father[v][i];&#125; if(u!=v) return father[u][0]; return u;&#125;void DFS(int now,int fa)&#123; for(int i=lnk[now];i;i=nxt[i]) if(son[i]!=fa) &#123;DFS(son[i],now);F[now]+=F[son[i]];&#125;&#125;int main()&#123; n=read(); for(int i=1;i&lt;=n;i++) A[i]=read(); for(int i=1;i&lt;n;i++) &#123; int a=read(),b=read(); add_e(a,b);add_e(b,a); &#125; Build(1,0); for(int i=1;i&lt;n;i++) &#123; F[A[i]]++; F[A[i+1]]++; int lca=LCA(A[i],A[i+1]); F[lca]--; F[father[lca][0]]--; &#125; DFS(1,0); for(int i=1;i&lt;n;i++) F[A[i+1]]--; for(int i=1;i&lt;=n;i++) printf("%d\n",F[i]); return 0;&#125;]]></content>
+    <title><![CDATA[「HNOI2002」营业额统计]]></title>
+    <url>%2F2019%2F04%2F07%2F%E3%80%8CHNOI2002%E3%80%8D%E8%90%A5%E4%B8%9A%E9%A2%9D%E7%BB%9F%E8%AE%A1-Solution%2F</url>
+    <content type="text"><![CDATA[裸的平衡树？ 题解我们需要求出每一天营业额的前驱和后继，然后挑一个更接近的就行了。 直接上平衡树搞就行。 或者调用STL里的set。 代码蒟蒻我手写了个伸展树。 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808182838485868788899091#include&lt;cstdio&gt;#include&lt;algorithm&gt;using namespace std;const int maxn=32800,inf=0X3F3F3F3F;int n,ans;bool vis[2000010];inline int read()&#123; int ret=0,f=1;char ch=getchar(); while(ch&lt;'0'||ch&gt;'9')&#123;if(ch=='-')f=-f;ch=getchar();&#125; while(ch&gt;='0'&amp;&amp;ch&lt;='9')&#123;ret=ret*10+ch-'0';ch=getchar();&#125; return ret*f;&#125;struct SplayTree&#123; int tot,root; struct Node&#123;int val,siz,fa,son[2];&#125;Tree[maxn]; inline int check(int x)&#123;return Tree[Tree[x].fa].son[1]==x?1:0;&#125; inline void PushUp(int x)&#123;Tree[x].siz=Tree[Tree[x].son[0]].siz+Tree[Tree[x].son[1]].siz+1;&#125; inline void Rotate(int x) &#123; int y=Tree[x].fa,z=Tree[y].fa,k=check(x),w=Tree[x].son[k^1]; Tree[y].son[k]=w; Tree[w].fa=y; Tree[x].fa=z; Tree[z].son[check(y)]=x; Tree[x].son[k^1]=y; Tree[y].fa=x; PushUp(y); PushUp(x); &#125; inline void Splay(int x) &#123; while(Tree[x].fa) &#123; int y=Tree[x].fa; if(Tree[y].fa) &#123; if(check(x)==check(y)) Rotate(y); else Rotate(x); &#125; Rotate(x); &#125; root=x; &#125; inline void Insert(int v) &#123; int p=root,fa=0; while(p) &#123; fa=p; p=Tree[p].son[v&gt;Tree[p].val]; &#125; p=++tot; Tree[fa].son[v&gt;Tree[fa].val]=p; Tree[p].fa=fa; Tree[p].siz=1; Tree[p].val=v; Splay(p); &#125; int FindPre(int v) &#123; int p=Tree[root].son[0]; if(!p) return -inf; while(Tree[p].son[1]) p=Tree[p].son[1]; return Tree[p].val; &#125; int FindSuf(int v) &#123; int p=Tree[root].son[1]; if(!p) return inf; while(Tree[p].son[0]) p=Tree[p].son[0]; return Tree[p].val; &#125;&#125;ST;int main()&#123; n=read(); for(int i=1;i&lt;=n;i++) &#123; int Ai=read(); if(i==1) ans+=Ai; if(!vis[Ai+1000005]) &#123; ST.Insert(Ai); if(i!=1) ans+=min(Ai-ST.FindPre(Ai),ST.FindSuf(Ai)-Ai); vis[Ai+1000005]=true; &#125; &#125; printf("%d\n",ans); return 0;&#125;]]></content>
       <categories>
-        <category>树上差分</category>
+        <category>平衡树</category>
       </categories>
       <tags>
-        <tag>LCA</tag>
-        <tag>线段树</tag>
-        <tag>树链剖分</tag>
-        <tag>树上差分</tag>
+        <tag>平衡树</tag>
+        <tag>set</tag>
       </tags>
   </entry>
   <entry>
@@ -156,18 +154,6 @@
       <tags>
         <tag>线段树</tag>
         <tag>树链剖分</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[「HNOI2002」营业额统计]]></title>
-    <url>%2F2019%2F04%2F07%2F%E3%80%8CHNOI2002%E3%80%8D%E8%90%A5%E4%B8%9A%E9%A2%9D%E7%BB%9F%E8%AE%A1-Solution%2F</url>
-    <content type="text"><![CDATA[裸的平衡树？ 题解我们需要求出每一天营业额的前驱和后继，然后挑一个更接近的就行了。 直接上平衡树搞就行。 或者调用STL里的set。 代码蒟蒻我手写了个伸展树。 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808182838485868788899091#include&lt;cstdio&gt;#include&lt;algorithm&gt;using namespace std;const int maxn=32800,inf=0X3F3F3F3F;int n,ans;bool vis[2000010];inline int read()&#123; int ret=0,f=1;char ch=getchar(); while(ch&lt;'0'||ch&gt;'9')&#123;if(ch=='-')f=-f;ch=getchar();&#125; while(ch&gt;='0'&amp;&amp;ch&lt;='9')&#123;ret=ret*10+ch-'0';ch=getchar();&#125; return ret*f;&#125;struct SplayTree&#123; int tot,root; struct Node&#123;int val,siz,fa,son[2];&#125;Tree[maxn]; inline int check(int x)&#123;return Tree[Tree[x].fa].son[1]==x?1:0;&#125; inline void PushUp(int x)&#123;Tree[x].siz=Tree[Tree[x].son[0]].siz+Tree[Tree[x].son[1]].siz+1;&#125; inline void Rotate(int x) &#123; int y=Tree[x].fa,z=Tree[y].fa,k=check(x),w=Tree[x].son[k^1]; Tree[y].son[k]=w; Tree[w].fa=y; Tree[x].fa=z; Tree[z].son[check(y)]=x; Tree[x].son[k^1]=y; Tree[y].fa=x; PushUp(y); PushUp(x); &#125; inline void Splay(int x) &#123; while(Tree[x].fa) &#123; int y=Tree[x].fa; if(Tree[y].fa) &#123; if(check(x)==check(y)) Rotate(y); else Rotate(x); &#125; Rotate(x); &#125; root=x; &#125; inline void Insert(int v) &#123; int p=root,fa=0; while(p) &#123; fa=p; p=Tree[p].son[v&gt;Tree[p].val]; &#125; p=++tot; Tree[fa].son[v&gt;Tree[fa].val]=p; Tree[p].fa=fa; Tree[p].siz=1; Tree[p].val=v; Splay(p); &#125; int FindPre(int v) &#123; int p=Tree[root].son[0]; if(!p) return -inf; while(Tree[p].son[1]) p=Tree[p].son[1]; return Tree[p].val; &#125; int FindSuf(int v) &#123; int p=Tree[root].son[1]; if(!p) return inf; while(Tree[p].son[0]) p=Tree[p].son[0]; return Tree[p].val; &#125;&#125;ST;int main()&#123; n=read(); for(int i=1;i&lt;=n;i++) &#123; int Ai=read(); if(i==1) ans+=Ai; if(!vis[Ai+1000005]) &#123; ST.Insert(Ai); if(i!=1) ans+=min(Ai-ST.FindPre(Ai),ST.FindSuf(Ai)-Ai); vis[Ai+1000005]=true; &#125; &#125; printf("%d\n",ans); return 0;&#125;]]></content>
-      <categories>
-        <category>平衡树</category>
-      </categories>
-      <tags>
-        <tag>平衡树</tag>
-        <tag>set</tag>
       </tags>
   </entry>
   <entry>
@@ -193,15 +179,17 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[「NOI2015」软件包管理器]]></title>
-    <url>%2F2019%2F04%2F06%2F%E3%80%8CNOI2015%E3%80%8D%E8%BD%AF%E4%BB%B6%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8-Solution%2F</url>
-    <content type="text"><![CDATA[又是一个树剖题QwQ。 传送门洛谷P2146 BZOJ4196 题解不难发现，各个软件包之间的依赖关系构成了一棵树。 所以先把树建出来，每一个节点设一个权值，权值为$0$表示还未安装，权值为$1$表示已安装。 当安装软件$x$的时候，答案为$x$到根节点的路径上没有安装的软件的数量，然后把一整条路径上的节点的权值都设成1。 卸载软件$x$的时候，答案为$x$的子树中已经安装的软件的数量，然后把整棵子树中所有节点的权值都设为0。 然后弄个支持区间覆盖查询区间加和的线段树维护下就好了。 代码123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107108109110111112113114#include&lt;cstdio&gt;#include&lt;cstring&gt;using namespace std;const int maxn=100005;int n,m,tot,lnk[maxn],son[maxn*2],w[maxn],nxt[maxn*2],idx,siz[maxn],wson[maxn],fa[maxn],top[maxn],seg[maxn],rev[maxn],ans;char cmd[10];inline int read()&#123; int ret=0,f=1;char ch=getchar(); while(ch&lt;'0'||ch&gt;'9')&#123;if(ch=='-')f=-f;ch=getchar();&#125; while(ch&gt;='0'&amp;&amp;ch&lt;='9')&#123;ret=ret*10+ch-'0';ch=getchar();&#125; return ret*f;&#125;struct SegmentTree&#123; struct Node&#123;int Sum,Tag;&#125;Tree[maxn*4]; void PushUp(int rt)&#123;Tree[rt].Sum=Tree[rt*2].Sum+Tree[rt*2+1].Sum;&#125; void PushDown(int rt,int LC,int RC) &#123; if(Tree[rt].Tag==-1) return; Tree[rt*2].Sum=Tree[rt].Tag*LC; Tree[rt*2+1].Sum=Tree[rt].Tag*RC; Tree[rt*2].Tag=Tree[rt].Tag; Tree[rt*2+1].Tag=Tree[rt].Tag; Tree[rt].Tag=-1; &#125; void RangeUpdate(int LL,int RR,int delta,int L=1,int R=n,int rt=1) &#123; if(LL&lt;=L&amp;&amp;R&lt;=RR) &#123; Tree[rt].Sum=delta*(R-L+1); Tree[rt].Tag=delta; return; &#125; int M=(L+R)/2; PushDown(rt,M-L+1,R-M); if(LL&lt;=M) RangeUpdate(LL,RR,delta,L,M,rt*2); if(M&lt;RR) RangeUpdate(LL,RR,delta,M+1,R,rt*2+1); PushUp(rt); &#125; int QueryRange(int LL,int RR,int L=1,int R=n,int rt=1) &#123; if(LL&lt;=L&amp;&amp;R&lt;=RR) return Tree[rt].Sum; int M=(L+R)/2,ret=0; PushDown(rt,M-L+1,R-M); if(LL&lt;=M) ret+=QueryRange(LL,RR,L,M,rt*2); if(M&lt;RR) ret+=QueryRange(LL,RR,M+1,R,rt*2+1); return ret; &#125;&#125;T;inline void add_e(int x,int y)&#123;tot++;son[tot]=y;nxt[tot]=lnk[x];lnk[x]=tot;&#125;void DFS1(int now)&#123; siz[now]=1; for(int i=lnk[now];i;i=nxt[i]) &#123; if(son[i]==fa[now]) continue; fa[son[i]]=now; DFS1(son[i]); siz[now]+=siz[son[i]]; &#125; for(int i=lnk[now];i;i=nxt[i]) if(son[i]!=fa[now]&amp;&amp;siz[son[i]]&gt;siz[wson[now]]) wson[now]=son[i];&#125;void DFS2(int now)&#123; seg[now]=++idx;rev[seg[now]]=now; if(now==1) top[now]=1; if(wson[now]) &#123; top[wson[now]]=top[now]; DFS2(wson[now]); &#125; for(int i=lnk[now];i;i=nxt[i]) &#123; if(son[i]==fa[now]||son[i]==wson[now]) continue; top[son[i]]=son[i]; DFS2(son[i]); &#125;&#125;int main()&#123; n=read(); for(int i=2;i&lt;=n;i++) &#123; int a=read()+1; add_e(a,i);add_e(i,a); &#125; for(int i=1;i&lt;=n*4;i++) T.Tree[i].Tag=-1; DFS1(1);DFS2(1); m=read(); while(m--) &#123; scanf("%s",cmd); int x=read()+1;ans=0; if(strcmp(cmd,"install")==0) &#123; while(x&gt;0) &#123; ans+=seg[x]-seg[top[x]]+1-T.QueryRange(seg[top[x]],seg[x]); T.RangeUpdate(seg[top[x]],seg[x],1); x=fa[top[x]]; &#125; printf("%d\n",ans); &#125; else &#123; ans=T.QueryRange(seg[x],seg[x]+siz[x]-1); T.RangeUpdate(seg[x],seg[x]+siz[x]-1,0); printf("%d\n",ans); &#125; &#125; return 0;&#125;]]></content>
+    <title><![CDATA[「JLOI2014」松鼠的新家]]></title>
+    <url>%2F2019%2F04%2F07%2F%E3%80%8CJLOI2014%E3%80%8D%E6%9D%BE%E9%BC%A0%E7%9A%84%E6%96%B0%E5%AE%B6-Solution%2F</url>
+    <content type="text"><![CDATA[蒟蒻我差点把简单问题复杂化QwQ。 传送门洛谷P3258 BZOJ3631 题解这两天刚做了几道树剖题。 害得我这题一上来就像码树剖。 其实完全没必要。 由于修改操作只有将一整条路劲上的点都加1，所以直接树上差分就可以了。 设修改的路径的两个端点分别为$a,b$，那么只要让a和b的权值加1，LCA(a,b)和它的父亲的权值分别减1。然后对于任意一个节点，它整个子树的权值加和便是该节点真正的权值。 然后注意一下细节即可。 代码12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364#include&lt;cstdio&gt;#include&lt;algorithm&gt;using namespace std;const int maxn=300005;int n,A[maxn],tot,lnk[maxn],son[maxn*2],nxt[maxn*2],F[maxn],father[maxn][20],dep[maxn];inline char nc()&#123; const int S=131072;static char buf[S],*L,*R; return L==R&amp;&amp;(R=(L=buf)+fread(buf,1,S,stdin),L==R)?EOF:*L++;&#125;inline int read()&#123; int ret=0,f=1;char ch=nc(); while(ch&lt;'0'||ch&gt;'9')&#123;if(ch=='-')f=-f;ch=nc();&#125; while(ch&gt;='0'&amp;&amp;ch&lt;='9')&#123;ret=ret*10+ch-'0';ch=nc();&#125; return ret*f;&#125;inline void add_e(int x,int y)&#123;tot++;son[tot]=y;nxt[tot]=lnk[x];lnk[x]=tot;&#125;void Build(int now,int fa)&#123; father[now][0]=fa;dep[now]=dep[fa]+1; for(int i=1;i&lt;=18;i++) father[now][i]=father[father[now][i-1]][i-1]; for(int i=lnk[now];i;i=nxt[i]) if(son[i]!=fa) Build(son[i],now);&#125;inline int LCA(int u,int v)&#123; if(dep[u]&lt;dep[v]) swap(u,v); for(int i=18;i&gt;=0;i--) if(dep[father[u][i]]&gt;=dep[v]) u=father[u][i]; for(int i=18;i&gt;=0;i--) if(father[u][i]!=father[v][i])&#123;u=father[u][i];v=father[v][i];&#125; if(u!=v) return father[u][0]; return u;&#125;void DFS(int now,int fa)&#123; for(int i=lnk[now];i;i=nxt[i]) if(son[i]!=fa) &#123;DFS(son[i],now);F[now]+=F[son[i]];&#125;&#125;int main()&#123; n=read(); for(int i=1;i&lt;=n;i++) A[i]=read(); for(int i=1;i&lt;n;i++) &#123; int a=read(),b=read(); add_e(a,b);add_e(b,a); &#125; Build(1,0); for(int i=1;i&lt;n;i++) &#123; F[A[i]]++; F[A[i+1]]++; int lca=LCA(A[i],A[i+1]); F[lca]--; F[father[lca][0]]--; &#125; DFS(1,0); for(int i=1;i&lt;n;i++) F[A[i+1]]--; for(int i=1;i&lt;=n;i++) printf("%d\n",F[i]); return 0;&#125;]]></content>
       <categories>
-        <category>树链剖分</category>
+        <category>树上差分</category>
       </categories>
       <tags>
         <tag>线段树</tag>
         <tag>树链剖分</tag>
+        <tag>LCA</tag>
+        <tag>树上差分</tag>
       </tags>
   </entry>
   <entry>
@@ -214,6 +202,18 @@
       <tags>
         <tag>二分</tag>
         <tag>LCA</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[「NOI2015」软件包管理器]]></title>
+    <url>%2F2019%2F04%2F06%2F%E3%80%8CNOI2015%E3%80%8D%E8%BD%AF%E4%BB%B6%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8-Solution%2F</url>
+    <content type="text"><![CDATA[又是一个树剖题QwQ。 传送门洛谷P2146 BZOJ4196 题解不难发现，各个软件包之间的依赖关系构成了一棵树。 所以先把树建出来，每一个节点设一个权值，权值为$0$表示还未安装，权值为$1$表示已安装。 当安装软件$x$的时候，答案为$x$到根节点的路径上没有安装的软件的数量，然后把一整条路径上的节点的权值都设成1。 卸载软件$x$的时候，答案为$x$的子树中已经安装的软件的数量，然后把整棵子树中所有节点的权值都设为0。 然后弄个支持区间覆盖查询区间加和的线段树维护下就好了。 代码123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107108109110111112113114#include&lt;cstdio&gt;#include&lt;cstring&gt;using namespace std;const int maxn=100005;int n,m,tot,lnk[maxn],son[maxn*2],w[maxn],nxt[maxn*2],idx,siz[maxn],wson[maxn],fa[maxn],top[maxn],seg[maxn],rev[maxn],ans;char cmd[10];inline int read()&#123; int ret=0,f=1;char ch=getchar(); while(ch&lt;'0'||ch&gt;'9')&#123;if(ch=='-')f=-f;ch=getchar();&#125; while(ch&gt;='0'&amp;&amp;ch&lt;='9')&#123;ret=ret*10+ch-'0';ch=getchar();&#125; return ret*f;&#125;struct SegmentTree&#123; struct Node&#123;int Sum,Tag;&#125;Tree[maxn*4]; void PushUp(int rt)&#123;Tree[rt].Sum=Tree[rt*2].Sum+Tree[rt*2+1].Sum;&#125; void PushDown(int rt,int LC,int RC) &#123; if(Tree[rt].Tag==-1) return; Tree[rt*2].Sum=Tree[rt].Tag*LC; Tree[rt*2+1].Sum=Tree[rt].Tag*RC; Tree[rt*2].Tag=Tree[rt].Tag; Tree[rt*2+1].Tag=Tree[rt].Tag; Tree[rt].Tag=-1; &#125; void RangeUpdate(int LL,int RR,int delta,int L=1,int R=n,int rt=1) &#123; if(LL&lt;=L&amp;&amp;R&lt;=RR) &#123; Tree[rt].Sum=delta*(R-L+1); Tree[rt].Tag=delta; return; &#125; int M=(L+R)/2; PushDown(rt,M-L+1,R-M); if(LL&lt;=M) RangeUpdate(LL,RR,delta,L,M,rt*2); if(M&lt;RR) RangeUpdate(LL,RR,delta,M+1,R,rt*2+1); PushUp(rt); &#125; int QueryRange(int LL,int RR,int L=1,int R=n,int rt=1) &#123; if(LL&lt;=L&amp;&amp;R&lt;=RR) return Tree[rt].Sum; int M=(L+R)/2,ret=0; PushDown(rt,M-L+1,R-M); if(LL&lt;=M) ret+=QueryRange(LL,RR,L,M,rt*2); if(M&lt;RR) ret+=QueryRange(LL,RR,M+1,R,rt*2+1); return ret; &#125;&#125;T;inline void add_e(int x,int y)&#123;tot++;son[tot]=y;nxt[tot]=lnk[x];lnk[x]=tot;&#125;void DFS1(int now)&#123; siz[now]=1; for(int i=lnk[now];i;i=nxt[i]) &#123; if(son[i]==fa[now]) continue; fa[son[i]]=now; DFS1(son[i]); siz[now]+=siz[son[i]]; &#125; for(int i=lnk[now];i;i=nxt[i]) if(son[i]!=fa[now]&amp;&amp;siz[son[i]]&gt;siz[wson[now]]) wson[now]=son[i];&#125;void DFS2(int now)&#123; seg[now]=++idx;rev[seg[now]]=now; if(now==1) top[now]=1; if(wson[now]) &#123; top[wson[now]]=top[now]; DFS2(wson[now]); &#125; for(int i=lnk[now];i;i=nxt[i]) &#123; if(son[i]==fa[now]||son[i]==wson[now]) continue; top[son[i]]=son[i]; DFS2(son[i]); &#125;&#125;int main()&#123; n=read(); for(int i=2;i&lt;=n;i++) &#123; int a=read()+1; add_e(a,i);add_e(i,a); &#125; for(int i=1;i&lt;=n*4;i++) T.Tree[i].Tag=-1; DFS1(1);DFS2(1); m=read(); while(m--) &#123; scanf("%s",cmd); int x=read()+1;ans=0; if(strcmp(cmd,"install")==0) &#123; while(x&gt;0) &#123; ans+=seg[x]-seg[top[x]]+1-T.QueryRange(seg[top[x]],seg[x]); T.RangeUpdate(seg[top[x]],seg[x],1); x=fa[top[x]]; &#125; printf("%d\n",ans); &#125; else &#123; ans=T.QueryRange(seg[x],seg[x]+siz[x]-1); T.RangeUpdate(seg[x],seg[x]+siz[x]-1,0); printf("%d\n",ans); &#125; &#125; return 0;&#125;]]></content>
+      <categories>
+        <category>树链剖分</category>
+      </categories>
+      <tags>
+        <tag>线段树</tag>
+        <tag>树链剖分</tag>
       </tags>
   </entry>
   <entry>
@@ -277,51 +277,10 @@
         <category>倍增</category>
       </categories>
       <tags>
-        <tag>主席树</tag>
         <tag>线段树</tag>
+        <tag>主席树</tag>
         <tag>倍增</tag>
         <tag>可持久化</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[「网络流24题」运输问题]]></title>
-    <url>%2F2019%2F03%2F18%2F%E3%80%8C%E7%BD%91%E7%BB%9C%E6%B5%8124%E9%A2%98%E3%80%8D%E8%BF%90%E8%BE%93%E9%97%AE%E9%A2%98-Solution%2F</url>
-    <content type="text"><![CDATA[好经典的模型。 传送门洛谷P4015 LOJ6011 题解乍一看就是一个二分图。 但是要求很明显要求最小费用最大流。 考虑如何建模。 由于每一个仓库只能流出定量的货物，但是又不能把每一个仓库看做源。 所以把所有货物都连到同一个源上，连到第$i​$个仓库的边嘚的容量为$A_i​$，费用为$0​$。 每一家零售店又都连到一个汇上，从第$i$家零售店连出的边的容量为$B_i$，费用为$0$。 中间从仓库到零售店的边就按照题目里的说的那样连，容量为$+\infty$。 然后直接跑最小费用最大流就好了。 代码1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374757677787980818283848586#include&lt;cstdio&gt;#include&lt;cstring&gt;#include&lt;algorithm&gt;using namespace std;const int maxn=210,maxm=20205,inf=0x3F3F3F3F;int m,n,S,T,tot,lnk[maxn],son[maxm],nxt[maxm],w[maxm],cap[maxm],que[maxn],lst[maxn],pre[maxn],dist[maxn],flow[maxn],ans;bool vis[maxn];inline int read()&#123; int ret=0,f=1;char ch=getchar(); while(ch&lt;'0'||ch&gt;'9')&#123;if(ch=='-')f=-f;ch=getchar();&#125; while(ch&gt;='0'&amp;&amp;ch&lt;='9')&#123;ret=ret*10+ch-'0';ch=getchar();&#125; return ret*f;&#125;inline void add_e(int x,int y,int z,int c)&#123;tot++;son[tot]=y;w[tot]=z;cap[tot]=c;nxt[tot]=lnk[x];lnk[x]=tot;&#125;inline void MinCostMaxFlow(int flg)&#123; while(true) &#123; if(flg==1) memset(dist,63,sizeof(dist)); else memset(dist,192,sizeof(dist)); memset(flow,63,sizeof(flow)); int hed=0,til=1; que[1]=S;dist[S]=0;vis[S]=true;pre[T]=0; while(hed!=til) &#123; hed=(hed+1)%maxn;vis[que[hed]]=false; for(int i=lnk[que[hed]];i;i=nxt[i]) &#123; if(cap[i]&amp;&amp;((flg==1&amp;&amp;dist[que[hed]]+w[i]&lt;dist[son[i]])||(flg==-1&amp;&amp;dist[que[hed]]+w[i]&gt;dist[son[i]]))) &#123; dist[son[i]]=dist[que[hed]]+w[i]; pre[son[i]]=que[hed]; lst[son[i]]=i; flow[son[i]]=min(flow[que[hed]],cap[i]); if(!vis[son[i]]) &#123; vis[son[i]]=true; til=(til+1)%maxn; que[til]=son[i]; &#125; &#125; &#125; &#125; if(pre[T]==0) return; ans+=flow[T]*dist[T]; int p=T; while(p!=S) &#123; cap[lst[p]]-=flow[T]; cap[(lst[p]&amp;1)?lst[p]+1:lst[p]-1]+=flow[T]; p=pre[p]; &#125; &#125;&#125;int main()&#123; m=read();n=read();S=1;T=m+n+2; for(int i=1;i&lt;=m;i++) &#123; int ai=read(); add_e(S,i+1,0,ai); add_e(i+1,S,0,0); &#125; for(int i=1;i&lt;=n;i++) &#123; int bi=read(); add_e(i+m+1,T,0,bi); add_e(T,i+m+1,0,0); &#125; for(int i=1;i&lt;=m;i++) &#123; for(int j=1;j&lt;=n;j++) &#123; int cij=read(); add_e(i+1,j+m+1,cij,inf); add_e(j+m+1,i+1,-cij,0); &#125; &#125; MinCostMaxFlow(1); printf("%d\n",ans); for(int i=2;i&lt;=tot;i+=2)&#123;cap[i-1]+=cap[i];cap[i]=0;&#125; ans=0; MinCostMaxFlow(-1); printf("%d\n",ans); return 0;&#125;]]></content>
-      <categories>
-        <category>最小费用最大流</category>
-      </categories>
-      <tags>
-        <tag>网络流</tag>
-        <tag>最大流</tag>
-        <tag>费用流</tag>
-        <tag>最小费用最大流</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[「网络流24题」餐巾计划问题]]></title>
-    <url>%2F2019%2F03%2F18%2F%E3%80%8C%E7%BD%91%E7%BB%9C%E6%B5%8124%E9%A2%98%E3%80%8D%E9%A4%90%E5%B7%BE%E8%AE%A1%E5%88%92%E9%97%AE%E9%A2%98-Solution%2F</url>
-    <content type="text"><![CDATA[又是一道有意思的网络流。 传送门洛谷P1251 LOJ6008 数据输入格式略有不同 题解此题重点在于建模。 首先很显然这题是一个费用流。 但是建模不是很好搞，需要绕几个弯。 首先拆点，将每一天分为早上和下午，早上需要准备好$r_i​$块干净的餐巾，晚上又免费获得了$r_i​$块脏的餐巾。 于是乎可以这样建图： 从源点连出$n$条边（绿的那些）到早上（下面那一排点），容量为$+\infty$，代价为$p$。如果需要买新的餐巾，从这些边流过来。 表示早上的$n$个点再连出来$n$条边到汇，容量为$r_i$，代价为$0$。正常情况下这些变必须满载。表示每天早上都可以提供$r_i$条干净的餐巾。 从源点再连出来$n$条边到每一个表示晚上的节点（上面一排），容量为$r_i$，代价为$0$。表示每天晚上可以免费获得$r_i$条脏餐巾。这些边不一定满载，因为脏的餐巾可以扔掉。 表示每一天晚上的节点再连出来一条边到下一天晚上（红的边），容量为$+\infty​$，代价为$0​$。当天的脏餐巾可以放到下一天再处理。 表示每一天晚上的节点连出一条边到$m$天后的早上（蓝的边），容量为$+ \infty$，代价为$f$。表示送去快洗部。 送去慢洗部的同上。 然后直接刷最小费用最大流即可。 代码1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374757677#include&lt;cstdio&gt;#include&lt;cstring&gt;#include&lt;algorithm&gt;using namespace std;typedef long long LL;const int maxn=4005,maxe=24005,inf=0x3F3F3F3F;int N,r[2005],p,m,f,n,s,tot,S,T,lnk[maxn],son[maxe],nxt[maxe],w[maxe],cap[maxe],que[maxn],dist[maxn],lst[maxn],pre[maxn],flow[maxn];bool vis[maxn];LL ans;inline int read()&#123; int ret=0,f=1;char ch=getchar(); while(ch&lt;'0'||ch&gt;'9')&#123;if(ch=='-')f=-f;ch=getchar();&#125; while(ch&gt;='0'&amp;&amp;ch&lt;='9')&#123;ret=ret*10+ch-'0';ch=getchar();&#125; return ret*f;&#125;inline void add_e(int x,int y,int z,int c)&#123; tot++;son[tot]=y;w[tot]=z;cap[tot]=c;nxt[tot]=lnk[x];lnk[x]=tot; tot++;son[tot]=x;w[tot]=-z;cap[tot]=0;nxt[tot]=lnk[y];lnk[y]=tot;&#125;inline void MinCostMaxFlow()&#123; while(true) &#123; memset(dist,63,sizeof(dist)); memset(flow,63,sizeof(flow)); int hed=0,til=1; que[1]=S;dist[S]=0;vis[S]=true;pre[T]=0; while(hed!=til) &#123; hed=(hed+1)%maxn;vis[que[hed]]=false; for(int i=lnk[que[hed]];i;i=nxt[i]) &#123; if(cap[i]&gt;0&amp;&amp;dist[que[hed]]+w[i]&lt;dist[son[i]]) &#123; dist[son[i]]=dist[que[hed]]+w[i]; lst[son[i]]=i; pre[son[i]]=que[hed]; flow[son[i]]=min(flow[que[hed]],cap[i]); if(!vis[son[i]]) &#123; vis[son[i]]=true; til=(til+1)%maxn; que[til]=son[i]; &#125; &#125; &#125; &#125; if(pre[T]==0) return; ans+=(LL)dist[T]*flow[T]; int p=T; while(p!=S) &#123; cap[lst[p]]-=flow[T]; cap[(lst[p]&amp;1)?lst[p]+1:lst[p]-1]+=flow[T]; p=pre[p]; &#125; &#125;&#125;int main()&#123; N=read();S=2*N+1;T=2*N+2; for(int i=1;i&lt;=N;i++) r[i]=read(); p=read();m=read();f=read();n=read();s=read(); for(int i=1;i&lt;=N;i++) add_e(S,i,p,inf); for(int i=1;i&lt;=N;i++) add_e(i,T,0,r[i]); for(int i=1;i&lt;=N;i++) add_e(S,i+N,0,r[i]); for(int i=1;i&lt;N;i++) add_e(i+N,i+N+1,0,inf); for(int i=1;i&lt;=N;i++) &#123; int to1=i+m,to2=i+n; if(to1&lt;=N) add_e(i+N,to1,f,inf); if(to2&lt;=N) add_e(i+N,to2,s,inf); &#125; MinCostMaxFlow(); printf("%lld\n",ans); return 0;&#125;]]></content>
-      <categories>
-        <category>最小费用最大流</category>
-      </categories>
-      <tags>
-        <tag>网络流</tag>
-        <tag>最大流</tag>
-        <tag>费用流</tag>
-        <tag>最小费用最大流</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[「网络流24题」魔术球问题]]></title>
-    <url>%2F2019%2F03%2F18%2F%E3%80%8C%E7%BD%91%E7%BB%9C%E6%B5%8124%E9%A2%98%E3%80%8D%E9%AD%94%E6%9C%AF%E7%90%83%E9%97%AE%E9%A2%98-Solution%2F</url>
-    <content type="text"><![CDATA[纳尼？这是网络流？？？ 传送门洛谷P2765 LOJ6003 题解这题一眼看上去就是一个贪心。 从小到大枚举球的编号，然后从$1$到$n$枚举柱子，找到第一个可以放上去的柱子后就把球放上去，直到放不了位置。 这个贪心看起来很假，但是是对的。 考虑网络流的做法，对于两个球，如果编号加和为完全平方数，那么就从编号小的球往编号大的球建一条边。然后整张图的最小路径覆盖就等于所需柱子的数量。从小到大枚举球的个数，当所需柱子的数量大于$n​$时就上一次的个数就是答案。 考虑贪心和网络流的关系。 其实贪心的过程就是往网络里加点的过程。由于优先考虑加到有球的柱子上，所以就相当于在维护最小路径覆盖是的数量。 所以贪心的做法本质上和网络流的做法是一样的。 代码123456789101112131415161718192021222324252627#include&lt;cmath&gt;#include&lt;cstdio&gt;using namespace std;const int maxn=60;int n,ans,top[maxn],A[maxn][maxn];inline bool check(int x)&#123; int sq=sqrt(x)+1e-10; return sq*sq==x;&#125;int main()&#123; scanf("%d",&amp;n); while(true) &#123; bool suc=false; for(int i=1;i&lt;=n;i++) if(top[i]==0||check(A[i][top[i]]+ans+1)) &#123;ans++;top[i]++;A[i][top[i]]=ans;suc=true;break;&#125; if(!suc) break; &#125; printf("%d\n",ans); for(int i=1;i&lt;=n;i++) for(int j=1;j&lt;=top[i];j++) printf("%d%c",A[i][j],j==top[i]?'\n':' '); return 0;&#125;]]></content>
-      <categories>
-        <category>贪心</category>
-      </categories>
-      <tags>
-        <tag>网络流</tag>
-        <tag>贪心</tag>
-        <tag>最大流</tag>
       </tags>
   </entry>
   <entry>
@@ -352,6 +311,33 @@
       </tags>
   </entry>
   <entry>
+    <title><![CDATA[「网络流24题」运输问题]]></title>
+    <url>%2F2019%2F03%2F18%2F%E3%80%8C%E7%BD%91%E7%BB%9C%E6%B5%8124%E9%A2%98%E3%80%8D%E8%BF%90%E8%BE%93%E9%97%AE%E9%A2%98-Solution%2F</url>
+    <content type="text"><![CDATA[好经典的模型。 传送门洛谷P4015 LOJ6011 题解乍一看就是一个二分图。 但是要求很明显要求最小费用最大流。 考虑如何建模。 由于每一个仓库只能流出定量的货物，但是又不能把每一个仓库看做源。 所以把所有货物都连到同一个源上，连到第$i​$个仓库的边嘚的容量为$A_i​$，费用为$0​$。 每一家零售店又都连到一个汇上，从第$i$家零售店连出的边的容量为$B_i$，费用为$0$。 中间从仓库到零售店的边就按照题目里的说的那样连，容量为$+\infty$。 然后直接跑最小费用最大流就好了。 代码1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374757677787980818283848586#include&lt;cstdio&gt;#include&lt;cstring&gt;#include&lt;algorithm&gt;using namespace std;const int maxn=210,maxm=20205,inf=0x3F3F3F3F;int m,n,S,T,tot,lnk[maxn],son[maxm],nxt[maxm],w[maxm],cap[maxm],que[maxn],lst[maxn],pre[maxn],dist[maxn],flow[maxn],ans;bool vis[maxn];inline int read()&#123; int ret=0,f=1;char ch=getchar(); while(ch&lt;'0'||ch&gt;'9')&#123;if(ch=='-')f=-f;ch=getchar();&#125; while(ch&gt;='0'&amp;&amp;ch&lt;='9')&#123;ret=ret*10+ch-'0';ch=getchar();&#125; return ret*f;&#125;inline void add_e(int x,int y,int z,int c)&#123;tot++;son[tot]=y;w[tot]=z;cap[tot]=c;nxt[tot]=lnk[x];lnk[x]=tot;&#125;inline void MinCostMaxFlow(int flg)&#123; while(true) &#123; if(flg==1) memset(dist,63,sizeof(dist)); else memset(dist,192,sizeof(dist)); memset(flow,63,sizeof(flow)); int hed=0,til=1; que[1]=S;dist[S]=0;vis[S]=true;pre[T]=0; while(hed!=til) &#123; hed=(hed+1)%maxn;vis[que[hed]]=false; for(int i=lnk[que[hed]];i;i=nxt[i]) &#123; if(cap[i]&amp;&amp;((flg==1&amp;&amp;dist[que[hed]]+w[i]&lt;dist[son[i]])||(flg==-1&amp;&amp;dist[que[hed]]+w[i]&gt;dist[son[i]]))) &#123; dist[son[i]]=dist[que[hed]]+w[i]; pre[son[i]]=que[hed]; lst[son[i]]=i; flow[son[i]]=min(flow[que[hed]],cap[i]); if(!vis[son[i]]) &#123; vis[son[i]]=true; til=(til+1)%maxn; que[til]=son[i]; &#125; &#125; &#125; &#125; if(pre[T]==0) return; ans+=flow[T]*dist[T]; int p=T; while(p!=S) &#123; cap[lst[p]]-=flow[T]; cap[(lst[p]&amp;1)?lst[p]+1:lst[p]-1]+=flow[T]; p=pre[p]; &#125; &#125;&#125;int main()&#123; m=read();n=read();S=1;T=m+n+2; for(int i=1;i&lt;=m;i++) &#123; int ai=read(); add_e(S,i+1,0,ai); add_e(i+1,S,0,0); &#125; for(int i=1;i&lt;=n;i++) &#123; int bi=read(); add_e(i+m+1,T,0,bi); add_e(T,i+m+1,0,0); &#125; for(int i=1;i&lt;=m;i++) &#123; for(int j=1;j&lt;=n;j++) &#123; int cij=read(); add_e(i+1,j+m+1,cij,inf); add_e(j+m+1,i+1,-cij,0); &#125; &#125; MinCostMaxFlow(1); printf("%d\n",ans); for(int i=2;i&lt;=tot;i+=2)&#123;cap[i-1]+=cap[i];cap[i]=0;&#125; ans=0; MinCostMaxFlow(-1); printf("%d\n",ans); return 0;&#125;]]></content>
+      <categories>
+        <category>最小费用最大流</category>
+      </categories>
+      <tags>
+        <tag>网络流</tag>
+        <tag>最大流</tag>
+        <tag>费用流</tag>
+        <tag>最小费用最大流</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[「网络流24题」魔术球问题]]></title>
+    <url>%2F2019%2F03%2F18%2F%E3%80%8C%E7%BD%91%E7%BB%9C%E6%B5%8124%E9%A2%98%E3%80%8D%E9%AD%94%E6%9C%AF%E7%90%83%E9%97%AE%E9%A2%98-Solution%2F</url>
+    <content type="text"><![CDATA[纳尼？这是网络流？？？ 传送门洛谷P2765 LOJ6003 题解这题一眼看上去就是一个贪心。 从小到大枚举球的编号，然后从$1$到$n$枚举柱子，找到第一个可以放上去的柱子后就把球放上去，直到放不了位置。 这个贪心看起来很假，但是是对的。 考虑网络流的做法，对于两个球，如果编号加和为完全平方数，那么就从编号小的球往编号大的球建一条边。然后整张图的最小路径覆盖就等于所需柱子的数量。从小到大枚举球的个数，当所需柱子的数量大于$n​$时就上一次的个数就是答案。 考虑贪心和网络流的关系。 其实贪心的过程就是往网络里加点的过程。由于优先考虑加到有球的柱子上，所以就相当于在维护最小路径覆盖是的数量。 所以贪心的做法本质上和网络流的做法是一样的。 代码123456789101112131415161718192021222324252627#include&lt;cmath&gt;#include&lt;cstdio&gt;using namespace std;const int maxn=60;int n,ans,top[maxn],A[maxn][maxn];inline bool check(int x)&#123; int sq=sqrt(x)+1e-10; return sq*sq==x;&#125;int main()&#123; scanf("%d",&amp;n); while(true) &#123; bool suc=false; for(int i=1;i&lt;=n;i++) if(top[i]==0||check(A[i][top[i]]+ans+1)) &#123;ans++;top[i]++;A[i][top[i]]=ans;suc=true;break;&#125; if(!suc) break; &#125; printf("%d\n",ans); for(int i=1;i&lt;=n;i++) for(int j=1;j&lt;=top[i];j++) printf("%d%c",A[i][j],j==top[i]?'\n':' '); return 0;&#125;]]></content>
+      <categories>
+        <category>贪心</category>
+      </categories>
+      <tags>
+        <tag>网络流</tag>
+        <tag>贪心</tag>
+        <tag>最大流</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[「网络流24题」试题库问题]]></title>
     <url>%2F2019%2F03%2F18%2F%E3%80%8C%E7%BD%91%E7%BB%9C%E6%B5%8124%E9%A2%98%E3%80%8D%E8%AF%95%E9%A2%98%E5%BA%93%E9%97%AE%E9%A2%98-Solution%2F</url>
     <content type="text"><![CDATA[又是一道经典题。 传送门洛谷P2763 LOJ6006 题解考虑如何建模。 很显然这是一个二分图。 对于题库中的每一道题，像试卷中的所有可行的空位连边。 比如题库中一道题可以属于$1$类或者$2类$，那么就往试卷中所有$1类$和$2$类的位置连边。 由于一道题只能用在试卷上的一个位置，且试卷上的一个位置也只能放一道题。 所以直接上匈牙利算法求解该二分图的最大匹配即可。 当最大匹配数小于$m$时即为无解。（洛谷上的数据真水，一开始我没考虑无解的情况竟然AC了） 也可以转化成最大流问题，然后用EK、Dinic等求解。 代码12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061#include&lt;cstdio&gt;#include&lt;cstring&gt;using namespace std;const int maxn=1005;int k,st[maxn],grp[maxn],n,m,tot,lnk[maxn],son[maxn*maxn],nxt[maxn*maxn],cp[maxn],len[maxn],A[25][maxn],sum;bool vis[maxn];inline int read()&#123; int ret=0,f=1;char ch=getchar(); while(ch&lt;'0'||ch&gt;'9')&#123;if(ch=='-')f=-f;ch=getchar();&#125; while(ch&gt;='0'&amp;&amp;ch&lt;='9')&#123;ret=ret*10+ch-'0';ch=getchar();&#125; return ret*f;&#125;inline void add_e(int x,int y)&#123;tot++;son[tot]=y;nxt[tot]=lnk[x];lnk[x]=tot;&#125;bool Hungary(int now)&#123; for(int i=lnk[now];i;i=nxt[i]) &#123; if(!vis[son[i]]) &#123; vis[son[i]]=true; if(!cp[son[i]]||Hungary(cp[son[i]])) &#123; cp[son[i]]=now; return true; &#125; &#125; &#125; return false;&#125;int main()&#123; k=read();n=read(); for(int i=1;i&lt;=k;i++) &#123; int cnt=read();st[i]=m+1; for(int j=1;j&lt;=cnt;j++) grp[++m]=i; &#125; for(int i=1;i&lt;=n;i++) &#123; int cnt=read(); for(int j=1;j&lt;=cnt;j++) &#123; int to=read(); for(int k=st[to];grp[k]==to;k++) add_e(i,k); &#125; &#125; for(int i=1;i&lt;=n;i++)&#123;memset(vis,false,n+3);Hungary(i);&#125; for(int i=1;i&lt;=m;i++) if(cp[i]) &#123;len[grp[i]]++;A[grp[i]][len[grp[i]]]=cp[i];&#125; for(int i=1;i&lt;=k;i++) sum+=len[i]; if(sum&lt;m)&#123;printf("No Solution!");return 0;&#125; for(int i=1;i&lt;=k;i++) &#123; printf("%d:",i); for(int j=1;j&lt;=len[i];j++) printf(" %d",A[i][j]); printf("\n"); &#125; return 0;&#125;]]></content>
@@ -367,6 +353,20 @@
       </tags>
   </entry>
   <entry>
+    <title><![CDATA[「网络流24题」餐巾计划问题]]></title>
+    <url>%2F2019%2F03%2F18%2F%E3%80%8C%E7%BD%91%E7%BB%9C%E6%B5%8124%E9%A2%98%E3%80%8D%E9%A4%90%E5%B7%BE%E8%AE%A1%E5%88%92%E9%97%AE%E9%A2%98-Solution%2F</url>
+    <content type="text"><![CDATA[又是一道有意思的网络流。 传送门洛谷P1251 LOJ6008 数据输入格式略有不同 题解此题重点在于建模。 首先很显然这题是一个费用流。 但是建模不是很好搞，需要绕几个弯。 首先拆点，将每一天分为早上和下午，早上需要准备好$r_i​$块干净的餐巾，晚上又免费获得了$r_i​$块脏的餐巾。 于是乎可以这样建图： 从源点连出$n$条边（绿的那些）到早上（下面那一排点），容量为$+\infty$，代价为$p$。如果需要买新的餐巾，从这些边流过来。 表示早上的$n$个点再连出来$n$条边到汇，容量为$r_i$，代价为$0$。正常情况下这些变必须满载。表示每天早上都可以提供$r_i$条干净的餐巾。 从源点再连出来$n$条边到每一个表示晚上的节点（上面一排），容量为$r_i$，代价为$0$。表示每天晚上可以免费获得$r_i$条脏餐巾。这些边不一定满载，因为脏的餐巾可以扔掉。 表示每一天晚上的节点再连出来一条边到下一天晚上（红的边），容量为$+\infty​$，代价为$0​$。当天的脏餐巾可以放到下一天再处理。 表示每一天晚上的节点连出一条边到$m$天后的早上（蓝的边），容量为$+ \infty$，代价为$f$。表示送去快洗部。 送去慢洗部的同上。 然后直接刷最小费用最大流即可。 代码1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374757677#include&lt;cstdio&gt;#include&lt;cstring&gt;#include&lt;algorithm&gt;using namespace std;typedef long long LL;const int maxn=4005,maxe=24005,inf=0x3F3F3F3F;int N,r[2005],p,m,f,n,s,tot,S,T,lnk[maxn],son[maxe],nxt[maxe],w[maxe],cap[maxe],que[maxn],dist[maxn],lst[maxn],pre[maxn],flow[maxn];bool vis[maxn];LL ans;inline int read()&#123; int ret=0,f=1;char ch=getchar(); while(ch&lt;'0'||ch&gt;'9')&#123;if(ch=='-')f=-f;ch=getchar();&#125; while(ch&gt;='0'&amp;&amp;ch&lt;='9')&#123;ret=ret*10+ch-'0';ch=getchar();&#125; return ret*f;&#125;inline void add_e(int x,int y,int z,int c)&#123; tot++;son[tot]=y;w[tot]=z;cap[tot]=c;nxt[tot]=lnk[x];lnk[x]=tot; tot++;son[tot]=x;w[tot]=-z;cap[tot]=0;nxt[tot]=lnk[y];lnk[y]=tot;&#125;inline void MinCostMaxFlow()&#123; while(true) &#123; memset(dist,63,sizeof(dist)); memset(flow,63,sizeof(flow)); int hed=0,til=1; que[1]=S;dist[S]=0;vis[S]=true;pre[T]=0; while(hed!=til) &#123; hed=(hed+1)%maxn;vis[que[hed]]=false; for(int i=lnk[que[hed]];i;i=nxt[i]) &#123; if(cap[i]&gt;0&amp;&amp;dist[que[hed]]+w[i]&lt;dist[son[i]]) &#123; dist[son[i]]=dist[que[hed]]+w[i]; lst[son[i]]=i; pre[son[i]]=que[hed]; flow[son[i]]=min(flow[que[hed]],cap[i]); if(!vis[son[i]]) &#123; vis[son[i]]=true; til=(til+1)%maxn; que[til]=son[i]; &#125; &#125; &#125; &#125; if(pre[T]==0) return; ans+=(LL)dist[T]*flow[T]; int p=T; while(p!=S) &#123; cap[lst[p]]-=flow[T]; cap[(lst[p]&amp;1)?lst[p]+1:lst[p]-1]+=flow[T]; p=pre[p]; &#125; &#125;&#125;int main()&#123; N=read();S=2*N+1;T=2*N+2; for(int i=1;i&lt;=N;i++) r[i]=read(); p=read();m=read();f=read();n=read();s=read(); for(int i=1;i&lt;=N;i++) add_e(S,i,p,inf); for(int i=1;i&lt;=N;i++) add_e(i,T,0,r[i]); for(int i=1;i&lt;=N;i++) add_e(S,i+N,0,r[i]); for(int i=1;i&lt;N;i++) add_e(i+N,i+N+1,0,inf); for(int i=1;i&lt;=N;i++) &#123; int to1=i+m,to2=i+n; if(to1&lt;=N) add_e(i+N,to1,f,inf); if(to2&lt;=N) add_e(i+N,to2,s,inf); &#125; MinCostMaxFlow(); printf("%lld\n",ans); return 0;&#125;]]></content>
+      <categories>
+        <category>最小费用最大流</category>
+      </categories>
+      <tags>
+        <tag>网络流</tag>
+        <tag>最大流</tag>
+        <tag>费用流</tag>
+        <tag>最小费用最大流</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[「JSOI2013」丢番图]]></title>
     <url>%2F2019%2F03%2F17%2F%E3%80%8CJSOI2013%E3%80%8D%E4%B8%A2%E7%95%AA%E5%9B%BE-Solution%2F</url>
     <content type="text"><![CDATA[挺好玩的一个数学题。 传送门洛谷P5253 BZOJ4459 题解首先来看看题目中给出的式子，看起来不是很好搞： \frac{1}{x}+\frac{1}{y}=\frac{1}{n}分式不好搞，所以先给它乘开： ny+nx=xy都移到一边： xy-nx-ny=0化为两式相乘的形式： (x-n)(y-n)=n^2不难发现，将$n^2$分解为任意两数相乘的形式时，都有唯一的$x,y$与之对应。 所以$n^2$的因子个数加一除以二就是答案。 但是$n^2$比较大，不好分解质因数。 但是$n$比较小，根据平方的性质，$n^2$的每一个质因子的个数等于$n$每一个质因子个数的两倍。 然后就好搞了。 代码12345678910111213141516171819202122232425262728293031#include&lt;cstdio&gt;using namespace std;typedef long long LL;int cnt,p[665000],tot[665000];LL n,ans;bool vis[10000005];inline void make_p() //欧拉筛素数&#123; vis[0]=vis[1]=true; for(int i=2;i&lt;=10000000;i++) &#123; if(!vis[i])&#123;cnt++;p[cnt]=i;&#125; for(int j=1;j&lt;=cnt&amp;&amp;p[j]*i&lt;=10000000;j++) vis[p[j]*i]=true; &#125;&#125;inline void Solve()&#123; for(int i=1;i&lt;=cnt;i++) while(n%p[i]==0) &#123;n/=p[i];tot[i]++;&#125; //分解质因数 if(n&gt;1)&#123;cnt++;tot[cnt]=1;p[cnt]=n;&#125; ans=1; for(int i=1;i&lt;=cnt;i++) ans*=2*tot[i]+1; //计算因子个数 ans=(ans+1)/2;&#125;int main()&#123; make_p(); scanf("%lld",&amp;n); Solve(); printf("%lld\n",ans); return 0;&#125;]]></content>
@@ -374,9 +374,9 @@
         <category>分解质因数</category>
       </categories>
       <tags>
+        <tag>分解质因数</tag>
         <tag>数学</tag>
         <tag>欧拉筛</tag>
-        <tag>分解质因数</tag>
       </tags>
   </entry>
   <entry>
@@ -387,8 +387,8 @@
         <category>线段树</category>
       </categories>
       <tags>
-        <tag>二分</tag>
         <tag>线段树</tag>
+        <tag>二分</tag>
         <tag>单调性</tag>
       </tags>
   </entry>
@@ -407,19 +407,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[「TJOI2010」分金币]]></title>
-    <url>%2F2019%2F03%2F08%2F%E3%80%8CTJOI2010%E3%80%8D%E5%88%86%E9%87%91%E5%B8%81-Solution%2F</url>
-    <content type="text"><![CDATA[又是一道模拟退火的题QwQ。 传送门洛谷P3878 题解感觉这样的题目还是比较套路的QwQ。 还是先考虑一个看起来比较靠谱的贪心，比如考虑按顺序遍历这些金币，如果当前两堆个数相等的话谁小就先丢到谁哪儿，否则就丢到个数少的一堆里。 此时决策的方案还是与遍历的顺序有关，所以上模拟退火确定一个最优的顺序，然后就好了QwQ。 代码123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960#include&lt;cmath&gt;#include&lt;cstdio&gt;#include&lt;cstdlib&gt;#include&lt;algorithm&gt;using namespace std;const int maxn=35;const double delta=0.998;int T,n,v[maxn],ans;inline int read()&#123; int ret=0,f=1;char ch=getchar(); while(ch&lt;'0'||ch&gt;'9')&#123;if(ch=='-')f=-f;ch=getchar();&#125; while(ch&gt;='0'&amp;&amp;ch&lt;='9')&#123;ret=ret*10+ch-'0';ch=getchar();&#125; return ret*f;&#125;inline int ABS(int x)&#123;return x&lt;0?-x:x;&#125;inline int Calc()&#123; int sum1=0,sum2=0,cnt1=0,cnt2=0; for(int i=1;i&lt;=n;i++) &#123; if(cnt1==cnt2) &#123; if(sum1&lt;sum2)&#123;sum1+=v[i];cnt1++;&#125; else&#123;sum2+=v[i];cnt2++;&#125; &#125; else &#123; if(cnt1&lt;cnt2)&#123;sum1+=v[i];cnt1++;&#125; else&#123;sum2+=v[i];cnt2++;&#125; &#125; &#125; return ABS(sum1-sum2);&#125;inline void SA(double T)&#123; while(T&gt;1e-12) &#123; int a=rand()%n+1,b=rand()%n+1; while(a==b)&#123;a=rand()%n+1;b=rand()%n+1;&#125; swap(v[a],v[b]); int now=Calc(); if(now&lt;ans) ans=now; else if(exp((ans-now)/T)&lt;(double)rand()/RAND_MAX) swap(v[a],v[b]); T*=delta; &#125;&#125;int main()&#123; srand(20030909); T=read(); while(T--) &#123; n=read(); for(int i=1;i&lt;=n;i++) v[i]=read(); ans=Calc(); if(n&gt;1) for(int i=1;i&lt;=15;i++) SA(19630217); printf("%d\n",ans); &#125; return 0;&#125;]]></content>
-      <categories>
-        <category>模拟退火</category>
-      </categories>
-      <tags>
-        <tag>随机算法</tag>
-        <tag>贪心</tag>
-        <tag>模拟退火</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[「HAOI2006」均分数据]]></title>
     <url>%2F2019%2F03%2F08%2F%E3%80%8CHAOI2006%E3%80%8D%E5%9D%87%E5%88%86%E6%95%B0%E6%8D%AE-Solution%2F</url>
     <content type="text"><![CDATA[今天是国际劳动妇女节，各位妇女们有没有去劳动啊QwQ？反正我没去 传送门洛谷P2503 BZOJ2428 题解数据范围好小啊，看起来像是状压DP或者搜索之类的。蒟蒻我选择了模拟退火+贪心。 先考虑贪心，我们从$1$到$n$遍历整个序列，每次就把当前的元素丢到加和最小的那一组里。 显然光光这样贪心是肯定不行的，但是这样得到的答案还是比较优的。考虑怎样改进。 不难发现，如果遍历序列的顺序会影响最后的答案，那么可以考虑直接random_shuffle，打乱个比如$10^5​$次的，很大概率上就能刷到最优解了。 但是总感觉直接random_shuffle不太靠谱啊（不过貌似也能AC），但是蒟蒻我选择了模拟退火，感觉起来会靠谱一些（其实到底是不是更靠谱我也不知道，但是我想练一下模拟退火，所以就这样写了）。 每次随机拎出来两个元素交换，然后再计算当前答案就可以了。 代码123456789101112131415161718192021222324252627282930313233343536373839404142434445464748#include&lt;cmath&gt;#include&lt;cstdio&gt;#include&lt;cstring&gt;#include&lt;algorithm&gt;using namespace std;const int maxn=25,maxm=10;const double delta=0.991;int n,m,A[maxn];double X[maxn],avg,ret,ans;inline double Calc() //计算当前答案&#123; ret=avg=0; memset(X,0,sizeof(X)); for(int i=1;i&lt;=n;i++) &#123; int mi=1; for(int j=1;j&lt;=m;j++) if(X[j]&lt;X[mi]) mi=j; X[mi]+=A[i]; &#125; for(int i=1;i&lt;=m;i++) avg+=X[i]; avg/=m; for(int i=1;i&lt;=m;i++) ret+=(X[i]-avg)*(X[i]-avg); return sqrt(ret/m);&#125;inline void SA(double T)&#123; while(T&gt;1e-12) &#123; int a=rand()%n+1,b=rand()%n+1; while(a==b)&#123;a=rand()%n+1;b=rand()%n+1;&#125;//rand出来两个是一样的概率挺大的，这样可以提升效率 swap(A[a],A[b]); double now=Calc(); if(now&lt;ans) ans=now; else if(exp((ans-now)/T)&lt;(double)rand()/RAND_MAX) swap(A[a],A[b]); T*=delta; &#125;&#125;int main()&#123; srand(20030909); //黄霖的生日，种子什么的选大佬的生日肯定不会错的 scanf("%d%d",&amp;n,&amp;m); for(int i=1;i&lt;=n;i++) scanf("%d",&amp;A[i]); sort(A+1,A+1+n); ans=Calc(); for(int i=1;i&lt;=100;i++) SA(19630217); //退火100次又不会WA并且还比较快，求稳的话可以多来几次 printf("%.2lf\n",ans); return 0;&#125;]]></content>
@@ -433,16 +420,16 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[「USACO」Haywire]]></title>
-    <url>%2F2019%2F03%2F07%2F%E3%80%8CUSACO%E3%80%8DHaywire-Solution%2F</url>
-    <content type="text"><![CDATA[什么神仙题目。蒟蒻我前前后后一共交了13次，才终于把这个退火搞懂了QwQ。 传送门洛谷P2210 题解蒟蒻我之前一直对模拟退火保持一个懵逼状态，今天是差不多把大概原理终于理清楚了QwQ。 其实基本上就是个退火的板子，但是蒟蒻我一直搞不清楚计算接受较差答案的概率。 一般来说，计算改成的式子是这样的： exp((now-ans)/T)&gt;rand()/RAND_MAX 其中now表示当前的答案，ans表示已知最优答案，也有可能是ans-now，总之应该是个负数。满足上式，则接受较差的答案。 其中$exp(x)$表示$e^x$，函数图像大概是这样的： 所以与当前最优答案差距越大，温度越低，$exp()$的值就越小，接受这个较差的答案的概率就越小。 还有，调参的时候，降温系数，停止退火的温度下限，温度初始值，退火的次数要一起调，尤其是退火的次数，多退几次还是很有必要的。种子可以用神仙学长ZZK的生日20020222。 代码1234567891011121314151617181920212223242526272829303132333435363738394041#include&lt;cmath&gt;#include&lt;cstdio&gt;#include&lt;cstdlib&gt;#include&lt;algorithm&gt;using namespace std;const double delta=0.99;int n,fri[20][5],Q[20],ans;inline int Calc()&#123; int ret=0; for(int i=1;i&lt;=n;i++) for(int j=1;j&lt;=3;j++) if(Q[i]&gt;Q[fri[i][j]]) ret+=Q[i]-Q[fri[i][j]]; return ret;&#125;inline void SA(double T)&#123; while(T&gt;1e-12) &#123; int a=rand()%n+1,b=rand()%n+1; while(a==b)&#123;a=rand()%n+1;b=rand()%n+1;&#125; swap(Q[a],Q[b]); int now=Calc(); if(now&lt;ans) ans=now; else if(exp((ans-now)/T)&lt;(double)rand()/RAND_MAX) swap(Q[a],Q[b]); T*=delta; &#125;&#125;int main()&#123; srand(19260817); scanf("%d",&amp;n); for(int i=1;i&lt;=n;i++) scanf("%d%d%d",&amp;fri[i][1],&amp;fri[i][2],&amp;fri[i][3]); for(int i=1;i&lt;=n;i++) Q[i]=i; ans=Calc(); for(int i=1;i&lt;=500;i++) SA(19260817); printf("%d\n",ans); return 0;&#125;]]></content>
+    <title><![CDATA[「TJOI2010」分金币]]></title>
+    <url>%2F2019%2F03%2F08%2F%E3%80%8CTJOI2010%E3%80%8D%E5%88%86%E9%87%91%E5%B8%81-Solution%2F</url>
+    <content type="text"><![CDATA[又是一道模拟退火的题QwQ。 传送门洛谷P3878 题解感觉这样的题目还是比较套路的QwQ。 还是先考虑一个看起来比较靠谱的贪心，比如考虑按顺序遍历这些金币，如果当前两堆个数相等的话谁小就先丢到谁哪儿，否则就丢到个数少的一堆里。 此时决策的方案还是与遍历的顺序有关，所以上模拟退火确定一个最优的顺序，然后就好了QwQ。 代码123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960#include&lt;cmath&gt;#include&lt;cstdio&gt;#include&lt;cstdlib&gt;#include&lt;algorithm&gt;using namespace std;const int maxn=35;const double delta=0.998;int T,n,v[maxn],ans;inline int read()&#123; int ret=0,f=1;char ch=getchar(); while(ch&lt;'0'||ch&gt;'9')&#123;if(ch=='-')f=-f;ch=getchar();&#125; while(ch&gt;='0'&amp;&amp;ch&lt;='9')&#123;ret=ret*10+ch-'0';ch=getchar();&#125; return ret*f;&#125;inline int ABS(int x)&#123;return x&lt;0?-x:x;&#125;inline int Calc()&#123; int sum1=0,sum2=0,cnt1=0,cnt2=0; for(int i=1;i&lt;=n;i++) &#123; if(cnt1==cnt2) &#123; if(sum1&lt;sum2)&#123;sum1+=v[i];cnt1++;&#125; else&#123;sum2+=v[i];cnt2++;&#125; &#125; else &#123; if(cnt1&lt;cnt2)&#123;sum1+=v[i];cnt1++;&#125; else&#123;sum2+=v[i];cnt2++;&#125; &#125; &#125; return ABS(sum1-sum2);&#125;inline void SA(double T)&#123; while(T&gt;1e-12) &#123; int a=rand()%n+1,b=rand()%n+1; while(a==b)&#123;a=rand()%n+1;b=rand()%n+1;&#125; swap(v[a],v[b]); int now=Calc(); if(now&lt;ans) ans=now; else if(exp((ans-now)/T)&lt;(double)rand()/RAND_MAX) swap(v[a],v[b]); T*=delta; &#125;&#125;int main()&#123; srand(20030909); T=read(); while(T--) &#123; n=read(); for(int i=1;i&lt;=n;i++) v[i]=read(); ans=Calc(); if(n&gt;1) for(int i=1;i&lt;=15;i++) SA(19630217); printf("%d\n",ans); &#125; return 0;&#125;]]></content>
       <categories>
         <category>模拟退火</category>
       </categories>
       <tags>
         <tag>随机算法</tag>
+        <tag>贪心</tag>
         <tag>模拟退火</tag>
-        <tag>搜索</tag>
       </tags>
   </entry>
   <entry>
@@ -455,6 +442,19 @@
       <tags>
         <tag>分块</tag>
         <tag>概率</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[「USACO」Haywire]]></title>
+    <url>%2F2019%2F03%2F07%2F%E3%80%8CUSACO%E3%80%8DHaywire-Solution%2F</url>
+    <content type="text"><![CDATA[什么神仙题目。蒟蒻我前前后后一共交了13次，才终于把这个退火搞懂了QwQ。 传送门洛谷P2210 题解蒟蒻我之前一直对模拟退火保持一个懵逼状态，今天是差不多把大概原理终于理清楚了QwQ。 其实基本上就是个退火的板子，但是蒟蒻我一直搞不清楚计算接受较差答案的概率。 一般来说，计算改成的式子是这样的： exp((now-ans)/T)&gt;rand()/RAND_MAX 其中now表示当前的答案，ans表示已知最优答案，也有可能是ans-now，总之应该是个负数。满足上式，则接受较差的答案。 其中$exp(x)$表示$e^x$，函数图像大概是这样的： 所以与当前最优答案差距越大，温度越低，$exp()$的值就越小，接受这个较差的答案的概率就越小。 还有，调参的时候，降温系数，停止退火的温度下限，温度初始值，退火的次数要一起调，尤其是退火的次数，多退几次还是很有必要的。种子可以用神仙学长ZZK的生日20020222。 代码1234567891011121314151617181920212223242526272829303132333435363738394041#include&lt;cmath&gt;#include&lt;cstdio&gt;#include&lt;cstdlib&gt;#include&lt;algorithm&gt;using namespace std;const double delta=0.99;int n,fri[20][5],Q[20],ans;inline int Calc()&#123; int ret=0; for(int i=1;i&lt;=n;i++) for(int j=1;j&lt;=3;j++) if(Q[i]&gt;Q[fri[i][j]]) ret+=Q[i]-Q[fri[i][j]]; return ret;&#125;inline void SA(double T)&#123; while(T&gt;1e-12) &#123; int a=rand()%n+1,b=rand()%n+1; while(a==b)&#123;a=rand()%n+1;b=rand()%n+1;&#125; swap(Q[a],Q[b]); int now=Calc(); if(now&lt;ans) ans=now; else if(exp((ans-now)/T)&lt;(double)rand()/RAND_MAX) swap(Q[a],Q[b]); T*=delta; &#125;&#125;int main()&#123; srand(19260817); scanf("%d",&amp;n); for(int i=1;i&lt;=n;i++) scanf("%d%d%d",&amp;fri[i][1],&amp;fri[i][2],&amp;fri[i][3]); for(int i=1;i&lt;=n;i++) Q[i]=i; ans=Calc(); for(int i=1;i&lt;=500;i++) SA(19260817); printf("%d\n",ans); return 0;&#125;]]></content>
+      <categories>
+        <category>模拟退火</category>
+      </categories>
+      <tags>
+        <tag>随机算法</tag>
+        <tag>模拟退火</tag>
+        <tag>搜索</tag>
       </tags>
   </entry>
   <entry>
@@ -504,20 +504,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[「ZJOI2019模拟赛 十二」紫苑]]></title>
-    <url>%2F2019%2F03%2F04%2F%E3%80%8CZJOI2019%E6%A8%A1%E6%8B%9F%E8%B5%9B%20%E5%8D%81%E4%BA%8C%E3%80%8D%E7%B4%AB%E8%8B%91-Solution%2F</url>
-    <content type="text"><![CDATA[震惊！XZY竟然在ZJOI模拟赛时公然写代码造数据卡掉各种排序算法… 传送门原题来自UOJ，但各个子任务的分值略有不同。 UOJ83 题解这题是真的毒瘤QwQ。 Subtask #1观察一下计数排序法的代码，发现它在排序开始之前先把数组从$0$到$max(A_i)$清了一遍，那么只要给一个数，并且足够大即可。简直就是送分。 Subtask #2从第二个子任务开始，题目渐渐地毒瘤了起来。 首先你需要知道对于冒泡排序法，交换元素的次数等于逆序对的个数。 然后仔细分析代码，计算出冒泡排序法和计数排序法的具体复杂度，然后发现，只要构造一个长度为$1990​$的升序排列，然后选出$521​$对元素两两交换即可。此时冒泡刚好不会T，选排刚好T掉。 Subtask #3继续分析代码。发现快排没有随机化，那么就让每次选的基准数都是整个序列的最大或者最小值，然后手动二分得到$n​$的值应该为$1984​$。 Subtask #4对于冒泡排序法来说，一个降序的排列逆序对数最多，最容易T，但是对计数排序法就很不友好了。 然后再随便写几个数列试试看，发现类似于这样的序列很不错：2 2 2 1 1 1 0 0 0，手动多试几次值域和每个值出现的次数，就把这个点搞掉了。 Subtask #5和子任务4一样是要卡冒泡，同样构造一个类似的序列，然后手动胡乱修改几个数的出现次数，然后就过了。（大雾 Subtask #6woc最恶心的一个点，一定要好好分析一下随机排序法的代码。 首先发现随机函数是手写的，想到这里应该有玄机，赶紧仔细看看。 发现seed、RNG_a、RNG_b的初值都是一个奇怪的数字，在10进制下看不出啥玩意，打开计算器，转到二进制下看看。 然后发现RNG_a在二进制下是$1100101101010000000000001$，RNG_b是$100110100100000000000001$，后面都有一长串$0$和一个$1$。并且打乱数组时都是取随机值然后模$n$，然后想到如果$n$是$2$的正整数次幂的话就会有一些奇妙的性质：上面两个数字在模$n$意义下都等于$1​$。 考虑到最好应该让该程序打乱一遍数组就排序好，并且题目中时间上限给的十分准确，枚举$n$，发现$n=4096$时计时器的值刚好是$43026$，由此根据出题人心理学套路断定$n$一定等于$4096$。 然后再仔细观察，发现如果seed是一个确定的值，原序列各元素之间的大小关系可以确定。于是乎再枚举seed，发现$seed=2048$（模$n$的意义下）时倒推得到的原序列使得快排T掉了。可得$seed=2048$。 但是由于seed是一个根据输入序列生成的值，所以在确定原序列各元素之间的大小关系的情况下，关键在于如何构造一个合法的序列使得$seed=2048$。 所以可以先构造一个各元素值都尽量小的排列$A$，然后将所有大于$A[n]$的元素的值都加上个比如$10^6$，然后就可枚举$A[n]$，一点点把它的值变大，直到$seed=2048$。这样最后一个点就构造好了。 然后恭喜你获得荣誉勋章：毒瘤出题人。 代码Subtask #11//没有QwQ，手造 Subtask #21234567891011121314#include&lt;cstdio&gt;#include&lt;algorithm&gt;using namespace std;int n,A[2000];int main()&#123; n=1990; printf("%d\n",n); for(int i=1;i&lt;=n;i++) A[i]=i; for(int i=1;i&lt;=521;i++) swap(A[i*2],A[i*2-1]); for(int i=1;i&lt;=n;i++) printf("%d%c",A[i],i==n?'\n':' '); return 0;&#125; Subtask #3123456789101112131415161718#include&lt;cstdio&gt;#include&lt;algorithm&gt;using namespace std;int n,A[5000],counter;int main()&#123; n=1984; printf("%d\n",n); for(int i=1;i&lt;=n;i++) A[i]=i; for(int i=1;i&lt;=n;i++) &#123; int j=(i+1)/2; swap(A[i],A[j]); &#125; for(int i=1;i&lt;=n;i++) printf("%d%c",A[i],i==n?'\n':' '); return 0;&#125; Subtask #4其实后面少了几个0，可以手动补上，不补也没关系。 12345678910#include&lt;cstdio&gt;using namespace std;int main()&#123; printf("%d\n",1012); for(int i=30;i&gt;=0;i--) for(int j=1;j&lt;=32;j++) printf("%d ",i); return 0;&#125; Subtask #5用这个代码生成数据后还有手动乱搞一下QwQ。 12345678910#include&lt;cstdio&gt;using namespace std;int main()&#123; printf("%d\n",1015); for(int i=27;i&gt;=0;i--) for(int j=1;j&lt;=40;j++) printf("%d ",i); return 0;&#125; Subtask #612345678910111213141516171819202122232425262728293031323334#include&lt;cstdio&gt;#include&lt;algorithm&gt;using namespace std;int n,A[5000],counter;unsigned int seed,RNG_a,RNG_b;void RNG_init()&#123; counter++; seed = 2166136261u; counter++; RNG_a = 26648577u; counter++; RNG_b = 10108929u;&#125;int main()&#123; freopen("Shion.in","wb",stdout); n=4096;seed=2166136261u; printf("%d\n",n); for(int i=1;i&lt;=n;i++) A[i]=i; for(int i=n;i;i--) &#123; int j=(i+2048)%4096+1; swap(A[i],A[j]); &#125; for(int i=1;i&lt;=n;i++) if(A[i]&gt;A[n]) A[i]+=1000000; for(int i=1;i&lt;n;i++) seed=(seed*16777619u)^A[i]; while(((seed*16777619u)^A[n])%(unsigned int)4096!=(unsigned int)2048) A[n]++; for(int i=1;i&lt;=n;i++) printf("%d%c",A[i],i==n?'\n':' '); return 0;&#125; 答案戳我呀^w^ 终于写完了QwQ，出题人真是毒瘤QwQ。]]></content>
-      <categories>
-        <category>分析代码</category>
-      </categories>
-      <tags>
-        <tag>非传统题</tag>
-        <tag>提交答案题</tag>
-        <tag>排序</tag>
-        <tag>分析代码</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[「AHOI2001」多项式乘法]]></title>
     <url>%2F2019%2F03%2F04%2F%E3%80%8CAHOI2001%E3%80%8D%E5%A4%9A%E9%A1%B9%E5%BC%8F%E4%B9%98%E6%B3%95-Solution%2F</url>
     <content type="text"><![CDATA[来水一发大模拟QwQ。 传送门洛谷P2553 题解好久没写这种处理字符串的大模拟了QwQ。 这题每个多项式的长度都很短，系数也很小，所以直接$O(n^2)$的暴力搞过去就行了。 数据范围大一点的话FFT即可。 注意可能有空格。 注意可能在一行中可能包含一个不完整的表达式（可能没有”*”或者”()”），注意应该什么也不要输出，也要注意不要RE或者怎么样了。 总而言之还是挺好写的QwQ。 代码12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758#include&lt;cstdio&gt;#include&lt;cstring&gt;using namespace std;int len,a1[50],a2[50],ans[100];char exp[1000];int main()&#123; while(gets(exp),exp[0]) &#123; len=strlen(exp);memset(a1,0,sizeof(a1));memset(a2,0,sizeof(a2));memset(ans,0,sizeof(ans)); int i=1; while(exp[i]!=')'&amp;&amp;i&lt;len) &#123; int x=0,z=0; while(exp[i]&lt;'0'||exp[i]&gt;'9') i++; x=exp[i]-'0'; if('0'&lt;=exp[i+1]&amp;&amp;exp[i+1]&lt;='9')&#123;i++;x=x*10+exp[i]-'0';&#125; i++; if(exp[i]=='a') &#123; i++;i++;z=exp[i]-'0'; if('0'&lt;=exp[i+1]&amp;&amp;exp[i+1]&lt;='9')&#123;i++;z=z*10+exp[i]-'0';&#125; i++; &#125; a1[z]+=x; &#125; i++; while(exp[i]!=')'&amp;&amp;i&lt;len) &#123; int x=0,z=0; while(exp[i]&lt;'0'||exp[i]&gt;'9') i++; x=exp[i]-'0'; if('0'&lt;=exp[i+1]&amp;&amp;exp[i+1]&lt;='9')&#123;i++;x=x*10+exp[i]-'0';&#125; i++; if(exp[i]=='a') &#123; i++;i++;z=exp[i]-'0'; if('0'&lt;=exp[i+1]&amp;&amp;exp[i+1]&lt;='9')&#123;i++;z=z*10+exp[i]-'0';&#125; i++; &#125; a2[z]+=x; &#125; for(int i=0;i&lt;=30;i++) for(int j=0;j&lt;=30;j++) ans[i+j]+=a1[i]*a2[j]; bool first=false; for(int j=60;j&gt;=0;j--) &#123; if(!ans[j]) continue; if(first) putchar('+'); else first=true; if(j&gt;0) printf("%da^%d",ans[j],j); else printf("%d",ans[j]); &#125; putchar('\n'); memset(exp,0,sizeof(exp)); &#125; return 0;&#125;]]></content>
@@ -529,6 +515,20 @@
         <tag>FFT</tag>
         <tag>模拟</tag>
         <tag>字符串处理</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[「ZJOI2019模拟赛 十二」紫苑]]></title>
+    <url>%2F2019%2F03%2F04%2F%E3%80%8CZJOI2019%E6%A8%A1%E6%8B%9F%E8%B5%9B%20%E5%8D%81%E4%BA%8C%E3%80%8D%E7%B4%AB%E8%8B%91-Solution%2F</url>
+    <content type="text"><![CDATA[震惊！XZY竟然在ZJOI模拟赛时公然写代码造数据卡掉各种排序算法… 传送门原题来自UOJ，但各个子任务的分值略有不同。 UOJ83 题解这题是真的毒瘤QwQ。 Subtask #1观察一下计数排序法的代码，发现它在排序开始之前先把数组从$0$到$max(A_i)$清了一遍，那么只要给一个数，并且足够大即可。简直就是送分。 Subtask #2从第二个子任务开始，题目渐渐地毒瘤了起来。 首先你需要知道对于冒泡排序法，交换元素的次数等于逆序对的个数。 然后仔细分析代码，计算出冒泡排序法和计数排序法的具体复杂度，然后发现，只要构造一个长度为$1990​$的升序排列，然后选出$521​$对元素两两交换即可。此时冒泡刚好不会T，选排刚好T掉。 Subtask #3继续分析代码。发现快排没有随机化，那么就让每次选的基准数都是整个序列的最大或者最小值，然后手动二分得到$n​$的值应该为$1984​$。 Subtask #4对于冒泡排序法来说，一个降序的排列逆序对数最多，最容易T，但是对计数排序法就很不友好了。 然后再随便写几个数列试试看，发现类似于这样的序列很不错：2 2 2 1 1 1 0 0 0，手动多试几次值域和每个值出现的次数，就把这个点搞掉了。 Subtask #5和子任务4一样是要卡冒泡，同样构造一个类似的序列，然后手动胡乱修改几个数的出现次数，然后就过了。（大雾 Subtask #6woc最恶心的一个点，一定要好好分析一下随机排序法的代码。 首先发现随机函数是手写的，想到这里应该有玄机，赶紧仔细看看。 发现seed、RNG_a、RNG_b的初值都是一个奇怪的数字，在10进制下看不出啥玩意，打开计算器，转到二进制下看看。 然后发现RNG_a在二进制下是$1100101101010000000000001$，RNG_b是$100110100100000000000001$，后面都有一长串$0$和一个$1$。并且打乱数组时都是取随机值然后模$n$，然后想到如果$n$是$2$的正整数次幂的话就会有一些奇妙的性质：上面两个数字在模$n$意义下都等于$1​$。 考虑到最好应该让该程序打乱一遍数组就排序好，并且题目中时间上限给的十分准确，枚举$n$，发现$n=4096$时计时器的值刚好是$43026$，由此根据出题人心理学套路断定$n$一定等于$4096$。 然后再仔细观察，发现如果seed是一个确定的值，原序列各元素之间的大小关系可以确定。于是乎再枚举seed，发现$seed=2048$（模$n$的意义下）时倒推得到的原序列使得快排T掉了。可得$seed=2048$。 但是由于seed是一个根据输入序列生成的值，所以在确定原序列各元素之间的大小关系的情况下，关键在于如何构造一个合法的序列使得$seed=2048$。 所以可以先构造一个各元素值都尽量小的排列$A$，然后将所有大于$A[n]$的元素的值都加上个比如$10^6$，然后就可枚举$A[n]$，一点点把它的值变大，直到$seed=2048$。这样最后一个点就构造好了。 然后恭喜你获得荣誉勋章：毒瘤出题人。 代码Subtask #11//没有QwQ，手造 Subtask #21234567891011121314#include&lt;cstdio&gt;#include&lt;algorithm&gt;using namespace std;int n,A[2000];int main()&#123; n=1990; printf("%d\n",n); for(int i=1;i&lt;=n;i++) A[i]=i; for(int i=1;i&lt;=521;i++) swap(A[i*2],A[i*2-1]); for(int i=1;i&lt;=n;i++) printf("%d%c",A[i],i==n?'\n':' '); return 0;&#125; Subtask #3123456789101112131415161718#include&lt;cstdio&gt;#include&lt;algorithm&gt;using namespace std;int n,A[5000],counter;int main()&#123; n=1984; printf("%d\n",n); for(int i=1;i&lt;=n;i++) A[i]=i; for(int i=1;i&lt;=n;i++) &#123; int j=(i+1)/2; swap(A[i],A[j]); &#125; for(int i=1;i&lt;=n;i++) printf("%d%c",A[i],i==n?'\n':' '); return 0;&#125; Subtask #4其实后面少了几个0，可以手动补上，不补也没关系。 12345678910#include&lt;cstdio&gt;using namespace std;int main()&#123; printf("%d\n",1012); for(int i=30;i&gt;=0;i--) for(int j=1;j&lt;=32;j++) printf("%d ",i); return 0;&#125; Subtask #5用这个代码生成数据后还有手动乱搞一下QwQ。 12345678910#include&lt;cstdio&gt;using namespace std;int main()&#123; printf("%d\n",1015); for(int i=27;i&gt;=0;i--) for(int j=1;j&lt;=40;j++) printf("%d ",i); return 0;&#125; Subtask #612345678910111213141516171819202122232425262728293031323334#include&lt;cstdio&gt;#include&lt;algorithm&gt;using namespace std;int n,A[5000],counter;unsigned int seed,RNG_a,RNG_b;void RNG_init()&#123; counter++; seed = 2166136261u; counter++; RNG_a = 26648577u; counter++; RNG_b = 10108929u;&#125;int main()&#123; freopen("Shion.in","wb",stdout); n=4096;seed=2166136261u; printf("%d\n",n); for(int i=1;i&lt;=n;i++) A[i]=i; for(int i=n;i;i--) &#123; int j=(i+2048)%4096+1; swap(A[i],A[j]); &#125; for(int i=1;i&lt;=n;i++) if(A[i]&gt;A[n]) A[i]+=1000000; for(int i=1;i&lt;n;i++) seed=(seed*16777619u)^A[i]; while(((seed*16777619u)^A[n])%(unsigned int)4096!=(unsigned int)2048) A[n]++; for(int i=1;i&lt;=n;i++) printf("%d%c",A[i],i==n?'\n':' '); return 0;&#125; 答案戳我呀^w^ 终于写完了QwQ，出题人真是毒瘤QwQ。]]></content>
+      <categories>
+        <category>分析代码</category>
+      </categories>
+      <tags>
+        <tag>非传统题</tag>
+        <tag>提交答案题</tag>
+        <tag>排序</tag>
+        <tag>分析代码</tag>
       </tags>
   </entry>
   <entry>
@@ -604,8 +604,8 @@
         <category>高斯消元</category>
       </categories>
       <tags>
-        <tag>数学</tag>
         <tag>高斯消元</tag>
+        <tag>数学</tag>
         <tag>算法</tag>
       </tags>
   </entry>
@@ -630,9 +630,9 @@
       </categories>
       <tags>
         <tag>DP</tag>
+        <tag>状态压缩</tag>
         <tag>概率与期望</tag>
         <tag>期望DP</tag>
-        <tag>状态压缩</tag>
         <tag>状压DP</tag>
       </tags>
   </entry>
@@ -687,10 +687,10 @@
         <category>分块打表</category>
       </categories>
       <tags>
+        <tag>数位DP</tag>
         <tag>分块</tag>
         <tag>打表</tag>
         <tag>分块打表</tag>
-        <tag>数位DP</tag>
       </tags>
   </entry>
   <entry>
@@ -759,6 +759,22 @@
       </tags>
   </entry>
   <entry>
+    <title><![CDATA[「国家集训队」聪聪可可]]></title>
+    <url>%2F2019%2F01%2F16%2F%E3%80%8C%E5%9B%BD%E5%AE%B6%E9%9B%86%E8%AE%AD%E9%98%9F%E3%80%8D%E8%81%AA%E8%81%AA%E5%8F%AF%E5%8F%AF%2F</url>
+    <content type="text"><![CDATA[我数数最差了QwQ… 传送门洛谷P2634 BZOJ2152 题解很显然这是一道假的概率题。而是一道数数题，只要数出路径长度为3的倍数的点对的数量就行了呢poi。 隔壁dalao说这是一道点分治裸题，但是我还是觉得树形DP更好写一些QwQ。 定义$F_{ij}(j \in \lbrace 0,1,2 \rbrace)$表示节点$i$的子树中，到i的距离$\mod 3=j$的节点个数。如果当前遍历到的节点为i，我们需要计算出$i$及其子树中满足最短路径经过节点$i$且满足路径长是3的倍数的节点个数，累计到答案里最后除以$n^2$并约分就好了呢poi。 注意起点和终点可以相同，计算时小心点，不要算重复也不要漏算了哟poi。 代码12345678910111213141516171819202122232425262728293031323334353637383940414243#include&lt;cstdio&gt;using namespace std;const int maxn=20005;int n,tot,lnk[maxn],son[maxn*2],w[maxn*2],nxt[maxn*2],F[maxn][3],ans1,ans2;inline int read()&#123; int ret=0,f=1;char ch=getchar(); while(ch&lt;'0'||ch&gt;'9')&#123;if(ch=='-')f=-f;ch=getchar();&#125; while(ch&gt;='0'&amp;&amp;ch&lt;='9')&#123;ret=ret*10+ch-'0';ch=getchar();&#125; return ret*f;&#125;inline void add_e(int x,int y,int z)&#123;tot++;son[tot]=y;w[tot]=z;nxt[tot]=lnk[x];lnk[x]=tot;&#125;int gcd(int x,int y)&#123;return !y?x:gcd(y,x%y);&#125;void DFS(int now,int fa)&#123; F[now][0]=1; for(int i=lnk[now];i;i=nxt[i]) &#123; if(son[i]!=fa) &#123; DFS(son[i],now); for(int j=0;j&lt;3;j++) ans1+=F[son[i]][j]*F[now][((3-j-w[i])%3+3)%3]*2; for(int j=0;j&lt;3;j++) F[now][(j+w[i])%3]+=F[son[i]][j]; &#125; &#125;&#125;int main()&#123; n=read(); for(int i=1;i&lt;n;i++) &#123; int a=read(),b=read(),c=read(); add_e(a,b,c);add_e(b,a,c); &#125; DFS(1,0); ans1+=n;ans2=n*n; int gys=gcd(ans1,ans2); ans1/=gys;ans2/=gys; printf("%d/%d\n",ans1,ans2); return 0;&#125;]]></content>
+      <categories>
+        <category>树形DP</category>
+      </categories>
+      <tags>
+        <tag>数数</tag>
+        <tag>DP</tag>
+        <tag>DFS</tag>
+        <tag>概率</tag>
+        <tag>点分治</tag>
+        <tag>树形DP</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[「洛谷P5059」中国象棋]]></title>
     <url>%2F2019%2F01%2F16%2F%E3%80%8C%E6%B4%9B%E8%B0%B7P5059%E3%80%8D%E4%B8%AD%E5%9B%BD%E8%B1%A1%E6%A3%8B%2F</url>
     <content type="text"><![CDATA[又是数数题QwQ… 传送门洛谷P5059 题解首先注意题目中说的是有$n^2$个格子，也就是$(n+1)^2$个格点。 以下是出题人的推导： 首先我们可以发现每一行是独立的，所以只需要处理一行的答案即可 设$F[i][0]$表示一行中摆了$i$个位置且第$i$个位置不摆放棋子的方案数 设$F[i][1]$表示一行中摆了$i$个位置且第$i$个位置摆放棋子的方案数 设$Ans[i]$表示$F[i][0]+F[i][1]$ 那么忽略第二个限制可以发现有: $F[i][0]=F[i-1][0]+F[i-1][1]$ $F[i][1]=F[i-1][0]$ 所以有 $Ans[i]$ $=F[i][0]+F[i][1]$ $=2F[i-1][0]+F[i-1][1]$ $=(F[i-1][0]+F[i-1][1])+(F[i-2][0]+F[i-2][1])$ $=Ans[i-1]+Ans[i-2]$ 好了很显然这是一个斐波那契数列。自己再推一下，注意一下细节，不难发现最后的答案就是 (Fib_{n+3}-n-2)^{n+1}矩阵加快速幂就可以在$\Theta(\log n)$的复杂内求解。 还有一个问题，由于n和P都非常大，直接乘long long也会boom。所以这里用了一个类似于快速幂的方法来求$(a*b)\mod P$的值。虽然复杂度多了一只log，但是很好写，并且避免了高精度又臭又长的代码和大常数复杂度。 代码还挺好写的呢poi。 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152#include&lt;cstdio&gt;using namespace std;typedef long long LL;LL n,P;LL Multiply(LL x,LL y) //两个10^18级别的数在模P意义下的乘法&#123; LL ret=0,w=x; while(y) &#123; if(y&amp;1) ret=(ret+w)%P; w=(w+w)%P;y&gt;&gt;=1; &#125; return ret;&#125;struct Matrix&#123; LL a[2][2]; Matrix()&#123;a[0][0]=a[0][1]=a[1][0]=a[1][1]=0;&#125; Matrix operator * (Matrix b) //矩阵乘法 &#123; Matrix c; for(int i=0;i&lt;2;i++) for(int j=0;j&lt;2;j++) for(int k=0;k&lt;2;k++) c.a[i][j]=(c.a[i][j]+Multiply(a[k][j],b.a[i][k]))%P; return c; &#125;&#125;ans,mat,tep;LL QP(LL a,LL b) //普通快速幂&#123; LL ret=1,w=a; while(b) &#123; if(b&amp;1) ret=Multiply(ret,w); w=Multiply(w,w);b&gt;&gt;=1; &#125; return ret;&#125;int main()&#123; scanf("%lld%lld",&amp;n,&amp;P); ans.a[0][0]=ans.a[0][1]=mat.a[0][0]=mat.a[0][1]=mat.a[1][0]=1; LL b=n+1;tep=mat; while(b) //矩阵加速斐波那契数列 &#123; if(b&amp;1) mat=mat*tep; tep=tep*tep;b&gt;&gt;=1; &#125; ans=ans*mat; printf("%lld\n",QP(((ans.a[0][0]-n-2)%P+P)%P,n+1)); return 0;&#125;]]></content>
@@ -771,22 +787,6 @@
         <tag>快速幂</tag>
         <tag>矩阵加速</tag>
         <tag>斐波那契数列</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[「国家集训队」聪聪可可]]></title>
-    <url>%2F2019%2F01%2F16%2F%E3%80%8C%E5%9B%BD%E5%AE%B6%E9%9B%86%E8%AE%AD%E9%98%9F%E3%80%8D%E8%81%AA%E8%81%AA%E5%8F%AF%E5%8F%AF%2F</url>
-    <content type="text"><![CDATA[我数数最差了QwQ… 传送门洛谷P2634 BZOJ2152 题解很显然这是一道假的概率题。而是一道数数题，只要数出路径长度为3的倍数的点对的数量就行了呢poi。 隔壁dalao说这是一道点分治裸题，但是我还是觉得树形DP更好写一些QwQ。 定义$F_{ij}(j \in \lbrace 0,1,2 \rbrace)$表示节点$i$的子树中，到i的距离$\mod 3=j$的节点个数。如果当前遍历到的节点为i，我们需要计算出$i$及其子树中满足最短路径经过节点$i$且满足路径长是3的倍数的节点个数，累计到答案里最后除以$n^2$并约分就好了呢poi。 注意起点和终点可以相同，计算时小心点，不要算重复也不要漏算了哟poi。 代码12345678910111213141516171819202122232425262728293031323334353637383940414243#include&lt;cstdio&gt;using namespace std;const int maxn=20005;int n,tot,lnk[maxn],son[maxn*2],w[maxn*2],nxt[maxn*2],F[maxn][3],ans1,ans2;inline int read()&#123; int ret=0,f=1;char ch=getchar(); while(ch&lt;'0'||ch&gt;'9')&#123;if(ch=='-')f=-f;ch=getchar();&#125; while(ch&gt;='0'&amp;&amp;ch&lt;='9')&#123;ret=ret*10+ch-'0';ch=getchar();&#125; return ret*f;&#125;inline void add_e(int x,int y,int z)&#123;tot++;son[tot]=y;w[tot]=z;nxt[tot]=lnk[x];lnk[x]=tot;&#125;int gcd(int x,int y)&#123;return !y?x:gcd(y,x%y);&#125;void DFS(int now,int fa)&#123; F[now][0]=1; for(int i=lnk[now];i;i=nxt[i]) &#123; if(son[i]!=fa) &#123; DFS(son[i],now); for(int j=0;j&lt;3;j++) ans1+=F[son[i]][j]*F[now][((3-j-w[i])%3+3)%3]*2; for(int j=0;j&lt;3;j++) F[now][(j+w[i])%3]+=F[son[i]][j]; &#125; &#125;&#125;int main()&#123; n=read(); for(int i=1;i&lt;n;i++) &#123; int a=read(),b=read(),c=read(); add_e(a,b,c);add_e(b,a,c); &#125; DFS(1,0); ans1+=n;ans2=n*n; int gys=gcd(ans1,ans2); ans1/=gys;ans2/=gys; printf("%d/%d\n",ans1,ans2); return 0;&#125;]]></content>
-      <categories>
-        <category>树形DP</category>
-      </categories>
-      <tags>
-        <tag>数数</tag>
-        <tag>DP</tag>
-        <tag>概率</tag>
-        <tag>DFS</tag>
-        <tag>点分治</tag>
-        <tag>树形DP</tag>
       </tags>
   </entry>
   <entry>
@@ -837,8 +837,8 @@
         <category>数据结构</category>
       </categories>
       <tags>
-        <tag>主席树</tag>
         <tag>线段树</tag>
+        <tag>主席树</tag>
         <tag>可持久化</tag>
         <tag>数据结构</tag>
       </tags>
@@ -846,7 +846,7 @@
   <entry>
     <title><![CDATA[XZY的女装flag(捂脸]]></title>
     <url>%2F2018%2F12%2F31%2FXZY%E7%9A%84%E5%A5%B3%E8%A3%85flag%2F</url>
-    <content type="text"><![CDATA[由于一些原因，本文禁止访问，除非你能猜到密码 Incorrect Password! No content to display! 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]]></content>
+    <content type="text"><![CDATA[由于一些原因，本文禁止访问，除非你能猜到密码 Incorrect Password! No content to display! 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]]></content>
       <categories>
         <category>公告</category>
       </categories>
