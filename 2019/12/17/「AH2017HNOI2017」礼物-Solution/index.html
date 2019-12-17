@@ -88,7 +88,7 @@
 <meta property="og:site_name" content="Welcome to XuZhiyuan&#39;s blog">
 <meta property="og:description" content="一个经典套路。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-12-17T02:09:19.746Z">
+<meta property="og:updated_time" content="2019-12-17T02:11:38.150Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="「AH2017&#x2F;HNOI2017」礼物">
 <meta name="twitter:description" content="一个经典套路。">
@@ -420,7 +420,7 @@
 <p>由于是一个环，按照套路，可以先将$x_i$复制一遍。</p>
 <p>设$C_i$为旋转了$i$个单位后$\sum x_iy_i$的值，有：</p>
 <script type="math/tex; mode=display">
-C_i=\sum_{j=1}^{n}{x_{i+j}y_j}</script><p>这个式子不是很好看，于是我们把$y$倒过来，那么就有：</p>
+C_i=\sum_{j=1}^{n}{x_{i+j}y_j}</script><p>这个式子不是很好看，于是我们把$y$（$x$也行）倒过来，那么就有：</p>
 <script type="math/tex; mode=display">
 C_i=\sum_{j=1}^{n}{x_{i+j}y_{n-j+1}}</script><p>然后不难发现，$x$与$y$下标之和为$n+i+1$的数将被乘起来然后对$C_i$造成贡献，所此时以$C_i$就等于多项式$x_1\cdot x+x_2\cdot x^2+\cdots x_n\cdot x^n$与$y_1\cdot x+y_2\cdot x^2+\cdots y_n\cdot x^n$卷积卷起来之后$x^{i+n+1}$项的系数。</p>
 <p>然后NTT求个卷积然后取个最小值就行了。</p>
