@@ -84,7 +84,7 @@
 <meta name="keywords" content="非传统题,提交答案题,排序,分析代码">
 <meta property="og:type" content="article">
 <meta property="og:title" content="「ZJOI2019模拟赛 十二」紫苑">
-<meta property="og:url" content="http://chnxuzhiyuan.cn/2019/03/04/「ZJOI2019模拟赛 十二」紫苑-Solution/index.html">
+<meta property="og:url" content="https://www.chnxuzhiyuan.cn/2019/03/04/「ZJOI2019模拟赛 十二」紫苑-Solution/index.html">
 <meta property="og:site_name" content="Welcome to XuZhiyuan&#39;s blog">
 <meta property="og:description" content="震惊！XZY竟然在ZJOI模拟赛时公然写代码造数据卡掉各种排序算法…">
 <meta property="og:locale" content="zh-Hans">
@@ -121,7 +121,7 @@
 
 
 
-  <link rel="canonical" href="http://chnxuzhiyuan.cn/2019/03/04/「ZJOI2019模拟赛 十二」紫苑-Solution/">
+  <link rel="canonical" href="https://www.chnxuzhiyuan.cn/2019/03/04/「ZJOI2019模拟赛 十二」紫苑-Solution/">
 
 
 
@@ -306,7 +306,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://chnxuzhiyuan.cn/2019/03/04/「ZJOI2019模拟赛 十二」紫苑-Solution/">
+    <link itemprop="mainEntityOfPage" href="https://www.chnxuzhiyuan.cn/2019/03/04/「ZJOI2019模拟赛 十二」紫苑-Solution/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="XuZhiyuan">
@@ -440,7 +440,7 @@
 <h4 id="Subtask-5-1"><a href="#Subtask-5-1" class="headerlink" title="Subtask #5"></a>Subtask #5</h4><p>用这个代码生成数据后还有手动乱搞一下QwQ。</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"%d\n"</span>,<span class="number">1015</span>);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">27</span>;i&gt;=<span class="number">0</span>;i--)</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">1</span>;j&lt;=<span class="number">40</span>;j++)</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"%d "</span>,i);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h4 id="Subtask-6-1"><a href="#Subtask-6-1" class="headerlink" title="Subtask #6"></a>Subtask #6</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">int</span> n,A[<span class="number">5000</span>],counter;<span class="keyword">unsigned</span> <span class="keyword">int</span> seed,RNG_a,RNG_b;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">RNG_init</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	counter++;</span><br><span class="line">	seed = <span class="number">2166136261u</span>;</span><br><span class="line">	counter++;</span><br><span class="line">	RNG_a = <span class="number">26648577u</span>;</span><br><span class="line">	counter++;</span><br><span class="line">	RNG_b = <span class="number">10108929u</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	freopen(<span class="string">"Shion.in"</span>,<span class="string">"wb"</span>,<span class="built_in">stdout</span>);</span><br><span class="line">	n=<span class="number">4096</span>;seed=<span class="number">2166136261u</span>;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"%d\n"</span>,n);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++) A[i]=i;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=n;i;i--)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">int</span> j=(i+<span class="number">2048</span>)%<span class="number">4096</span>+<span class="number">1</span>;</span><br><span class="line">		swap(A[i],A[j]);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line">		<span class="keyword">if</span>(A[i]&gt;A[n])</span><br><span class="line">			A[i]+=<span class="number">1000000</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;n;i++)</span><br><span class="line">		seed=(seed*<span class="number">16777619u</span>)^A[i];</span><br><span class="line">	<span class="keyword">while</span>(((seed*<span class="number">16777619u</span>)^A[n])%(<span class="keyword">unsigned</span> <span class="keyword">int</span>)<span class="number">4096</span>!=(<span class="keyword">unsigned</span> <span class="keyword">int</span>)<span class="number">2048</span>) A[n]++;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"%d%c"</span>,A[i],i==n?<span class="string">'\n'</span>:<span class="string">' '</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="答案"><a href="#答案" class="headerlink" title="答案"></a>答案</h3><p><a href="https://www.chnxuzhiyuan.cn/files/「ZJOI2019模拟赛-十二」紫苑-Solution.zip" target="_blank" rel="noopener">戳我呀^w^</a></p>
+<h3 id="答案"><a href="#答案" class="headerlink" title="答案"></a>答案</h3><p><a href="https://www.chnxuzhiyuan.cn/files/「ZJOI2019模拟赛-十二」紫苑-Solution.zip">戳我呀^w^</a></p>
 <p>终于写完了QwQ<del>，出题人真是毒瘤QwQ</del>。</p>
 
       
@@ -478,8 +478,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/03/04/「SNOI2017」一个简单的询问-Solution/" rel="next" title="「SNOI2017」一个简单的询问">
-                <i class="fa fa-chevron-left"></i> 「SNOI2017」一个简单的询问
+              <a href="/2019/03/04/「AHOI2001」多项式乘法-Solution/" rel="next" title="「AHOI2001」多项式乘法">
+                <i class="fa fa-chevron-left"></i> 「AHOI2001」多项式乘法
               </a>
             
           </div>

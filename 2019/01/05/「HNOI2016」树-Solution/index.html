@@ -84,7 +84,7 @@
 <meta name="keywords" content="树上问题,LCA,主席树">
 <meta property="og:type" content="article">
 <meta property="og:title" content="「HNOI2016」树">
-<meta property="og:url" content="http://chnxuzhiyuan.cn/2019/01/05/「HNOI2016」树-Solution/index.html">
+<meta property="og:url" content="https://www.chnxuzhiyuan.cn/2019/01/05/「HNOI2016」树-Solution/index.html">
 <meta property="og:site_name" content="Welcome to XuZhiyuan&#39;s blog">
 <meta property="og:description" content="骚年，来看看这棵 真•树套树 吧！">
 <meta property="og:locale" content="zh-Hans">
@@ -123,7 +123,7 @@
 
 
 
-  <link rel="canonical" href="http://chnxuzhiyuan.cn/2019/01/05/「HNOI2016」树-Solution/">
+  <link rel="canonical" href="https://www.chnxuzhiyuan.cn/2019/01/05/「HNOI2016」树-Solution/">
 
 
 
@@ -308,7 +308,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://chnxuzhiyuan.cn/2019/01/05/「HNOI2016」树-Solution/">
+    <link itemprop="mainEntityOfPage" href="https://www.chnxuzhiyuan.cn/2019/01/05/「HNOI2016」树-Solution/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="XuZhiyuan">
@@ -431,7 +431,7 @@
 <p>还需要写几个函数：</p>
 <ul>
 <li>int GetRoot(long long u);用于查找小节点u所在的大节点。构造好S[],T[0]后，二分即可实现。</li>
-<li>int GetPre(long long u);用于查找小节点u在模板树中对应的是哪个节点。假设小节点u在大节点rt里，那么根据题意，我们要找的就是rt对应的模板树的子树中该子树编号第$u-S[rt]+1$小的节点。这个我们可以把模板树<del>一巴掌拍扁</del>求个DFS序，然后用主席树解决（<a href="https://www.chnxuzhiyuan.cn/2019/01/04/%E4%B8%BB%E5%B8%AD%E6%A0%91%EF%BC%88%E5%8F%AF%E6%8C%81%E4%B9%85%E5%8C%96%E7%BA%BF%E6%AE%B5%E6%A0%91%EF%BC%89/" target="_blank" rel="noopener">不会主席树的童鞋戳这里</a>）。</li>
+<li>int GetPre(long long u);用于查找小节点u在模板树中对应的是哪个节点。假设小节点u在大节点rt里，那么根据题意，我们要找的就是rt对应的模板树的子树中该子树编号第$u-S[rt]+1$小的节点。这个我们可以把模板树<del>一巴掌拍扁</del>求个DFS序，然后用主席树解决（<a href="https://www.chnxuzhiyuan.cn/2019/01/04/%E4%B8%BB%E5%B8%AD%E6%A0%91%EF%BC%88%E5%8F%AF%E6%8C%81%E4%B9%85%E5%8C%96%E7%BA%BF%E6%AE%B5%E6%A0%91%EF%BC%89/">不会主席树的童鞋戳这里</a>）。</li>
 <li>int GetDist(int u,int v);用于求模板树上的节点u,v之间的距离。LCA解决。</li>
 </ul>
 <p>然后就可以开始考虑如何计算答案了。</p>
