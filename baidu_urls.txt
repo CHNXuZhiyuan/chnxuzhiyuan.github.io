@@ -1,3 +1,4 @@
+https://www.chnxuzhiyuan.cn/2019/12/20/「PKUSC2018」题解-Solution/
 https://www.chnxuzhiyuan.cn/2019/12/19/「PKUWC2018」题解-Solution/
 https://www.chnxuzhiyuan.cn/2019/11/17/「CSP2019」游记-Diary/
 https://www.chnxuzhiyuan.cn/2019/10/25/「TJOI2019」唱、跳、rap和篮球-Solution/
@@ -7,8 +8,8 @@ https://www.chnxuzhiyuan.cn/2019/08/16/「十二省联考2019」异或粽子-Sol
 https://www.chnxuzhiyuan.cn/2019/08/15/「WC2013」糖果公园-Solution/
 https://www.chnxuzhiyuan.cn/2019/08/09/「HNOI2013」游走-Solution/
 https://www.chnxuzhiyuan.cn/2019/08/05/「慈溪中学」暑假集训游记-Diary/
-https://www.chnxuzhiyuan.cn/2019/08/02/「Ynoi2019模拟赛」Yuno-loves-sqrt-technology-III-Solution/
 https://www.chnxuzhiyuan.cn/2019/08/02/「CF452F」Permutation-Solution/
+https://www.chnxuzhiyuan.cn/2019/08/02/「Ynoi2019模拟赛」Yuno-loves-sqrt-technology-III-Solution/
 https://www.chnxuzhiyuan.cn/2019/07/29/「Violet」天使玩偶 SJY摆棋子-Solution/
 https://www.chnxuzhiyuan.cn/2019/07/27/「AHOI2013」连通图-Solution/
 https://www.chnxuzhiyuan.cn/2019/07/26/「Gty」Gty的二逼妹子序列-Solution/
@@ -20,8 +21,8 @@ https://www.chnxuzhiyuan.cn/2019/07/01/「NOI2017」游戏-Solution/
 https://www.chnxuzhiyuan.cn/2019/06/24/「HAOI2010」软件安装-Solution/
 https://www.chnxuzhiyuan.cn/2019/06/08/「IOI2008」Island-Solution/
 https://www.chnxuzhiyuan.cn/2019/06/05/「国家集训队」礼物-Solution/
-https://www.chnxuzhiyuan.cn/2019/06/03/「NOI2018」屠龙勇士-Solution/
 https://www.chnxuzhiyuan.cn/2019/06/03/「GXOI GZOI2019」旅行者-Solution/
+https://www.chnxuzhiyuan.cn/2019/06/03/「NOI2018」屠龙勇士-Solution/
 https://www.chnxuzhiyuan.cn/2019/06/01/「SCOI2009」迷路-Solution/
 https://www.chnxuzhiyuan.cn/2019/05/28/「TJOI2017」城市-Solution/
 https://www.chnxuzhiyuan.cn/2019/05/27/「SDOI2011」消防-Solution/
@@ -31,14 +32,14 @@ https://www.chnxuzhiyuan.cn/2019/05/13/「SCOI2010」股票交易-Solution/
 https://www.chnxuzhiyuan.cn/2019/05/06/「APIO2007」动物园-Solution/
 https://www.chnxuzhiyuan.cn/2019/04/27/「华东师范大学ACM」游记-Diary/
 https://www.chnxuzhiyuan.cn/2019/04/26/「ZJOI2019」游记-Diary/
-https://www.chnxuzhiyuan.cn/2019/04/22/「CQOI2016」手机号码-Solution/
 https://www.chnxuzhiyuan.cn/2019/04/22/「BZOJ3155 洛谷P4868」Preprefix-sum -Solution/
+https://www.chnxuzhiyuan.cn/2019/04/22/「CQOI2016」手机号码-Solution/
 https://www.chnxuzhiyuan.cn/2019/04/22/「ZJOI2008」骑士-Solution/
-https://www.chnxuzhiyuan.cn/2019/04/07/「HNOI2002」营业额统计-Solution/
-https://www.chnxuzhiyuan.cn/2019/04/07/「HNOI2004」宠物收养场-Solution/
-https://www.chnxuzhiyuan.cn/2019/04/07/「SDOI2011」染色-Solution/
 https://www.chnxuzhiyuan.cn/2019/04/07/「JLOI2014」松鼠的新家-Solution/
 https://www.chnxuzhiyuan.cn/2019/04/07/「HNOI2012」永无乡-Solution/
+https://www.chnxuzhiyuan.cn/2019/04/07/「HNOI2004」宠物收养场-Solution/
+https://www.chnxuzhiyuan.cn/2019/04/07/「HNOI2002」营业额统计-Solution/
+https://www.chnxuzhiyuan.cn/2019/04/07/「SDOI2011」染色-Solution/
 https://www.chnxuzhiyuan.cn/2019/04/06/「NOI2015」软件包管理器-Solution/
 https://www.chnxuzhiyuan.cn/2019/04/06/「国家集训队」跳跳棋-Solution/
 https://www.chnxuzhiyuan.cn/2019/04/06/「HAOI2015」树上操作-Solution/
@@ -46,12 +47,12 @@ https://www.chnxuzhiyuan.cn/2019/03/29/「国家集训队」middle-Solution/
 https://www.chnxuzhiyuan.cn/2019/03/25/「BZOJ5164」餐厅计划问题-Solution/
 https://www.chnxuzhiyuan.cn/2019/03/24/「ICPC-Beijing-2006」狼抓兔子-Solution/
 https://www.chnxuzhiyuan.cn/2019/03/19/「ZJOI模拟赛」线段树-Solution/
+https://www.chnxuzhiyuan.cn/2019/03/18/「网络流24题」家园-Solution/
+https://www.chnxuzhiyuan.cn/2019/03/18/「网络流24题」试题库问题-Solution/
 https://www.chnxuzhiyuan.cn/2019/03/18/「网络流24题」运输问题-Solution/
 https://www.chnxuzhiyuan.cn/2019/03/18/「网络流24题」飞行员配对方案问题-Solution/
-https://www.chnxuzhiyuan.cn/2019/03/18/「网络流24题」家园-Solution/
 https://www.chnxuzhiyuan.cn/2019/03/18/「网络流24题」餐巾计划问题-Solution/
 https://www.chnxuzhiyuan.cn/2019/03/18/「网络流24题」魔术球问题-Solution/
-https://www.chnxuzhiyuan.cn/2019/03/18/「网络流24题」试题库问题-Solution/
 https://www.chnxuzhiyuan.cn/2019/03/17/「JSOI2013」丢番图-Solution/
 https://www.chnxuzhiyuan.cn/2019/03/15/「VK Cup 2015-Round 2」A.Berland Miners 「ZJOI模拟赛」俄刻阿诺斯-Solution/
 https://www.chnxuzhiyuan.cn/2019/03/14/「ZJOI模拟赛」Bug级的存在-Solution/
@@ -62,9 +63,9 @@ https://www.chnxuzhiyuan.cn/2019/03/07/「USACO」Haywire-Solution/
 https://www.chnxuzhiyuan.cn/2019/03/06/「YNOI2016」这是我自己的发明-Solution/
 https://www.chnxuzhiyuan.cn/2019/03/05/「洛谷P4886」快递员-Solution/
 https://www.chnxuzhiyuan.cn/2019/03/05/「IOI2011」Race-Solution/
-https://www.chnxuzhiyuan.cn/2019/03/04/「AHOI2001」多项式乘法-Solution/
-https://www.chnxuzhiyuan.cn/2019/03/04/「ZJOI2019模拟赛 十二」紫苑-Solution/
 https://www.chnxuzhiyuan.cn/2019/03/04/「SNOI2017」一个简单的询问-Solution/
+https://www.chnxuzhiyuan.cn/2019/03/04/「ZJOI2019模拟赛 十二」紫苑-Solution/
+https://www.chnxuzhiyuan.cn/2019/03/04/「AHOI2001」多项式乘法-Solution/
 https://www.chnxuzhiyuan.cn/2019/02/25/「YNOI2016」掉进兔子洞-Solution/
 https://www.chnxuzhiyuan.cn/2019/02/18/「ZJOI2019模拟赛 六」硬币-Solution/
 https://www.chnxuzhiyuan.cn/2019/02/15/「洛谷P1654 BZOJ4318」OSU!-Solution/
@@ -76,14 +77,14 @@ https://www.chnxuzhiyuan.cn/2019/02/05/「SCOI2008」奖励关-Solution/
 https://www.chnxuzhiyuan.cn/2019/02/04/「SCOI2009」粉刷匠-Solution/
 https://www.chnxuzhiyuan.cn/2019/02/03/「HNOI2008」GT考试-Solution/
 https://www.chnxuzhiyuan.cn/2019/01/31/「AHOI2009」中国象棋-Solution/
-https://www.chnxuzhiyuan.cn/2019/01/30/「SCOI2009」windy数-Solution/
 https://www.chnxuzhiyuan.cn/2019/01/30/「FJOI2007」轮状病毒-Solution/
+https://www.chnxuzhiyuan.cn/2019/01/30/「SCOI2009」windy数-Solution/
 https://www.chnxuzhiyuan.cn/2019/01/29/「HNOI2005」狡猾的商人-Solution/
 https://www.chnxuzhiyuan.cn/2019/01/28/「HNOI2006」马步距离-Solution/
 https://www.chnxuzhiyuan.cn/2019/01/24/「BJOI2014」想法-Solution/
 https://www.chnxuzhiyuan.cn/2019/01/23/「洛谷P2617」Dynamic-Rankings/
-https://www.chnxuzhiyuan.cn/2019/01/16/「洛谷P5059」中国象棋/
 https://www.chnxuzhiyuan.cn/2019/01/16/「国家集训队」聪聪可可/
+https://www.chnxuzhiyuan.cn/2019/01/16/「洛谷P5059」中国象棋/
 https://www.chnxuzhiyuan.cn/2019/01/15/「JSOI2004」平衡点 吊打XXX-Solution/
 https://www.chnxuzhiyuan.cn/2019/01/14/「USACO2015JAN」草鉴定Grass-Cownoisseur -Solution/
 https://www.chnxuzhiyuan.cn/2019/01/05/「HNOI2016」树-Solution/
